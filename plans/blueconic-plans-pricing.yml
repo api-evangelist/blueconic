@@ -1,0 +1,44 @@
+name: BlueConic Plans and Pricing
+description: BlueConic offers custom enterprise pricing for its customer data platform.
+  Pricing is not publicly listed and is based on the number of identifiable profiles
+  and monthly visitor traffic. Prospective customers must contact sales or request
+  a demo to obtain pricing.
+version: '0.1'
+url: https://www.blueconic.com/request-demo
+contact:
+  url: https://www.blueconic.com/contact
+  phone: +1 (888) 440-2583
+plans:
+  - name: Enterprise
+    description: Custom enterprise pricing for BlueConic CDP based on number of identifiable
+      profiles and monthly visitor traffic. Includes access to full REST API v2, OAuth
+      2.0 authorization, segments, interactions, audit events, and platform connections.
+      Pricing typically ranges from $100,000 to $200,000 per year depending on profile
+      volume and feature set.
+    type: enterprise
+    pricing:
+      model: custom
+      currency: USD
+      billingPeriod: annual
+      estimatedMin: 100000
+      estimatedMax: 200000
+      note: Pricing is negotiated based on number of identifiable profiles and monthly
+        visitor traffic. Contact sales for a quote.
+    features:
+      - Full REST API v2 access
+      - OAuth 2.0 authentication (client credentials and authorization code flows)
+      - Visitor profile management
+      - Segment creation and management
+      - Interaction tracking
+      - Audit event logging
+      - Platform connections and integrations
+      - iOS and Roku SDK support
+      - BlueConic University training access
+      - Customer success support
+    contact:
+      url: https://www.blueconic.com/request-demo
+notes:
+  - Pricing is not publicly disclosed; contact sales for accurate estimates.
+  - Implementation, training, and add-on fees may apply beyond list price.
+  - The BlueConic API is included as part of the platform subscription; there are
+    no separate API-tier charges.

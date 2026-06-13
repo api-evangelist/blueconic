@@ -1,0 +1,90 @@
+aid: blueconic
+name: BlueConic
+description: BlueConic is a customer data platform (CDP) with a REST API for managing
+  unified customer profiles, lifecycle stages, segments, connections, and permissions-based
+  data activation. The API provides OAuth 2.0-secured access to visitor profiles,
+  segments, interactions, and audit events via an OpenAPI-compliant interface.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/blueconic/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - Customer Data Platform
+  - CDP
+  - Customer Profiles
+  - Segments
+  - Data Activation
+  - First-Party Data
+  - Lifecycle Stages
+  - Connections
+  - Privacy
+apis:
+  - aid: blueconic:blueconic-rest-api-v2
+    name: BlueConic REST API v2
+    description: The BlueConic REST API v2 provides access to visitor profiles, segments,
+      interactions, and audit events. It uses OAuth 2.0 for authorization and follows
+      the OpenAPI specification, supporting both client credentials and authorization
+      code flows. JSON is the only supported format.
+    humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
+    baseURL: https://[tenantname].blueconic.net
+    tags:
+      - Customer Profiles
+      - Segments
+      - Interactions
+      - Audit Events
+      - OAuth 2.0
+      - OpenAPI
+    properties:
+      - type: Documentation
+        url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
+      - type: OpenAPI
+        url: https://rest.apidoc.blueconic.com
+      - type: GettingStarted
+        url: https://support.blueconic.com/en/articles/248009-using-the-blueconic-rest-api-v2
+      - type: Authentication
+        url: https://support.blueconic.com/en/articles/247557-authorizing-applications-granting-external-applications-to-access-blueconic
+      - type: AuthorizationCodeFlow
+        url: https://support.blueconic.com/en/articles/247559-authorizing-applications-using-the-authorization-code-flow
+      - type: ClientCredentialsFlow
+        url: https://support.blueconic.com/en/articles/247558-authorizing-applications-using-the-client-credentials-flow
+    contact:
+      - FN: BlueConic Support
+        url: https://support.blueconic.com/en/
+common:
+  - type: Website
+    url: https://www.blueconic.com/
+  - type: Documentation
+    url: https://support.blueconic.com/hc/en-us/categories/200458421-Developers
+  - type: GitHubOrg
+    url: https://github.com/blueconic
+  - type: OpenAPI
+    url: https://github.com/blueconic/openapi
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/blueconic
+  - type: X
+    url: https://twitter.com/blueconic
+  - type: Blog
+    url: https://www.blueconic.com/resources/category/blog
+  - type: Pricing
+    url: https://www.blueconic.com/request-demo
+  - type: StatusPage
+    url: https://status.blueconic.com
+  - type: Support
+    url: https://support.blueconic.com/en/
+  - type: iOSSDK
+    url: https://github.com/blueconic/blueconic-ios-sdk
+  - type: RokuSDK
+    url: https://github.com/blueconic/blueconic-roku-sdk
+  - type: MCPServer
+    url: https://github.com/blueconic/blueconic-mcp
+  - type: Plans
+    url: plans/blueconic-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/blueconic-rate-limits.yml
+  - type: FinOps
+    url: finops/blueconic-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

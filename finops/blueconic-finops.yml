@@ -1,0 +1,92 @@
+name: BlueConic FinOps Framework
+description: FinOps Framework 1.0 FOCUS-aligned cost and usage guidance for BlueConic
+  CDP platform and REST API consumption. Covers cost allocation, optimization strategies,
+  and reporting for enterprise customers using BlueConic for customer data activation.
+version: '1.0'
+framework: FinOps Foundation FOCUS 1.0
+url: https://www.blueconic.com/request-demo
+costAllocation:
+  dimensions:
+    - name: Profile Volume
+      description: Primary cost driver; pricing is based on the number of identifiable
+        customer profiles stored and activated in BlueConic.
+      unit: profiles
+      notes: Monitor profile count growth to anticipate contract renewal pricing changes.
+    - name: Monthly Visitor Traffic
+      description: Secondary cost driver; monthly active visitor volume impacts pricing
+        tiers in enterprise contracts.
+      unit: visitors-per-month
+    - name: API Calls
+      description: REST API v2 calls contribute to operational load but are not separately
+        billed; included in the platform subscription.
+      unit: requests
+      billed: false
+    - name: Data Connections
+      description: Number of active platform connections (e.g., ad networks, CRMs,
+        marketing tools) may affect contract scope.
+      unit: connections
+    - name: Tenant Environment
+      description: US, EU, APAC, and Canadian cluster environments may carry different
+        infrastructure costs depending on data residency requirements.
+      unit: region
+optimization:
+  recommendations:
+    - name: Profile Hygiene
+      description: Regularly audit and remove stale or duplicate profiles to keep
+        the identifiable profile count within contracted limits and avoid overage charges.
+      impact: high
+    - name: Segment Efficiency
+      description: Consolidate overlapping segments to reduce computational overhead
+        and improve platform performance.
+      impact: medium
+    - name: API Pagination
+      description: Use pagination parameters in REST API v2 calls to retrieve data
+        in efficient batches, reducing processing time and resource consumption.
+      impact: medium
+    - name: OAuth Token Reuse
+      description: Implement proper OAuth 2.0 token caching and refresh token rotation
+        to minimize redundant authentication calls.
+      impact: low
+    - name: Data Residency Planning
+      description: Select the appropriate regional cluster (US, EU, APAC, Canada)
+        at contract time to avoid costly migrations and ensure compliance with data
+        residency regulations.
+      impact: high
+reporting:
+  cadence: monthly
+  metrics:
+    - name: Active Profile Count
+      description: Total number of identifiable customer profiles; primary billing
+        metric.
+      source: BlueConic CDP dashboard or REST API audit events endpoint
+    - name: Monthly Active Visitors
+      description: Count of visitors tracked per month across connected properties.
+      source: BlueConic CDP dashboard
+    - name: API Request Volume
+      description: Volume of REST API v2 calls per tenant per month for capacity planning.
+      source: BlueConic REST API audit events
+    - name: Connection Utilization
+      description: Number of active data connections and integrations in use.
+      source: BlueConic CDP connections interface
+  tools:
+    - name: BlueConic CDP Dashboard
+      description: Native analytics and reporting within the BlueConic platform.
+      url: https://www.blueconic.com/
+    - name: REST API Audit Events
+      description: Programmatic access to usage and audit data via REST API v2.
+      url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
+    - name: BlueConic Status Page
+      description: Monitor platform availability across regional clusters.
+      url: https://status.blueconic.com
+pricing:
+  model: custom-enterprise
+  billingPeriod: annual
+  primaryDriver: identifiable-profiles
+  secondaryDriver: monthly-visitor-traffic
+  publicPricing: false
+  estimatedRange:
+    currency: USD
+    min: 100000
+    max: 200000
+    unit: per-year
+  contactUrl: https://www.blueconic.com/request-demo

@@ -1,0 +1,36 @@
+name: BlueConic API Rate Limits
+description: BlueConic does not publicly document specific rate limits for the REST
+  API v2. Rate limits are enforced at the tenant level and may vary based on the customer's
+  contract and environment. Contact BlueConic support or customer success for rate
+  limit details applicable to your tenant.
+version: '0.1'
+url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
+rateLimits:
+  - name: Default Tenant Rate Limit
+    description: BlueConic enforces rate limits at the individual tenant level. Specific
+      thresholds are not publicly disclosed and depend on the customer's contract and
+      infrastructure allocation.
+    type: tenant
+    scope: all-endpoints
+    disclosed: false
+    notes:
+      - Rate limits are applied per BlueConic tenant environment.
+      - Limits are not publicly documented; contact support for specifics.
+      - The API uses gzip encoding by default to reduce payload sizes and improve
+        efficiency.
+      - Responses are minified by default; use prettyPrint=true for readable output.
+headers:
+  - name: Content-Encoding
+    description: gzip encoding is used by default on API responses
+    value: gzip
+authentication:
+  type: OAuth 2.0
+  flows:
+    - name: Client Credentials
+      description: Machine-to-machine (M2M) flow for server-side integrations
+      url: https://support.blueconic.com/en/articles/247558-authorizing-applications-using-the-client-credentials-flow
+    - name: Authorization Code
+      description: Flow for web apps executing on a server requiring user authorization
+      url: https://support.blueconic.com/en/articles/247559-authorizing-applications-using-the-authorization-code-flow
+contact:
+  url: https://support.blueconic.com/en/

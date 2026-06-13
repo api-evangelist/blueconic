@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/objective.json",
+  "title": "objective",
+  "type": "object",
+  "properties": {
+    "consentedProfileCount": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The number of profiles that consented this objective."
+    },
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "creator": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description."
+    },
+    "id": {
+      "type": "string",
+      "description": "The object ID."
+    },
+    "lastModifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "lastModifiedUser": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "lastProfileMutationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last time a profile consented the objective. Updated once per hour.",
+      "readOnly": true
+    },
+    "legislations": {
+      "type": "array",
+      "description": "The legislations this objectives applies to.",
+      "example": "[GDPR, CCPA]",
+      "items": {
+        "type": "string",
+        "description": "The legislations this objectives applies to.",
+        "example": "[GDPR, CCPA]"
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "The object name."
+    },
+    "needsConsent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indicates whether this objective requires consent.",
+      "example": true
+    },
+    "objectiveDescription": {
+      "type": "string",
+      "description": "The description of the objective.",
+      "example": "For marketing purposes, to personalize content."
+    },
+    "references": {
+      "type": "array",
+      "description": "The items that this objective applies to.",
+      "items": {
+        "$ref": "#/components/schemas/reference"
+      }
+    },
+    "refusedProfileCount": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The number of profiles that refused this objective."
+    },
+    "tags": {
+      "type": "array",
+      "description": "The tags (i.e. labels).",
+      "example": "Address",
+      "items": {
+        "type": "string",
+        "description": "The tags (i.e. labels).",
+        "example": "Address"
+      }
+    },
+    "title": {
+      "type": "string",
+      "description": "The title of the objective.",
+      "example": "Personalization"
+    },
+    "totalProfileCount": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The number of profiles that have refused or consented this objective."
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "summary": "GET /listeners/{listener} 200 - Response body",
+  "description": "Get one listener",
+  "value": "{\n  \"allChannels\": false,\n  \"creationDate\": \"2025-10-01T11:53:43.839Z\",\n  \"creator\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"description\": \"\",\n  \"domains\": [\n    {\n      \"id\": \"8d7757cf-9ed0-4807-b974-089ebc0197d0\",\n      \"name\": \"www.blueconic.test\"\n    }\n  ],\n  \"id\": \"28411027-a400-4c29-b962-bcb6910db736\",\n  \"isEnabled\": true,\n  \"lastModifiedDate\": \"2025-10-01T14:28:53.215Z\",\n  \"lastModifiedUser\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"lastActivationDate\": \"2025-11-27T10:35:43.034Z\",\n  \"name\": \"AdBlock Detection\",\n  \"pluginId\": \"listener_adblock\",\n  \"tags\": [],\n  \"targetChannels\": [\n    {\n      \"URLRestrictions\": [\n        {\n          \"pattern\": \"/tenant\",\n          \"previewURL\": \"\",\n          \"restrictionType\": \"RESTRICT\"\n        }\n      ],\n      \"channelId\": \"653d3db6-8016-46e8-96a5-547feceb9d15\"\n    }\n  ]\n}"
+}

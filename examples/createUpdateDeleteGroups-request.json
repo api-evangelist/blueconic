@@ -1,0 +1,5 @@
+{
+  "summary": "PUT /groups request - Basic create group example",
+  "description": "Create, update, or delete one or more groups",
+  "value": "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]"
+}

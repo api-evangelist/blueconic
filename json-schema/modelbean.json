@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/modelbean.json",
+  "title": "ModelBean",
+  "type": "object",
+  "properties": {
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "creator": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description."
+    },
+    "featureNames": {
+      "type": "array",
+      "description": "The features that are used in the model. Only required for models of type `DIALOGUE`, `RECOMMENDATION` or `CONTINUOUS` and when an ONNX model is provided.",
+      "items": {
+        "type": "string",
+        "description": "The features that are used in the model. Only required for models of type `DIALOGUE`, `RECOMMENDATION` or `CONTINUOUS` and when an ONNX model is provided."
+      }
+    },
+    "id": {
+      "type": "string",
+      "description": "The object ID."
+    },
+    "lastModifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "lastModifiedUser": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "modelHash": {
+      "type": "string",
+      "description": "The model hash which can be used to do conditional requests for retrieving the model binary. Either via the `etag` querystring parameter or the `If-None-Match` header.",
+      "readOnly": true
+    },
+    "modelUrl": {
+      "type": "string",
+      "description": "The model url of the binary model. If not set, the model has no binary yet.",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The object name."
+    },
+    "parameters": {
+      "type": "array",
+      "description": "The parameters of the object, containing optional key/values pairs.",
+      "items": {
+        "$ref": "#/components/schemas/parameter"
+      }
+    },
+    "profilePropertyIds": {
+      "type": "array",
+      "description": "The profile properties that are used in the model. Only required for models of type `DIALOGUE`, `RECOMMENDATION` or `CONTINUOUS`.",
+      "items": {
+        "type": "string",
+        "description": "The profile properties that are used in the model. Only required for models of type `DIALOGUE`, `RECOMMENDATION` or `CONTINUOUS`."
+      }
+    },
+    "segmentId": {
+      "type": "string",
+      "description": "The segment ID this model is designated for (can be empty if the model can work on more than one segment). Only relevant for models of type `CONTINUOUS`."
+    },
+    "storeId": {
+      "type": "string",
+      "description": "The store ID of the content/product store this model is designated for (can be empty if the model can work on more than one store). Only relevant for models of type `RECOMMENDATION`."
+    },
+    "tags": {
+      "type": "array",
+      "description": "The tags (i.e. labels).",
+      "example": "Address",
+      "items": {
+        "type": "string",
+        "description": "The tags (i.e. labels).",
+        "example": "Address"
+      }
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the model. Must be one of the allowed model types `GENERAL`, `DIALOGUE`, `RECOMMENDATION` or `CONTINUOUS`.",
+      "enum": [
+        "GENERAL",
+        "DIALOGUE",
+        "RECOMMENDATION",
+        "CONTINUOUS"
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

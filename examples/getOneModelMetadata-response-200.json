@@ -1,0 +1,5 @@
+{
+  "summary": "GET /models/{model} 200 - Response body (GENERAL)",
+  "description": "Get one model",
+  "value": "{\n  \"creationDate\": \"2025-04-17T14:00:46.920Z\",\n  \"creator\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"description\": \"somedescription\",\n  \"id\": \"2613c9d6-a179-4c79-b6d2-1618a53fbc64\",\n  \"lastModifiedDate\": \"2025-04-17T14:00:46.920Z\",\n  \"lastModifiedUser\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"modelHash\": \"9a9887d8676976851423ac44de8a97d4\",\n  \"modelUrl\": \"/rest/v2/models/2613c9d6-a179-4c79-b6d2-1618a53fbc64/model\",\n  \"name\": \"mymodel\",\n  \"parameters\": [\n    {\n      \"id\": \"abc\",\n      \"values\": [\n        \"123\"\n      ]\n    }\n  ],\n  \"tags\": [],\n  \"type\": \"GENERAL\"\n}"
+}

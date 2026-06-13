@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/userbean.json",
+  "title": "UserBean",
+  "type": "object",
+  "description": "BlueConic user.",
+  "properties": {
+    "fullName": {
+      "type": "string",
+      "description": "The full name of the user."
+    },
+    "userName": {
+      "type": "string",
+      "description": "The username."
+    }
+  },
+  "readOnly": true
+}

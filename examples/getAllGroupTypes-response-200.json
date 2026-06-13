@@ -1,0 +1,5 @@
+{
+  "summary": "GET /groupTypes 200 - Example group types response",
+  "description": "Retrieves all types of groups",
+  "value": "{\n  \"groupTypes\": [\n    {\n      \"id\": \"company\",\n      \"name\": \"company\",\n      \"pluralName\": \"companies\"\n    }\n  ],\n  \"itemsPerPage\": 1,\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 1\n}"
+}

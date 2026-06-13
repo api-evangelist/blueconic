@@ -1,0 +1,5 @@
+{
+  "summary": "GET /contentStores 200 - Response body",
+  "description": "Get all stores",
+  "value": "{\n  \"itemsPerPage\": 20,\n  \"contentStores\": [\n    {\n      \"id\": \"2613c9d6-a179-4c79-b6d2-1618a53fbc64\",\n      \"name\": \"my content store\",\n      \"description\": \"somedescription\",\n      \"creationDate\": \"2025-04-17T14:00:46.920Z\",\n      \"lastModifiedDate\": \"2025-04-17T14:00:46.920Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n\t  \"storeType\" : \"CONTENT\",\t  \n      \"tags\": []\n    }\n  ],\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 1\n} "
+}

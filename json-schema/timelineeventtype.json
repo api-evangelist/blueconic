@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/timelineeventtype.json",
+  "title": "timelineEventType",
+  "type": "object",
+  "description": "A timeline event type.",
+  "properties": {
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "creator": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description."
+    },
+    "fieldTypes": {
+      "type": "array",
+      "description": "The field types of the timeline event type.",
+      "items": {
+        "$ref": "#/components/schemas/FieldTypeBean"
+      }
+    },
+    "id": {
+      "type": "string",
+      "description": "The object ID."
+    },
+    "lastModifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "lastModifiedUser": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "mappingFrontendEventType": {
+      "type": "string",
+      "description": "The identifier of the frontend event this event type maps on."
+    },
+    "mappingSystemEventType": {
+      "type": "string",
+      "description": "The identifier of the system event this event type maps on."
+    },
+    "name": {
+      "type": "string",
+      "description": "The object name."
+    },
+    "priority": {
+      "type": "string",
+      "description": "The priority of the timeline event type.",
+      "enum": [
+        "HIGH",
+        "LOW"
+      ]
+    },
+    "retentionPeriod": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The retention period of the timeline event type."
+    },
+    "source": {
+      "type": "string",
+      "description": "The source of the timeline event type.",
+      "enum": [
+        "PLUGIN",
+        "REST"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "description": "The tags (i.e. labels).",
+      "example": "Address",
+      "items": {
+        "type": "string",
+        "description": "The tags (i.e. labels).",
+        "example": "Address"
+      }
+    }
+  }
+}

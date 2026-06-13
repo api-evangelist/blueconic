@@ -1,0 +1,5 @@
+{
+  "summary": "GET /interactions 200 - Example response",
+  "description": "Get interactions",
+  "value": "{\n  \"interactions\": [\n    {\n      \"defaultLocale\": \"en_US\",\n      \"id\": \"2b65eba6-d1c7-4cf9-b1f4-03e3615a42f8\",\n      \"interactionType\": {\n        \"id\": \"listener_adblock\",\n        \"type\": \"listener\"\n      },\n      \"name\": \"AdBlock Detection\",\n      \"parameters\": [\n        {\n          \"id\": \"property\",\n          \"values\": [\n            {\n              \"locale\": \"en_US\",\n              \"value\": [\n                \"adblock_detected\"\n              ]\n            },\n            {\n              \"locale\": \"nl_NL\",\n              \"value\": [\n                \"adblock_detected\"\n              ]\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"defaultLocale\": \"en_US\",\n      \"id\": \"2b65eba6-d1c7-4cf9-b1f4-03e3615a42f8\",\n      \"name\": \"AdBlock Detection\"\n    }\n  ]\n}"
+}

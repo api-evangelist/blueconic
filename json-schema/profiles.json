@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/profiles.json",
+  "title": "profiles",
+  "type": "object",
+  "properties": {
+    "itemsPerPage": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Number of results per page.",
+      "readOnly": true
+    },
+    "profiles": {
+      "type": "array",
+      "description": "List of profile IDs that matches search criteria.",
+      "items": {
+        "$ref": "#/components/schemas/AbstractBaseBean"
+      }
+    },
+    "startIndex": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The start index.",
+      "readOnly": true
+    },
+    "totalPages": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The total number of pages.",
+      "readOnly": true
+    },
+    "totalResults": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The total number of results.",
+      "readOnly": true
+    }
+  }
+}

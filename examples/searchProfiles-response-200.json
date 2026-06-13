@@ -1,0 +1,5 @@
+{
+  "summary": "GET /profiles 200 - Example response",
+  "description": "Search profiles",
+  "value": "{\n  \"profiles\": [\n    {\n      \"id\": \"61835134-e910-49da-a09e-79d41af9b96\"\n    },\n    {\n      \"id\": \"45e2a650-ca17-4e03-8e8d-12d00ed4d9b3\"\n    }\n  ],\n  \"itemsPerPage\": 5,\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 2\n}"
+}

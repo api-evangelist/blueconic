@@ -1,0 +1,5 @@
+{
+  "summary": "PUT /contentStores/{contentStore} request - Request body",
+  "description": "Update store",
+  "value": "{\n  \"name\": \"my updated name\",\n  \"description\": \"An updated content store description\",\n  \"storeType\": \"CONTENT\"\n}"
+}

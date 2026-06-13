@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/auditentrybean.json",
+  "title": "AuditEntryBean",
+  "type": "object",
+  "properties": {
+    "application": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Datetime in UTC when the event occurred. The date is in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\"."
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "objectType": {
+      "type": "string",
+      "enum": [
+        "DIALOGUE",
+        "LISTENER",
+        "CONNECTION",
+        "VARIANT",
+        "SEGMENT",
+        "PROFILE_PROPERTY",
+        "GROUP_PROPERTY",
+        "TRACKER",
+        "DASHBOARD",
+        "LIFECYCLE",
+        "PLUGIN",
+        "USER",
+        "ROLE",
+        "CHANNEL",
+        "BLUECONIC_HOSTNAME",
+        "LANGUAGE",
+        "CONTENTSTORE",
+        "STATISTICS",
+        "FAVORITE",
+        "TEMPLATE",
+        "NOTEBOOK",
+        "PRIORITY",
+        "GROUP_TYPE",
+        "CLEANUP_RULE",
+        "MERGE_RULE",
+        "COMPOSITION_RULE",
+        "OBJECTIVE",
+        "TIMELINE_EVENT_TYPE",
+        "PROFILE",
+        "IP_RANGE",
+        "GROUP",
+        "SUPPORTED_LEGISLATION_ZONE",
+        "DOMAIN_GROUP",
+        "DOMAIN",
+        "PRIVACY_SETTING",
+        "SINGLE_SIGN_ON_SETTING",
+        "BLUECONIC_SUPPORT_ACCESS_SETTING",
+        "OAUTH_APPLICATION",
+        "OAUTH_TOKEN",
+        "TIMELINE_EVENT_ROLLUP",
+        "INACTIVITY_SETTING",
+        "AI_CANVAS",
+        "MODEL",
+        "GEN_AI_SETTING"
+      ]
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AuditEntryObjectBean"
+      }
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "CREATE",
+        "UPDATE",
+        "DELETE",
+        "READ",
+        "LOGIN",
+        "LOGOUT",
+        "LOGIN_FAILED",
+        "PROFILE_MERGE_TRIGGERED_BY_USER",
+        "PASSWORD_RESET_REQUESTED",
+        "PASSWORD_CHANGE",
+        "MANUAL_RUN",
+        "SCHEDULED_RUN",
+        "EDITOR_RUN"
+      ]
+    },
+    "username": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "date",
+    "objectType",
+    "operation"
+  ]
+}

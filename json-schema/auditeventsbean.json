@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/auditeventsbean.json",
+  "title": "AuditEventsBean",
+  "type": "object",
+  "properties": {
+    "auditEvents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AuditEntryBean"
+      }
+    }
+  }
+}

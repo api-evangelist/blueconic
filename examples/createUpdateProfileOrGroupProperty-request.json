@@ -1,0 +1,5 @@
+{
+  "summary": "PUT /profileProperties/{propertyId} request - Example request body (profile property)",
+  "description": "Create/update property",
+  "value": "{\n  \"id\": \"test_property\",\n  \"indexed\": false,\n  \"createNewProfile\": false,\n  \"availableForSegmentation\": true,\n  \"showInUI\": true,\n  \"canRead\": true,\n  \"canWrite\": true,\n  \"filterType\": \"RANGE\",\n  \"description\": \"The profile property description\",\n  \"permissionLevel\": \"PERSONAL\",\n  \"mergeStrategy\": \"BOTH\",\n  \"dataSensitivity\": \"NON_PII\",\n  \"tags\": [],\n  \"values\": [],\n  \"precision\": 0,\n  \"unit\": {\n    \"id\": \"views\",\n    \"name\": {\n      \"label\": [\n        {\n          \"content\": \"Views\",\n          \"locale\": \"en_US\"\n        },\n        {\n          \"content\": \"Impressies\",\n          \"locale\": \"nl_NL\"\n        }\n      ]\n    }\n  },\n  \"name\": \"Test property\"\n}"
+}

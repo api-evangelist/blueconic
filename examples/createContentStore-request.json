@@ -1,0 +1,5 @@
+{
+  "summary": "POST /contentStores request - Request body",
+  "description": "Create store",
+  "value": "{\n  \"name\": \"my new content store\",\n  \"description\": \"A content store description\",\n  \"properties\": [\n    {\n      \"id\": \"RECENT_HOURS\",\n      \"values\": [\n        \"5\"\n      ]\n    }\n  ],\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}"
+}

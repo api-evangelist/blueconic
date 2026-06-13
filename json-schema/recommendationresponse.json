@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/recommendationresponse.json",
+  "title": "RecommendationResponse",
+  "type": "object",
+  "properties": {
+    "recommendationBlock": {
+      "type": "array",
+      "description": "The recommendation blocks as defined in the request body.",
+      "items": {
+        "$ref": "#/components/schemas/RecommendationSubResponse"
+      }
+    },
+    "recommendationId": {
+      "type": "string",
+      "description": "The unique ID for this recommendation request."
+    },
+    "trackingPixel": {
+      "type": "string",
+      "description": "The tracking pixel to track this recommendation request."
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/profileproperty.json",
+  "title": "profileProperty",
+  "type": "object",
+  "properties": {
+    "availableForSegmentation": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the property is available as a filter to create segments."
+    },
+    "canRead": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the visitor's browser is allowed to retrieve the value for this property."
+    },
+    "canWrite": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the visitor's browser is allowed to write a (new) value into this property."
+    },
+    "createNewProfile": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether a visitor will switch to a new profile when a new value for the profile property is set. This will prevent potential profile hijacking. Only applicable when \"indexed\" is \"true.\" This is only relevant for profile properties, not group properties."
+    },
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "creator": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "currency": {
+      "$ref": "#/components/schemas/currency"
+    },
+    "dataSensitivity": {
+      "type": "string",
+      "default": "NON_PII",
+      "description": "The data sensitivity for the property.",
+      "enum": [
+        "NON_PII",
+        "PII"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "The description."
+    },
+    "filterType": {
+      "type": "string",
+      "default": "None",
+      "description": "The filtertype of the property. Note that changing the type might lead to loss of information.",
+      "enum": [
+        "RANGE",
+        "CURRENCY",
+        "DECIMAL",
+        "SELECT",
+        "EMAIL",
+        "DATETIME"
+      ]
+    },
+    "filterTypeSuggestion": {
+      "type": "string",
+      "description": "The suggested filter type.",
+      "readOnly": true
+    },
+    "groupTypeId": {
+      "type": "string",
+      "description": "The ID of the group type that this property belongs to. Blank for profile properties."
+    },
+    "id": {
+      "type": "string",
+      "description": "The object ID."
+    },
+    "indexed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Specifies that the profile property holds a unique value for each profile. When enabled, the property is indexed and used as a unique identifier."
+    },
+    "isIdProperty": {
+      "type": "boolean",
+      "description": "Whether this is a property that contains references to groups (only relevant to profile properties of type 'Group ID')."
+    },
+    "lastModifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "lastModifiedUser": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "lastProfileMutationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last time a profile has been updated.",
+      "readOnly": true
+    },
+    "linkingGroupTypeId": {
+      "type": "string",
+      "description": "The ID of the group type that this profile property contains the group references for (only applicable to profile properties).",
+      "example": "household"
+    },
+    "mergeStrategy": {
+      "type": "string",
+      "default": "None",
+      "description": "The merge strategy of the property.",
+      "enum": [
+        "BOTH",
+        "SUM",
+        "HIGHEST",
+        "LOWEST",
+        "LATEST",
+        "OLDEST",
+        "KEEP_CURRENT",
+        "SYSTEM_DEFINED"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "description": "The object name."
+    },
+    "permissionLevel": {
+      "type": "string",
+      "default": "ANONYMOUS",
+      "description": "The permission level of the property.",
+      "enum": [
+        "DO_NOT_TRACK",
+        "ANONYMOUS",
+        "PERSONAL"
+      ]
+    },
+    "precision": {
+      "type": "integer",
+      "format": "int32",
+      "default": 0,
+      "description": "The precision of a property, e.g. 3. Only applicable when the \u201cfilterType\u201d is \"DECIMAL.\"",
+      "example": 3
+    },
+    "profileCount": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Number of profiles that have a value for this property.",
+      "readOnly": true
+    },
+    "range": {
+      "$ref": "#/components/schemas/range"
+    },
+    "showInUI": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the property is shown in the segments UI. Only applicable when \"isAvailableForSegmentation\" is \"true.\""
+    },
+    "tags": {
+      "type": "array",
+      "description": "The tags (i.e. labels).",
+      "example": "Address",
+      "items": {
+        "type": "string",
+        "description": "The tags (i.e. labels).",
+        "example": "Address"
+      }
+    },
+    "totalProfileCount": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The total number of profiles that have a value for this property.",
+      "readOnly": true
+    },
+    "unit": {
+      "$ref": "#/components/schemas/unit"
+    },
+    "useValidation": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the value should be validated according to the validation rules of the filter type."
+    },
+    "values": {
+      "type": "array",
+      "description": "When selecting this property as filter for segmentation, these values will be selectable next to the values that are in the profiles. Only applicable when \"availableForSegmentation\" is \"true\".",
+      "items": {
+        "type": "string",
+        "description": "When selecting this property as filter for segmentation, these values will be selectable next to the values that are in the profiles. Only applicable when \"availableForSegmentation\" is \"true\"."
+      },
+      "uniqueItems": true
+    }
+  }
+}

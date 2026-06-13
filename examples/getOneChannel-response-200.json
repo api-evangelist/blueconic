@@ -1,0 +1,5 @@
+{
+  "summary": "GET /channels/{channelId} 200 - Example channel response",
+  "description": "Get one channel",
+  "value": "{\n  \"aliases\" : [ \"blueconic.com\" ],\n  \"creationDate\" : \"2024-01-24T12:30:50.000Z\",\n  \"creator\" : {\n    \"fullName\" : \"user@blueconic.com\",\n    \"userName\" : \"user@blueconic.com\"\n  },\n  \"description\" : \"BlueConic website\",\n  \"domain\": {\n    \"id\" : \"6398b714-45fd-4c28-ab08-80d8fea50757\",\n    \"name\" : \"www.blueconic.com\"\n  },\n  \"hostname\" : \"www.blueconic.com\",\n  \"id\" : \"6b44d80c-73c8-485b-ad76-b53a103751af\",\n  \"lastModifiedDate\" : \"2024-02-01T12:30:50.000Z\",\n  \"lastModifiedUser\" : {\n    \"fullName\" : \"user@blueconic.com\",\n    \"userName\" : \"user@blueconic.com\"\n  },\n  \"logo\" : \"https://bc.blueconic.net/rest/v2/channels/6b44d80c-73c8-485b-ad76-b53a103751af/logo?etag=3082b317eba5029e0aea03b42e3f3ca1\",\n  \"name\" : \"www.blueconic.com\",\n  \"tags\" : [ \"Marketing\", \"Data\", \"Privacy\" ],\n  \"type\" : \"WEBSITE\",\n  \"visitorCount\" : 10\n}"
+}

@@ -1,0 +1,5 @@
+{
+  "summary": "GET /urlmappings/{id} 200 - Example GET response",
+  "description": "Get URL mapping",
+  "value": "{\n  \"id\": \"4d\",\n  \"properties\": [\n    {\n      \"id\": \"pp_download\",\n      \"values\": [\n        \"Blueconic Release News R30\"\n      ]\n    },\n    {\n      \"id\": \"interactionId\",\n      \"values\": [\n        \"9197fdf7-e1d4-4b4b-8b59-5c49a72a412b\"\n      ]\n    },\n    {\n      \"id\": \"containerId\",\n      \"values\": [\n        \"b8bf7a5b-e937-451f-a93c-aa83a20deea5\"\n      ]\n    },\n    {\n      \"id\": \"channelId\",\n      \"values\": [\n        \"36a43edb-0a92-42df-8f19-f788cb146bda\"\n      ]\n    },\n    {\n      \"id\": \"pp_interest_index\",\n      \"values\": [\n        \"blueconic\"\n      ]\n    }\n  ],\n  \"type\": \"TRACKINGPIXEL\",\n  \"url\": \"http://www.blueconic.com/support/release-notes/profile-property-creation.htm\"\n}"
+}

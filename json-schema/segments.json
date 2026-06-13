@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/segments.json",
+  "title": "segments",
+  "type": "object",
+  "properties": {
+    "itemsPerPage": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Number of results per page.",
+      "readOnly": true
+    },
+    "segments": {
+      "type": "array",
+      "description": "The segments.",
+      "items": {
+        "$ref": "#/components/schemas/segment"
+      }
+    },
+    "startIndex": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The start index.",
+      "readOnly": true
+    },
+    "totalPages": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The total number of pages.",
+      "readOnly": true
+    },
+    "totalResults": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The total number of results.",
+      "readOnly": true
+    }
+  }
+}

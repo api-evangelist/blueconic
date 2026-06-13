@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/segment.json",
+  "title": "segment",
+  "type": "object",
+  "description": "The segments.",
+  "properties": {
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "creator": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description."
+    },
+    "id": {
+      "type": "string",
+      "description": "The object ID."
+    },
+    "inverseOf": {
+      "type": "string",
+      "description": "The ID of the segment of which this is the inverse."
+    },
+    "inversedBy": {
+      "type": "string",
+      "description": "The ID of the segment that inversed this segment."
+    },
+    "lastModifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "lastModifiedUser": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "name": {
+      "type": "string",
+      "description": "The object name."
+    },
+    "profileCount": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of profiles in this segment."
+    },
+    "tags": {
+      "type": "array",
+      "description": "The tags (i.e. labels).",
+      "example": "Address",
+      "items": {
+        "type": "string",
+        "description": "The tags (i.e. labels).",
+        "example": "Address"
+      }
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/profile.json",
+  "title": "profile",
+  "type": "object",
+  "description": "The profiles that are in this segment.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier for the object."
+    },
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\"."
+    },
+    "privacyLegislation": {
+      "type": "string",
+      "description": "The default privacy legislation for creating profiles (not for matching).",
+      "enum": [
+        "NONE",
+        "GDPR",
+        "PIPEDA",
+        "CCPA",
+        "SB220",
+        "NYPA",
+        "PERU_DPL",
+        "ARGENTINA_DPL",
+        "SB1392",
+        "SB190",
+        "BRAZIL_LGPD",
+        "ISRAEL_PPL",
+        "JAPAN_APPI",
+        "NEW_ZEALAND_PRIVACY_ACT",
+        "SWITZERLAND_DPA",
+        "UK_GDPR",
+        "CHINA_PIPL",
+        "AUSTRALIA_PRIVACY_ACT",
+        "CDPA_CTCPDA",
+        "UCPA",
+        "MEXICO_LFPDPPP"
+      ]
+    },
+    "consentedObjectives": {
+      "type": "array",
+      "description": "List of objective IDs that the profile has given consent to.",
+      "items": {
+        "type": "string",
+        "description": "List of objective IDs that the profile has given consent to."
+      }
+    },
+    "refusedObjectives": {
+      "type": "array",
+      "description": "List of objective IDs that the profile has refused consent to.",
+      "items": {
+        "type": "string",
+        "description": "List of objective IDs that the profile has refused consent to."
+      }
+    },
+    "permissions": {
+      "$ref": "#/components/schemas/permissions"
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/property"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/event"
+      }
+    },
+    "groups": {
+      "type": "array",
+      "description": "Groups that the profile is a part of.",
+      "items": {
+        "$ref": "#/components/schemas/group"
+      }
+    },
+    "matchingGroups": {
+      "type": "array",
+      "description": "Groups that the profile is a part of and match the segment refinements.",
+      "items": {
+        "$ref": "#/components/schemas/matchingGroup"
+      }
+    },
+    "lifecycleStages": {
+      "type": "array",
+      "description": "Lifecycle stages that the profile is part of.",
+      "items": {
+        "$ref": "#/components/schemas/lifecycleStage"
+      }
+    },
+    "replacedBy": {
+      "type": "string",
+      "description": "The profile ID that replaced this profile."
+    },
+    "replaces": {
+      "type": "array",
+      "description": "The IDs of the profiles that are replaced by this profile.",
+      "items": {
+        "type": "string",
+        "description": "The IDs of the profiles that are replaced by this profile."
+      }
+    },
+    "segments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/profileSegmentBean"
+      }
+    }
+  }
+}

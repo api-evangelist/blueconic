@@ -1,0 +1,5 @@
+{
+  "summary": "PUT /groups 200 - Example bulk response",
+  "description": "Create, update, or delete one or more groups",
+  "value": "[\n  {\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupTypeId\": \"company_test\",\n    \"state\": \"MODIFIED\"\n  },\n  {\n    \"groupId\": \"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\",\n    \"groupTypeId\": \"company_test\",\n    \"state\": \"DELETED\"\n  }\n]"
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/recommendationrequest.json",
+  "title": "RecommendationRequest",
+  "type": "object",
+  "properties": {
+    "boosts": {
+      "type": "array",
+      "description": "The algorithms that will be executed to determine the recommendations with their boost value and parameters.",
+      "example": [
+        {
+          "value": "1.5",
+          "algorithm": "RECENCY"
+        }
+      ],
+      "items": {
+        "$ref": "#/components/schemas/Boost"
+      }
+    },
+    "count": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The maximum number of items that should be returned for this definition.",
+      "example": 5
+    },
+    "filters": {
+      "type": "array",
+      "description": "Item filters, see description.",
+      "example": [
+        "category:news",
+        "viewed"
+      ],
+      "items": {
+        "type": "string",
+        "description": "Item filters, see description.",
+        "example": "[\"category:news\",\"viewed\"]"
+      }
+    },
+    "id": {
+      "type": "string",
+      "description": "The order of execution of the definition objects: 'first' will be executed first, 'second' will be executed next. If the total count has not been reached, the remainder items will be from the 'default' definition.",
+      "example": "first"
+    }
+  },
+  "required": [
+    "boosts",
+    "id"
+  ]
+}

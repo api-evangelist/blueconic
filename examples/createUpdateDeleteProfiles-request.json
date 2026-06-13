@@ -1,0 +1,5 @@
+{
+  "summary": "PUT /profiles request - Basic create profile example",
+  "description": "Create, update, or delete one or more profiles",
+  "value": "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]"
+}

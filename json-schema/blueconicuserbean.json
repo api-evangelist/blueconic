@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/blueconicuserbean.json",
+  "title": "BlueConicUserBean",
+  "type": "object",
+  "description": "The user.",
+  "properties": {
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "creator": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description."
+    },
+    "domains": {
+      "type": "array",
+      "description": "The domains the user has access to. Only available if `hasAllDomains` is false.",
+      "items": {
+        "$ref": "#/components/schemas/simpleDomain"
+      },
+      "readOnly": true,
+      "uniqueItems": true
+    },
+    "hasAllDomains": {
+      "type": "boolean",
+      "description": "Indicates if the user has access to all domains. If false, the configured domains are returned in the `domains` property.",
+      "readOnly": true
+    },
+    "id": {
+      "type": "string",
+      "description": "The object ID."
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Indicates if the user is active or inactive and can no longer login."
+    },
+    "lastLoginDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last login date."
+    },
+    "lastModifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "lastModifiedUser": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "name": {
+      "type": "string",
+      "description": "The object name."
+    },
+    "permissions": {
+      "type": "array",
+      "description": "The permissions assigned to this user.",
+      "items": {
+        "type": "string",
+        "description": "The permissions assigned to this user."
+      }
+    },
+    "roles": {
+      "type": "array",
+      "description": "The roles assigned to this user.",
+      "items": {
+        "$ref": "#/components/schemas/SimpleRoleBean"
+      },
+      "uniqueItems": true
+    },
+    "tags": {
+      "type": "array",
+      "description": "The tags (i.e. labels).",
+      "example": "Address",
+      "items": {
+        "type": "string",
+        "description": "The tags (i.e. labels).",
+        "example": "Address"
+      }
+    }
+  }
+}

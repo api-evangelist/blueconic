@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/blueconic/json-schema/rolebean.json",
+  "title": "RoleBean",
+  "type": "object",
+  "properties": {
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "creator": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description."
+    },
+    "id": {
+      "type": "string",
+      "description": "The object ID."
+    },
+    "lastModifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = \"2025-01-22T11:21:33.872Z\".",
+      "readOnly": true
+    },
+    "lastModifiedUser": {
+      "$ref": "#/components/schemas/UserBean"
+    },
+    "name": {
+      "type": "string",
+      "description": "The object name."
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "MANAGE_PROPERTIES",
+          "READ_PROFILES",
+          "MANAGE_PROFILES",
+          "MANAGE_LISTENERS",
+          "MANAGE_TRACKERS",
+          "MANAGE_SEGMENTS",
+          "MANAGE_PROFILE_MERGE_RULES",
+          "MANAGE_PROFILE_COMPOSITION_RULES",
+          "MANAGE_DIALOGUES",
+          "CREATE_POSITIONS",
+          "MANAGE_INSIGHTS",
+          "MANAGE_EMAIL_NOTIFICATIONS",
+          "MANAGE_LIFECYCLES",
+          "USE_SIMULATOR",
+          "MANAGE_CHANNELS",
+          "MANAGE_PLUGINS",
+          "MANAGE_CONNECTIONS",
+          "MANAGE_API_V1_ACCESS_KEYS",
+          "EDIT_AI_AGENT",
+          "MANAGE_USERS",
+          "MANAGE_ROLES",
+          "MANAGE_PRIVACY_SETTINGS",
+          "MANAGE_GENERAL_SETTINGS",
+          "MANAGE_TEMPLATES",
+          "MANAGE_NOTEBOOKS",
+          "USE_NOTEBOOK_EDITOR",
+          "APPLY_BULK_OPERATIONS",
+          "MANAGE_OBJECTIVES",
+          "MANAGE_TIMELINE_EVENT_TYPES",
+          "MANAGE_AI_CANVAS",
+          "MANAGE_GROWTH_PLAYS",
+          "READ_GROUPS",
+          "MANAGE_GROUPS",
+          "MANAGE_PII_VALUES",
+          "READ_AUDIT_EVENTS",
+          "READ_EXACT_PROFILE_STATISTICS",
+          "MANAGE_APPLICATIONS",
+          "AUTHORIZE_APPLICATIONS",
+          "MANAGE_SINGLE_SIGN_ON_SETTINGS",
+          "MANAGE_IP_BASED_ACCESS_SETTINGS",
+          "MANAGE_SUPPORT_ACCESS_SETTINGS",
+          "MANAGE_TIMELINE_EVENT_ROLLUPS",
+          "READ_INACTIVITY_SETTINGS",
+          "MANAGE_INACTIVITY_SETTINGS",
+          "READ_SECURITY_SETTINGS",
+          "MANAGE_SECURITY_SETTINGS",
+          "MANAGE_MODELS",
+          "TRANSFER_CONFIGURATION"
+        ]
+      }
+    },
+    "restrictions": {
+      "$ref": "#/components/schemas/restrictions"
+    },
+    "tags": {
+      "type": "array",
+      "description": "The tags (i.e. labels).",
+      "example": "Address",
+      "items": {
+        "type": "string",
+        "description": "The tags (i.e. labels).",
+        "example": "Address"
+      }
+    }
+  },
+  "required": [
+    "permissions"
+  ]
+}

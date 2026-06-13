@@ -1,0 +1,5 @@
+{
+  "summary": "GET /roles/{role} 200 - Response body",
+  "description": "Get one role",
+  "value": "{\n  \"creationDate\" : \"2024-03-27T12:14:02.651Z\",\n  \"creator\" : {\n    \"fullName\" : \"admin@blueconic.com\",\n    \"userName\" : \"admin@blueconic.com\"\n  },\n  \"description\" : \"Role description here\",\n  \"id\" : \"0d8a5b63-a2c8-4cbd-b5de-415c1743d67c\",\n  \"lastModifiedDate\" : \"2024-03-27T12:26:31.300Z\",\n  \"lastModifiedUser\" : {\n    \"fullName\" : \"admin@blueconic.com\",\n    \"userName\" : \"admin@blueconic.com\"\n  },\n  \"name\" : \"Marketeers\",\n  \"permissions\" : [ \"MANAGE_USERS\", \"READ_EXACT_PROFILE_STATISTICS\", \"MANAGE_APPLICATIONS\", \"AUTHORIZE_APPLICATIONS\" ],\n  \"tags\" : [ \"a tag here\" ]\n}\n"
+}

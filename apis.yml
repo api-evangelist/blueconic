@@ -5,7 +5,7 @@ description: BlueConic is a customer data platform (CDP) with a REST API for man
   data activation. The API provides OAuth 2.0-secured access to visitor profiles,
   segments, interactions, and audit events via an OpenAPI-compliant interface.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/blueconic/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'

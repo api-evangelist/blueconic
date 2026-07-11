@@ -1,0 +1,27 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/blueconic-rest-api-v2-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /rest/v2/oauth/token
+    scopes: 0
+  - flow: authorizationCode
+    authorizationUrl: /rest/v2/oauth/authorize
+    tokenUrl: /rest/v2/oauth/token
+    scopes: 0
+  description: Authenticates a registered OAuth 2.0 client. The Authorization code flow and
+    Client credentials flow are supported. Make sure to select the correct flow based on which
+    flow the registered client supports. The client id and client secret can be found in BlueConic
+    by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:**
+    When using the Authorization code
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml

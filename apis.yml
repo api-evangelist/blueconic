@@ -53,6 +53,10 @@ apis:
       - FN: BlueConic Support
         url: https://support.blueconic.com/en/
 common:
+  - type: DomainSecurity
+    url: security/blueconic-domain-security.yml
+  - type: Authentication
+    url: authentication/blueconic-authentication.yml
   - type: OAuthScopes
     url: scopes/blueconic-scopes.yml
   - type: Website

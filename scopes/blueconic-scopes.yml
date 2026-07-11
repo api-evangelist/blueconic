@@ -1,0 +1,105 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/blueconic-rest-api-v2-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/blueconic-rest-api-v2-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /rest/v2/oauth/token
+  - flow: authorizationCode
+    authorizationUrl: /rest/v2/oauth/authorize
+    tokenUrl: /rest/v2/oauth/token
+  description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and
+    Client credentials flow are supported. Make sure to select the correct flow based on which
+    flow the registered client supports. The client id and client secret can be found in BlueConic
+    by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:**
+    When using the Authorization code flow, the redirect URL of the registered client in BlueConic
+    must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof
+    Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication,
+    follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the
+    token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request
+    to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining
+    a new token.'
+scopes:
+- scope: read:audit-events
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:channels
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:connections
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:content_stores
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:dialogues
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:group-types
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:groups
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:lifecycles
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:listeners
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:models
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:notebooks
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:objectives
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:plugins
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:profile-properties
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:profiles
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:roles
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:segments
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:timeline-event-types
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:timeline_event_rollups
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:url-mappings
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: read:users
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: write:content_stores
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: write:groups
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: write:models
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: write:profile-properties
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: write:profiles
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml
+- scope: write:url-mappings
+  sources:
+  - openapi/blueconic-rest-api-v2-openapi.yml

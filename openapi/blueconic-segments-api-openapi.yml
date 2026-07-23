@@ -1,0 +1,656 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Segments API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Segments
+  description: A segment is a group of profiles characterized by a defined set of attributes & properties. The following methods allow you to retrieve information from segments and the profiles within a given segment. [Read more](https://support.blueconic.com/hc/en-us/articles/202531952-Segments?utm_source=BlueConic_User)
+paths:
+  /segments/{segment}/profiles:
+    get:
+      tags:
+      - Segments
+      summary: Get profiles in segment
+      description: Retrieves the profiles of the segment.
+      operationId: getProfilesInSegment
+      parameters:
+      - name: segment
+        in: path
+        description: The ID of the segment.
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Defines the starting point of the page for pagination. When cursors are used, each page, except the last page, returns a `nextCursor` value which can be used to retrieve the next page.
+        schema:
+          type: string
+        example: '*'
+      - name: count
+        in: query
+        description: Specifies the number of results to return. Smaller than or equal to 1.000.000.
+        schema:
+          type: integer
+          format: int32
+        example: 20
+      - name: maxHitsAllowed
+        in: query
+        description: When greater than 0, enables fast approximate export by limiting total hits and using segment count from cache. Use with count for consistent paging (e.g. maxHitsAllowed=200 and count=20 for max 10 pages).
+        schema:
+          type: integer
+          format: int32
+        example: 0
+      - name: properties
+        in: query
+        description: Specifies which profile properties values will be returned for each profile. If not specified, the values of all profile properties will be returned, which may result in a large result set. One or more profile property ids, separated by a comma.
+        deprecated: true
+        schema:
+          type: string
+        example: browserversion,email
+      - name: profileProperty
+        in: query
+        description: When the profileProperty is specified, the response will only return the values for the given profile property. If not specified, the values of all profile properties will be returned, which may result in a large result set.
+        schema:
+          type: array
+          items:
+            type: string
+        example: email
+      - name: groupProperty
+        in: query
+        description: When the groupProperty is specified, the response will only return the values for the given group property. If not specified, the values of all group properties will be returned, which may result in a large result set. Only relevant when `&expand=profiles.profile.groups` is supplied.
+        schema:
+          type: array
+          items:
+            type: string
+        example: city
+      - name: refinement
+        in: query
+        description: "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter profiles. If not specified, all profiles of the given segment will be returned.\n\nTo filter profiles using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a profile.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |\n\n**Objective**\n\nThe objectives used to filter the property or objectives within a profile.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| CONSENTED               | Objective consented |\n| REFUSED                 | Objective refused |\n| UNKNOWN                 | Unknown |\n| REFUSED_OR_UNKNOWN      | Refused or unknown | \n| CONSENTED_OR_UNNEEDED   | Consented or unneeded |\n\nCan only be used with the operators CONTAINS_ANY and CONTAINS_ALL"
+        schema:
+          $ref: '#/components/schemas/RefinementBean'
+        examples:
+          URL encoded example:
+            description: URL encoded example
+            value: '%7B%22property%22%3A%20%22email%22%2C%20%22operator%22%3A%20%22IS_EMPTY%22%7D%0A'
+          Example composite refinement (not yet URL-encoded):
+            description: Example composite refinement (not yet URL-encoded)
+            value: "{\n  \"filters\": [{\n    \"property\": \"email\",\n    \"operator\": \"IS_EMPTY\"\n  }, {\n    \"property\": \"variant\",\n    \"operator\": \"CONTAINS_ANY\",\n    \"values\": [\"VariantA\", \"VariantB\"]\n  }\n  ],\n  \"operator\": \"AND\"\n}"
+          Example property filter refinement (not yet URL-encoded):
+            description: Example property filter refinement (not yet URL-encoded)
+            value: "{\n  \"property\": \"visits\",\n  \"operator\": \"IN_RANGE\",\n  \"fromValue\": 1,\n  \"toValue\": 10\n}\n"
+          Example objective filter refinement (not yet URL-encoded):
+            description: Example objective filter refinement (not yet URL-encoded)
+            value: "{\n  \"objective\": \"CONSENTED_OR_UNNEEDED\",\n  \"operator\": \"CONTAINS_ANY\",\n  \"values\": [\"objective1\", \"objective2\"]\n}\n"
+      - name: expand
+        in: query
+        description: Expand the information in the result set. Use `profiles.profile.permissions` to include permission level. Use `profiles.profile.replace` to include profile merge information. Use `profiles.profile.segments` to include the segments a profile is part of. Use `profiles.profile.timeline` to include timeline event information. Use `profiles.profile.groups` to include group information.  Use `profiles.profile.matchingGroups` to include matching group information. Use multiple `expand` querystring parameters to return combinations.
+        schema:
+          type: array
+          items:
+            type: string
+        example: profiles.profile.segments
+      - name: eventTypeId
+        in: query
+        description: Filter for the returned timeline events for specific types. One or more IDs of a timeline event type.
+        schema:
+          type: array
+          items:
+            type: string
+        example: order
+      - name: eventProperty
+        in: query
+        description: When the eventProperty is specified, the response will only return the values for the given property. If not specified, the values of all event properties will be returned, which may result in a large result set.
+        schema:
+          type: array
+          items:
+            type: string
+        example: order.orderline
+      - name: eventCount
+        in: query
+        description: The maximum number of timeline events to return.
+        schema:
+          type: integer
+          format: int32
+        example: 20
+      - name: fromDate
+        in: query
+        description: Filter to only include timeline events that are dated later than this date. In the ISO 8601 format '2025-01-22T11:21:33.872Z' or with time zone offset `2025-01-22T11:21:33.872+05:00`.
+        schema:
+          type: string
+        example: 2025-01-22 11:21:33.872000+00:00
+      - name: toDate
+        in: query
+        description: Filter to only include timeline events that are dated before this date. In the ISO 8601 format '2025-01-22T11:21:33.872Z' or with time zone offset `2023-01-22T11:21:33.872+05:00`.
+        schema:
+          type: string
+        example: 2025-02-22 11:21:33.872000+00:00
+      - name: audienceId
+        in: query
+        description: This is used to track if a profile has already been exported to an audience. If a profile has already been exported to this audience then it is only included in the result when there are recent modifications to the given trackProperties.
+        schema:
+          type: string
+        example: 2f7dfdec-35c4-4f6e-b56d-7ccacc4a3311
+      - name: autoCommit
+        in: query
+        description: If the exported profiles should be auto-committed to the given audience.
+        schema:
+          type: boolean
+          default: true
+        example: true
+      - name: trackPropertiesModifiedSince
+        in: query
+        description: The date since which the provided trackProperties should have changed.
+        schema:
+          type: string
+        example: 2025-04-15 11:24:01.183000+00:00
+      - name: trackProperties
+        in: query
+        description: The tracked properties that should be checked for changes since the given trackPropertiesModifiedSince date.
+        schema:
+          type: array
+          items:
+            type: string
+        example: geo_city_name
+      - name: trackPropertyChangesInNumberOfDays
+        in: query
+        description: The number of days to track property changes.
+        schema:
+          type: integer
+          format: int32
+        example: 32
+      responses:
+        '200':
+          description: 'Returns the profiles of the given segment in a streaming fashion (`Transfer-Encoding: chunked`).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentProfiles'
+              examples:
+                Example segment profiles response:
+                  description: Example segment profiles response
+                  value: "{\n\"itemsPerPage\":20,\n\"totalPages\":5,\n\"totalResults\":100,\n\"cursor\":\"*\",\n\"nextCursor\":\"AoJylraPsPICPwU4ZDZiMzhmYS0yMmYwLTRmZTAtYmE0My1kOWVlNTFjNWE5MDA\",\n\n  \"links\" : [ {\n    \"href\" : \"https://localhost/rest/v2/segments/aa9c3c86-edec-4ac5-8521-a1be602eb7c6/profiles?cursor=%2A&count=20\",\n    \"rel\" : \"first\",\n    \"type\" : \"application/json\"\n  }, {\n    \"href\" : \"https://localhost/rest/v2/segments/aa9c3c86-edec-4ac5-8521-a1be602eb7c6/profiles?cursor=AoJylraPsPICPwU4ZDZiMzhmYS0yMmYwLTRmZTAtYmE0My1kOWVlNTFjNWE5MDA&count=20\",\n    \"rel\" : \"last\",\n    \"type\" : \"application/json\"\n  } ]\n,\n\"profiles\": [\n{\n  \"id\" : \"41ebc321-b02b-4e8a-a368-82995c81fb18\",\n  \"creationDate\" : \"2023-03-27T10:36:11.990Z\",\n  \"privacyLegislation\" : \"GDPR\",\n  \"consentedObjectives\" : [ \"objective1\" ],\n  \"refusedObjectives\" : [ \"objective2\" ],\n  \"properties\" : [ {\n    \"id\" : \"visitclicks_5db4a390-4e11-43ae-be2d-a1b6e248d129\",\n    \"values\" : [ \"1\" ]\n  }, {\n    \"id\" : \"privacy_legislation\",\n    \"values\" : [ \"GDPR\" ]\n  }, {\n    \"id\" : \"visitedchannel\",\n    \"values\" : [ \"5db4a390-4e11-43ae-be2d-a1b6e248d129\" ]\n  }, {\n    \"id\" : \"creationdate\",\n    \"values\" : [ \"1679913371990\" ]\n  }, {\n    \"id\" : \"color\",\n    \"values\" : [ \"Mustard\" ]\n  }, {\n    \"id\" : \"currentbrowsername\",\n    \"values\" : [ \"Default Browser\" ]\n  }, {\n    \"id\" : \"sample_id\",\n    \"values\" : [ \"41\" ]\n  }, {\n    \"id\" : \"lastvisitdate\",\n    \"values\" : [ \"1679913372011\" ]\n  }, {\n    \"id\" : \"currentbrowserversion\",\n    \"values\" : [ \"Default Browser Unknown\" ]\n  }, {\n    \"id\" : \"lastvisit\",\n    \"values\" : [ \"1679913371988\" ]\n  }, {\n    \"id\" : \"origin_source\",\n    \"values\" : [ \"www.blueconic.com\" ]\n  }, {\n    \"id\" : \"session_start\",\n    \"values\" : [ \"1679913371934\" ]\n  }, {\n    \"id\" : \"devicetype\",\n    \"values\" : [ \"MOBILE\" ]\n  }, {\n    \"id\" : \"lastvisitdate_5db4a390-4e11-43ae-be2d-a1b6e248d129\",\n    \"values\" : [ \"1679913372011\" ]\n  }, {\n    \"id\" : \"frequency\",\n    \"values\" : [ \"100\" ]\n  }, {\n    \"id\" : \"devicetypes\",\n    \"values\" : [ \"MOBILE\" ]\n  }, {\n    \"id\" : \"visits\",\n    \"values\" : [ \"1\" ]\n  }, {\n    \"id\" : \"domaingroup\",\n    \"values\" : [ \"DEFAULT\" ]\n  }, {\n    \"id\" : \"totalvisittime\",\n    \"values\" : [ \"0\" ]\n  }, {\n    \"id\" : \"clickcount\",\n    \"values\" : [ \"1\" ]\n  }, {\n    \"id\" : \"clickcount_5db4a390-4e11-43ae-be2d-a1b6e248d129\",\n    \"values\" : [ \"1\" ]\n  }, {\n    \"id\" : \"visitedsites\",\n    \"values\" : [ \"www.blueconic.test\" ]\n  }, {\n    \"id\" : \"averagetime\",\n    \"values\" : [ \"0\" ]\n  }, {\n    \"id\" : \"lastmodifieddate\",\n    \"values\" : [ \"1679922388115\" ]\n  }, {\n    \"id\" : \"hostentrypage\",\n    \"values\" : [ \"{\\\\\"www.blueconic.com\\\\\":{\\\\\"entrypage\\\\\":\\\\\"http://www.blueconic.com/\\\\\"}}\" ]\n  }, {\n    \"id\" : \"browsername\",\n    \"values\" : [ \"Default Browser\" ]\n  }, {\n    \"id\" : \"recency\",\n    \"values\" : [ \"99\" ]\n  }, {\n    \"id\" : \"origin_type\",\n    \"values\" : [ \"mobile_web\" ]\n  }, {\n    \"id\" : \"momentum\",\n    \"values\" : [ \"50\" ]\n  }, {\n    \"id\" : \"intensity\",\n    \"values\" : [ \"100\" ]\n  }, {\n    \"id\" : \"firstvisit\",\n    \"values\" : [ \"1679913371926\" ]\n  }, {\n    \"id\" : \"hostaveragetime\",\n    \"values\" : [ \"{\\\\\"www.blueconic.test\\\\\":{\\\\\"startdate\\\\\":1679913372011,\\\\\"enddate\\\\\":1679913372011,\\\\\"averageTime\\\\\":0,\\\\\"visits\\\\\":0}}\" ]\n  }, {\n    \"id\" : \"visiteddomain\",\n    \"values\" : [ \"75d78fab-bc93-4398-adbf-b8d04fc1889b\" ]\n  }, {\n    \"id\" : \"entrypage\",\n    \"values\" : [ \"http://www.blueconic.com/\" ]\n  }, {\n    \"id\" : \"origin_detail\",\n    \"values\" : [ \"http://www.blueconic.com/\" ]\n  }, {\n    \"id\" : \"visits_5db4a390-4e11-43ae-be2d-a1b6e248d129\",\n    \"values\" : [ \"1\" ]\n  }, {\n    \"id\" : \"recent_intensity\",\n    \"values\" : [ \"100\" ]\n  }, {\n    \"id\" : \"browserversion\",\n    \"values\" : [ \"Default Browser Unknown\" ]\n  }, {\n    \"id\" : \"visitclicks\",\n    \"values\" : [ \"1\" ]\n  } ],\n  \"segments\" : [ {\n    \"id\" : \"bdd64355-2d45-411b-a5ea-0bcf87318f35\",\n    \"name\" : \"Export test segment\"\n  } ]\n}\n]}"
+        '400':
+          description: One or more required parameters are missing or invalid.
+        '404':
+          description: Segment not found.
+        '401':
+          description: Authentication failed (unauthorized).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:segments
+  /segments:
+    get:
+      tags:
+      - Segments
+      summary: Get all segments
+      description: Retrieves all segments.
+      operationId: getAllSegments
+      parameters:
+      - name: startIndex
+        in: query
+        description: Specifies the index of the first item to include in the result.
+        schema:
+          type: integer
+          format: int32
+        example: 0
+      - name: count
+        in: query
+        description: Specifies the number of results to return.
+        schema:
+          type: integer
+          format: int32
+        example: 10
+      - name: filterTag
+        in: query
+        description: When specified, only segments that have at least one matching tag are returned. Multiple values can be provided by repeating the parameter.
+        schema:
+          type: array
+          items:
+            type: string
+        example: Homepage
+      responses:
+        '200':
+          description: Returns the segments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/segments'
+              examples:
+                Example segment response:
+                  description: Example segment response
+                  value: "{\n  \"itemsPerPage\" : 10,\n  \"segments\" : [ {\n    \"creationDate\" : \"2024-03-21T15:04:58.390Z\",\n    \"creator\" : {\n      \"fullName\" : \"BlueConic\",\n      \"userName\" : \"BlueConic\"\n    },\n    \"description\" : \"The segment description\",\n    \"id\" : \"aa9c3c86-edec-4ac5-8521-a1be602eb7c6\",\n    \"inverseOf\" : \"\",\n    \"inversedBy\" : \"\",\n    \"lastModifiedDate\" : \"2024-03-21T15:04:58.390Z\",\n    \"lastModifiedUser\" : {\n      \"fullName\" : \"BlueConic\",\n      \"userName\" : \"BlueConic\"\n    },\n    \"name\" : \"All Visitors\",\n    \"profileCount\" : 12345,\n    \"tags\" : [\"a tag\"]\n  }, {\n    \"creationDate\" : \"2024-03-21T15:16:26.843Z\",\n    \"creator\" : {\n      \"fullName\" : \"ondemand@blueconic.com\",\n      \"userName\" : \"ondemand@blueconic.com\"\n    },\n    \"description\" : \"\",\n    \"id\" : \"dcd46509-0c5f-40a5-8b91-e9b9315466ef\",\n    \"inverseOf\" : \"\",\n    \"inversedBy\" : \"\",\n    \"lastModifiedDate\" : \"2024-03-21T15:16:26.843Z\",\n    \"lastModifiedUser\" : {\n      \"fullName\" : \"ondemand@blueconic.com\",\n      \"userName\" : \"ondemand@blueconic.com\"\n    },\n    \"name\" : \"Preferred visit hour: Afternoon\",\n    \"profileCount\" : 365,\n    \"tags\" : [ ]\n  }, {\n    \"creationDate\" : \"2024-03-21T15:16:26.848Z\",\n    \"creator\" : {\n      \"fullName\" : \"ondemand@blueconic.com\",\n      \"userName\" : \"ondemand@blueconic.com\"\n    },\n    \"description\" : \"\",\n    \"id\" : \"6c2785b1-66fd-4504-9b26-20c8b24b1c46\",\n    \"inverseOf\" : \"\",\n    \"inversedBy\" : \"\",\n    \"lastModifiedDate\" : \"2024-03-21T15:16:26.848Z\",\n    \"lastModifiedUser\" : {\n      \"fullName\" : \"ondemand@blueconic.com\",\n      \"userName\" : \"ondemand@blueconic.com\"\n    },\n    \"name\" : \"Preferred visit hour: Evening\",\n    \"tags\" : [ ]\n  }, {\n    \"creationDate\" : \"2024-03-21T15:16:26.839Z\",\n    \"creator\" : {\n      \"fullName\" : \"ondemand@blueconic.com\",\n      \"userName\" : \"ondemand@blueconic.com\"\n    },\n    \"description\" : \"\",\n    \"id\" : \"194b246b-26c5-4e9a-bc3a-f3896c8dc96e\",\n    \"inverseOf\" : \"\",\n    \"inversedBy\" : \"\",\n    \"lastModifiedDate\" : \"2024-03-21T15:16:26.839Z\",\n    \"lastModifiedUser\" : {\n      \"fullName\" : \"ondemand@blueconic.com\",\n      \"userName\" : \"ondemand@blueconic.com\"\n    },\n    \"name\" : \"Preferred visit hour: Morning\",\n    \"profileCount\" : 13,\n    \"tags\" : [ ]\n  }, {\n    \"creationDate\" : \"2024-03-21T15:16:26.837Z\",\n    \"creator\" : {\n      \"fullName\" : \"ondemand@blueconic.com\",\n      \"userName\" : \"ondemand@blueconic.com\"\n    },\n    \"description\" : \"\",\n    \"id\" : \"1e557d7c-e655-415a-a0bd-256009af183a\",\n    \"inverseOf\" : \"\",\n    \"inversedBy\" : \"\",\n    \"lastModifiedDate\" : \"2024-03-21T15:16:26.837Z\",\n    \"lastModifiedUser\" : {\n      \"fullName\" : \"ondemand@blueconic.com\",\n      \"userName\" : \"ondemand@blueconic.com\"\n    },\n    \"name\" : \"Preferred visit hour : Night\",\n    \"profileCount\" : 0,\n    \"tags\" : [ ]\n  } ],\n  \"startIndex\" : 0,\n  \"totalPages\" : 1,\n  \"totalResults\" : 5\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:segments
+components:
+  schemas:
+    profile:
+      type: object
+      description: The profiles that are in this segment.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the object.
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        privacyLegislation:
+          type: string
+          description: The default privacy legislation for creating profiles (not for matching).
+          enum:
+          - NONE
+          - GDPR
+          - PIPEDA
+          - CCPA
+          - SB220
+          - NYPA
+          - PERU_DPL
+          - ARGENTINA_DPL
+          - SB1392
+          - SB190
+          - BRAZIL_LGPD
+          - ISRAEL_PPL
+          - JAPAN_APPI
+          - NEW_ZEALAND_PRIVACY_ACT
+          - SWITZERLAND_DPA
+          - UK_GDPR
+          - CHINA_PIPL
+          - AUSTRALIA_PRIVACY_ACT
+          - CDPA_CTCPDA
+          - UCPA
+          - MEXICO_LFPDPPP
+        consentedObjectives:
+          type: array
+          description: List of objective IDs that the profile has given consent to.
+          items:
+            type: string
+            description: List of objective IDs that the profile has given consent to.
+        refusedObjectives:
+          type: array
+          description: List of objective IDs that the profile has refused consent to.
+          items:
+            type: string
+            description: List of objective IDs that the profile has refused consent to.
+        permissions:
+          $ref: '#/components/schemas/permissions'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
+        groups:
+          type: array
+          description: Groups that the profile is a part of.
+          items:
+            $ref: '#/components/schemas/group'
+        matchingGroups:
+          type: array
+          description: Groups that the profile is a part of and match the segment refinements.
+          items:
+            $ref: '#/components/schemas/matchingGroup'
+        lifecycleStages:
+          type: array
+          description: Lifecycle stages that the profile is part of.
+          items:
+            $ref: '#/components/schemas/lifecycleStage'
+        replacedBy:
+          type: string
+          description: The profile ID that replaced this profile.
+        replaces:
+          type: array
+          description: The IDs of the profiles that are replaced by this profile.
+          items:
+            type: string
+            description: The IDs of the profiles that are replaced by this profile.
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/profileSegmentBean'
+    SegmentProfiles:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The cursor of the current page. `*` when not passed.
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        links:
+          type: array
+          description: The links to the first and next/last page.
+          items:
+            $ref: '#/components/schemas/link'
+        nextCursor:
+          type: string
+          description: The cursor of the next page (if any).
+        profiles:
+          type: array
+          description: The profiles that are in this segment.
+          items:
+            $ref: '#/components/schemas/profile'
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    segments:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        segments:
+          type: array
+          description: The segments.
+          items:
+            $ref: '#/components/schemas/segment'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    Property:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Timeline event property ID to apply to this rule for.
+        strategy:
+          type: string
+          description: The strategy to apply to primitive timeline event properties. For nested timeline event properties, SET/UPSERT/UPDATE/DELETE are supported.
+          enum:
+          - ADD
+          - SET
+          - SET_IF_EMPTY
+          writeOnly: true
+        values:
+          type: array
+          description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
+          items:
+            type: object
+            description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
+    segment:
+      type: object
+      description: The segments.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        id:
+          type: string
+          description: The object ID.
+        inverseOf:
+          type: string
+          description: The ID of the segment of which this is the inverse.
+        inversedBy:
+          type: string
+          description: The ID of the segment that inversed this segment.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        name:
+          type: string
+          description: The object name.
+        profileCount:
+          type: integer
+          format: int32
+          description: The number of profiles in this segment.
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+    simpleObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: The object name.
+    link:
+      type: object
+      properties:
+        Href:
+          type: string
+          description: The href of the link
+        Rel:
+          type: string
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
+          type: string
+          description: The type of the link e.g. 'application/json'
+    group:
+      type: object
+      description: Groups that the profile is a part of.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        groupTypeId:
+          type: string
+          description: The ID of the BlueConic group type.
+        id:
+          type: string
+          description: The unique identifier for the object.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+    matchingGroup:
+      type: object
+      description: Groups that the profile is a part of and match the segment refinements.
+      properties:
+        profilePropertyId:
+          type: string
+          description: The ID of the BlueConic profile property.
+        groupIds:
+          type: array
+          description: The matching group IDs.
+          items:
+            type: string
+            description: The matching group IDs.
+    RefinementBean:
+      type: object
+      properties:
+        daysCount:
+          type: integer
+          format: int32
+          description: The days count
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefinementBean'
+        fromDate:
+          type: string
+          description: The from date in ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')
+        fromValue:
+          type: integer
+          format: int32
+          description: The from value
+        groupProperty:
+          type: string
+          description: The group property
+        hoursCount:
+          type: integer
+          format: int32
+          description: The hours count
+        objective:
+          type: string
+          description: The objective
+        operator:
+          type: string
+          description: The operator
+        property:
+          type: string
+          description: The property
+        toDate:
+          type: string
+          description: The to date in ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')
+        toValue:
+          type: integer
+          format: int32
+          description: The to value
+        values:
+          type: array
+          description: The values
+          items:
+            type: string
+            description: The values
+    permissions:
+      type: object
+      properties:
+        level:
+          type: string
+          description: The permission level of the profile
+    lifecycleStage:
+      type: object
+      description: Lifecycle stages that the profile is part of.
+      properties:
+        lifecycle:
+          $ref: '#/components/schemas/simpleObject'
+        stage:
+          $ref: '#/components/schemas/simpleObject'
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    event:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        date:
+          type: string
+          format: date-time
+          description: Timestamp for the event. The format of date is "2018-01-01T00:00Z" or with a timezone offset "2018-01-01T00:00+05:00". If empty, "now" will be used.
+        eventTypeId:
+          type: string
+          description: The type identifier of the event. See https://yourserver.blueconic.net/rest/timelineEventTypes?alt=json for the list of defined event types.
+        id:
+          type: string
+          description: An identifier to identify the event. Preferred to be unique, although it isn't required. If an event with the same ID is present on the profile's timeline, it will be overwritten. Note that the combination of ID, event type ID, and date uniquely identifies an event.
+        identifier:
+          type: string
+          description: An (external) identifier which can be passed along with a timeline event operation and is returned in the response.
+        strategy:
+          type: string
+          description: How the event will be applied to the timeline.
+          enum:
+          - SET
+          - UPSERT
+          - UPDATE
+          - DELETE
+          writeOnly: true
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+    profileSegmentBean:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the segment.
+        name:
+          type: string
+          description: The name of the segment.
+        tags:
+          type: array
+          description: The labels of the segment (optionally included).
+          items:
+            type: string
+            description: The labels of the segment (optionally included).
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

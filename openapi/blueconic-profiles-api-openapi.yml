@@ -1,0 +1,1030 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Profiles API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Profiles
+  description: The following methods allow you to create, modify, retrieve properties from, and delete [BlueConic Profiles](https://support.blueconic.com/hc/en-us/articles/115001671965-Overview-BlueConic-Profiles), as well as retrieve BlueConic segment information.
+paths:
+  /profiles:
+    get:
+      tags:
+      - Profiles
+      summary: Search profiles
+      description: Search for BlueConic profiles based on a specific value for an indexed (unique) property. Multiple name/value pairs can be used to refine the search.
+      operationId: searchProfiles
+      parameters:
+      - name: property
+        in: query
+        description: Specifies the id of the profile property to search for.
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          List of profile property IDs:
+            description: List of profile property IDs
+            value: email
+      - name: value
+        in: query
+        description: The value of the property to search for.
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          List of profile property values:
+            description: List of profile property values
+            value: '"john.smith@blueconic.com"'
+      responses:
+        '200':
+          description: Searches for BlueConic profiles based on a specific value for an indexed (unique) property. Multiple name/value pairs can be used to refine the search.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profiles'
+              examples:
+                Example response:
+                  description: Example response
+                  value: "{\n  \"profiles\": [\n    {\n      \"id\": \"61835134-e910-49da-a09e-79d41af9b96\"\n    },\n    {\n      \"id\": \"45e2a650-ca17-4e03-8e8d-12d00ed4d9b3\"\n    }\n  ],\n  \"itemsPerPage\": 5,\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 2\n}"
+        '400':
+          description: One or more required parameters are missing or invalid.
+        '401':
+          description: Authentication failed (unauthorized).
+        '408':
+          description: Request timed out.
+        '501':
+          description: The specified property is not classified as indexed (unique) (not implemented).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:profiles
+    put:
+      tags:
+      - Profiles
+      summary: Create, update, or delete one or more profiles
+      description: Create, update, or delete one or more profiles in a single request. This is the recommended way of creating, updating and deleting profiles.
+      operationId: createUpdateDeleteProfiles
+      parameters:
+      - name: objectiveIds
+        in: query
+        description: A list of Objective IDs. If you provide objectiveIDs, profiles will only be updated or created if they have given consent for the provided objectives or consent is not required for the legislation zone of the profile. If a profile would have been created or updated, but is skipped because of an objective mismatch, the response will contain a `CONSENT_MISMATCH` state for that profile. If you don’t provide objectiveIDs, the update will always proceed.
+        schema:
+          type: string
+          format: uuid
+          default: ''
+        examples:
+          Comma separated list of objective IDs:
+            description: Comma separated list of objective IDs
+            value: objective1,objective2
+      requestBody:
+        description: '**Timeline event types**
+
+
+          Timeline event types can be accessed through **Timeline event types** tab in BlueConic. In this tab you can create a new timeline event type, update, or delete existing ones.
+
+
+          It''s possible to add, update, or remove properties and nested properties from a timeline event type. The property ID of timeline event property can only be changed until it''s saved.
+
+          To update the property ID after saving, the property will have to be deleted and recreated with the desired ID.
+
+
+          **Timeline events**
+
+
+          Events are data points tied to the [BlueConic Timeline](https://support.blueconic.com/hc/en-us/articles/360035962954-About-Timeline-events-in-BlueConic) of a profile, e.g. an order the customer placed. BlueConic comes out of the box with several predefined [BlueConic Timeline event types](https://support.blueconic.com/hc/en-us/articles/360037189454-BlueConic-Timeline-event-types).
+
+          Events can be HIGH or LOW priority. There is a maximum number of 250 events per profile allowed.
+
+          LOW priority events have a retention period between 1 and 365 days (the default is 30 days).
+
+          HIGH priority events have a retention period of 1 day and up.
+
+          The default is indefinitely; however, they are constrained by the total number of events and take precedence over LOW priority events, which are capped at 50 if there are 200 or more HIGH priority events.
+
+
+          **Privacy legislations and consent management**
+
+
+          Any `objectiveIds` passed in the query string are matched against the profile that is being created.
+
+          Matching is done against the special profile property `consented_objectives`, which reflects the objective IDs that the profile has explicitly consented to. So, for the profile to be created, the “properties” should at least contain one of the objective IDs passed in the querystring, for the property with id `consented_objectives`. Otherwise, the `CONSENT_MISMATCH` state is returned in the response.
+
+
+          The following values are valid privacy legislation zone values.
+
+
+          | Name                    | Description |
+
+          |:------------------------| :---------- |
+
+          | CCPA                    | A profile is governed by CCPA in the State of California. |
+
+          | GDPR                    | A profile is governed by GDPR in Europe. |
+
+          | NYPA                    | A profile is governed by NYPA in the State of New York. |
+
+          | PIPEDA                  | A profile is governed by PIPEDA in Canada. |
+
+          | SB220                   | A profile is governed by SB220 in the State of Nevada. |
+
+          | PERU_DPL                | A profile is governed by the Personal Data Protection Law (PDPL) of Peru. |
+
+          | ARGENTINA_DPL           | A profile is governed by the Personal Data Protection Law (PDPL) of Argentina. |
+
+          | SB1392                  | A profile is governed by SB1392 of the Commonwealth of Virginia |
+
+          | SB190                   | A profile is governed by the State of Colorado. |
+
+          | CDPA_CTCPDA             | A profile is governed by CDPA/CTCPDA in the State of Connecticut. |
+
+          | UCPA                    | A profile is governed by UCPA in the State of Utah. |
+
+          | BRAZIL_LGPD             | A profile is governed by the Brazilian General Protection Law. |
+
+          | ISRAEL_PPL              | A profile is governed by the Israel Protection Privacy Law. |
+
+          | JAPAN_APPI              | A profile is governed by the Japan APPI. |
+
+          | MEXICO_LFPDPPP          | A profile is governed by the Mexico LFPDPPP. |
+
+          | NEW_ZEALAND_PRIVACY_ACT | A profile is governed by the New Zealand Privacy Act. |
+
+          | SWITZERLAND_DPA         | A profile is governed by the Switzerland Data Protection Act (DPA). |
+
+          | UK_GDPR                 | A profile is governed by the United Kingdom General Data Protection Regulation. |
+
+          | CHINA_PIPL              | A profile is governed by the People''s Republic of China PIPL. |
+
+          | AUSTRALIA_PRIVACY_ACT   | A profile is governed by the Australian Privacy Act. |
+
+          | TDPSA                   | A profile is governed by TDPSA in the State of Texas. |
+
+          | MTCDPA                  | A profile is governed by MTCDPA in the State of Montana. |
+
+          | FDBR                    | A profile is governed by FDBR in the State of Florida. |
+
+          | OCPA                    | A profile is governed by OCPA in the State of Oregon. |
+
+          | DPDPA                   | A profile is governed by DPDPA in the State of Delaware. |
+
+          | ICDPA                   | A profile is governed by ICDPA in the State of Iowa. |
+
+          | NHPA                    | A profile is governed by NHPA in the State of New Hampshire. |
+
+          | NJDPA                   | A profile is governed by NJDPA in the State of New Jersey. |
+
+          | NEDPA                   | A profile is governed by NEDPA in the State of Nebraska. |
+
+          | HAITI_APD               | A profile is governed by the Haiti Arrêté de Protection des Données (APD). |
+
+          | JAMAICA_DPA             | A profile is governed by the Jamaica Data Protection Act (DPA). |
+
+          | TRINIDAD_TOBAGO_DPA     | A profile is governed by the Trinidad & Tobago Data Protection Act (DPA). |
+
+          | COSTA_RICA_L8968        | A profile is governed by the Costa Rica Law No. 8968 on Protection of Individuals Against the Processing of Personal Data. |
+
+          | GUATEMALA_LAIP          | A profile is governed by the Guatemala Ley de Acceso a la Información Pública, Decree 57-2008. |
+
+          | PANAMA_L81              | A profile is governed by the Panama Data Protection Law No. 81. |
+
+          | HONDURAS_LPDCP          | A profile is governed by the Honduras LPDCP. |
+
+          | EL_SALVADOR             | A profile is governed by the El Salvador Privacy Statutes. |
+
+          | COLOMBIA_L1581_D1377    | A profile is governed by the Colombia Law 1581, 2012; Decree 1377, 2013. |
+
+          | NICARAGUA_L787          | A profile is governed by the Nicaragua Law No. 787. |
+
+          | CHILE_L19_628           | A profile is governed by the Chile Law No. 19.628 on Protection of Privacy. |
+
+          | BELIZE_DPA              | A profile is governed by the Belize Data Protection Act (DPA). |
+
+          | TENNESSEE_TIPA          | A profile is governed by TIPA in the State of Tennessee. |
+
+          | INDIANA_INCDPA          | A profile is governed by INCDPA in the State of Indiana. |
+
+          | KENTUCKY_KCDPA          | A profile is governed by KCDPA in the State of Kentucky. |
+
+          | MINNESOTA_MCDPA         | A profile is governed by MCDPA in the State of Minnesota. |
+
+          | MARYLAND_MODPA          | A profile is governed by MODPA in the State of Maryland. |
+
+          | RHODE_ISLAND_RIDTPPA    | A profile is governed by RIDTPPA in the State of Rhode Island. |
+
+          | SOUTH_KOREA_PIPA        | A profile is governed by the South Korea PIPA. |
+
+          | NONE                    | The profile is not governed by a known privacy legislation zone; profile will just be created. NONE legislations are also targeted when ''Rest of World'' is selected in an objective. |
+
+
+          **Profile strategy**
+
+
+          The following values are valid strategies for profile operations. These can be used to create, update or delete profiles.
+
+
+          | Name         | Description |
+
+          | :----------- | :---------- |
+
+          | UPSERT   | Will update (and insert if not found) the profile based on the rules passed along. |
+
+          | UPDATE   | Will update (but doesn’t insert if not found) the profile based on the rules passed along. |
+
+          | DELETE   | Will delete the profile with the given ID. |
+
+
+          **Timeline Strategy**
+
+
+          The following values are valid timeline strategies. These can either be used for the strategy property for a timeline event as a whole, or when passing rules to apply on nested timeline event properties.
+
+
+          | Name     | Description |
+
+          | :--------| :---------- |
+
+          | SET      | Timeline event will be added to the profile timeline as is, possibly replacing the existing event with the same ID, event type ID, and date. |
+
+          | UPSERT   | Will update (and insert if not found) the timeline event with the given ID, event type ID, and date, based on the rules that are passed along. |
+
+          | UPDATE   | Will update (but doesn’t insert if not found) the timeline event with the given ID, event type ID, and date, based on the rules that are passed along. |
+
+          | DELETE   | Will delete the timeline event with the given ID, event type ID and, optionally, a date. If not passed, all events matching the ID and event type ID will be deleted. |
+
+
+          **Profile and Timeline property strategy**
+
+
+          The following values are valid property strategies. These rules apply on profile and timeline event properties.
+
+
+          | Name         | Description |
+
+          | :----------- | :---------- |
+
+          | ADD          | Values will be added to the values that already existed in the profile or timeline event property. Duplicates will not be added. |
+
+          | SET          | Values will overwrite the values that already existed in the profile or timeline event property. |
+
+          | SET_IF_EMPTY | Only set values if the profile or timeline event property is empty. |
+
+          | SUM          | Add the value to the value already stored in the profile property. This is not supported for timeline event properties. |
+
+          | REMOVE       | Remove the value from the list of values already stored in the profile property. This is not yet supported for timeline event properties. |
+
+
+          **Group property strategy**
+
+
+          The following values are valid property strategies. These rules apply on group properties.
+
+
+          | Name         | Description                                                                                                  |
+
+          | :----------- |:-------------------------------------------------------------------------------------------------------------|
+
+          | ADD          | Values will be added to the values that already existed in the group property. Duplicates will not be added. |
+
+          | SET          | Values will overwrite the values that already existed in the group property.                                 |
+
+          | SET_IF_EMPTY | Only set values if the group property is empty.                                                              |
+
+          | SUM          | Add the value to the value already stored in the group property.                                             |
+
+          | REMOVE       | Remove the value from the list of values already stored in the group property.                               |
+
+
+          **Limits**
+
+
+          * Each request can contain up to 1000 entries. If this limit is exceeded, a HTTP 413 will be thrown (the first 1000 entries will be processed and returned in the response).
+
+          * When too many requests are sent concurrently, a HTTP 429 can be thrown. BlueConic recommends designing your app to be resilient to this scenario. For example, implement a request queue with an exponential backoff algorithm.'
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BulkInputEntryV2'
+            examples:
+              Basic create profile example:
+                description: Example that shows how to create one profile.
+                value: "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]"
+              Update objectives for a single profile:
+                description: 'The following properties have a special meaning:
+
+
+                  `privacy_legislation`: The value passed in this property should be one of the [privacy legislation zone values](https://support.blueconic.com/hc/en-us/articles/202528082-BlueConic-REST-API#h_01GDB09HCR8WYFPF7MDHJ3D6DW), and is used to determine if a profile should be matched against the passed `objectiveIds` in the querystring.
+
+                  `consented_objectives`: The value(s) passed in this property are used to match against the passed `objectiveIds` in the querystring. At least one must match in order for the profile to be created or updated; otherwise `CONSENT_MISMATCH` is returned.
+
+                  `refused_objectives`: The value(s) passed in this property are used to set the explicitly refused objectives.
+
+
+                  The strategy can be set to `ADD`, `SET`, `SET_IF_EMPTY`, `INCREMENT`, or `REMOVE`. '
+                value: "{\n    \"id\": \"530cb682-5f67-48ec-9662-57512b3dc899\",\n    \"setProperties\": {\n        \"privacy_legislation\": [\n        \"GDPR\"\n        ],\n        \"consented_objectives\": [\n        \"qunit_tests\",\n        \"qunit_tests2\"\n        ],\n        \"refused_objectives\": [\n        \"qunit_tests3\",\n        \"qunit_tests4\"\n        ]\n    }\n}"
+              Advanced example:
+                description: "This request contains three operations:\n\n* The first operation looks up a specific BlueConic profile by its id, then sets the property with id crm_id to 003Kz4Bsaa14 and adds a new entry to email property. If the profile cannot be found, nothing will happen.\n* The second operation deletes a specific BlueConic profile by its id.\n* The third operation tries to find profiles that either have an email address `jane@example.com` or a crm_id of `002wC4BadR1w` in the specified domain. If any profile is found, three properties and timeline event will be set:\n    * Zipcodes `02111` and `02112` will be added.\n    * `email` will be set to `jane@example.com.`\n    * `crm_id` will be set to `002wC4BadR1w`.\n    * An `order` event will be added to the profiles timeline:\n        * `quantity` 2\n        * `net price` 3.45\n        * `coupon` \"FREETV\"\n        * `delivery date` 23/1/2023 at 11:45 PM\n    * If no profile can be found, a new profile is created in the specified domaingroup. The three properties and the timeline event will be set on the profile.\n"
+                value: "[{\n        \"profileId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n        \"properties\": [{\n            \"id\": \"crm_id\",\n            \"values\": [\"003Kz4Bsaa11\"],\n            \"strategy\": \"SET\"\n        }, {\n            \"id\": \"email\",\n            \"values\": [\"user_0000@gmail.com\"],\n            \"strategy\": \"ADD\"\n        }]\n    },\n    {\n        \"profileId\": \"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\",\n        \"strategy\": \"DELETE\"\n    },\n    {\n        \"matching\": [\n            [{\n                \"id\": \"email\",\n                \"value\": \"jane@example.com\"\n            }],\n            [{\n                \"id\": \"crm_id\",\n                \"value\": \"002wC5BadR1w\"\n            }]\n        ],\n        \"properties\": [{\n                \"id\": \"zipcode\",\n                \"values\": [\"02111\", \"02112\"],\n                \"strategy\": \"ADD\"\n            },\n            {\n                \"id\": \"email\",\n                \"values\": [\"jane99@example.com\"],\n                \"strategy\": \"ADD\"\n            },\n            {\n                \"id\": \"crm_id\",\n                \"values\": [\"002wC5BadR1w\"],\n                \"strategy\": \"SET\"\n            }\n        ],\n        \"timeline\": [{\n            \"eventTypeId\": \"order\",\n            \"data\": [{\n                \"id\": \"product\",\n                \"values\": [\n                    [{\n                        \"id\": \"quantity\",\n                        \"values\": [2]\n                    }, {\n                        \"id\": \"netprice\",\n                        \"values\": [3.45]\n                    }, {\n                        \"id\": \"coupon\",\n                        \"values\": [\"FREETV\"]\n                    }, {\n                        \"id\": \"deliverydate\",\n                        \"values\": [\"2023-01-23T23:45:56.789Z\"]\n                    }]\n                ]\n            }, {\n                \"id\": \"quantity\",\n                \"values\": [1]\n            }],\n            \"strategy\": \"SET\"\n        }],\n        \"strategy\": \"UPSERT\",\n        \"domainGroup\": \"85ee8f33-15a3-4e95-aff5-abfa5bc457ab\"\n    }\n]"
+              Partial updates for timeline events:
+                description: "An example for partially updating a timeline event:\n\n\n* Will update (or insert if not exists) the order event with the given ID.\n    * `date` is optional and may be omitted, causing all events with the given ID to be updated.\n* Will add (or update if it exists) a product with id:PRODUCT-5469878987 to product.\n     * Note that the `strategy` can be left empty when the `identifier` is specified.\n* Will set `quantity` to 2 if the product does not have `quantity` set yet.\n* Will add `FREETV-CHRISTMAS-SPECIAL` to `coupon` for the product.\n* Will set `quantity` to 1 for this `order`.\n\nNotes on using an `identifier` for nested timeline event properties:\n\n* A timeline event type property marked as `identifier` can only contain one value; more values will be ignored (first value is used).\n* When sending an `identifier` in the bulk API, it cannot be empty."
+                value: "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"timeline\": [\n        {\n            \"id\": \"eb20c911-4d23-4791-a3e7-d113e7a326d9\",\n            \"date\": \"2023-01-01T00:00:00Z\",\n            \"eventTypeId\": \"order\",\n            \"data\": [{\n                    \"id\": \"product\",\n                    \"values\": [\n                        [\n                            {\n                                \"id\": \"id\",\n                                \"values\": [\"PRODUCT-5469878987\"]\n                            },\n                            {\n                                \"id\": \"quantity\",\n                                \"values\": [2],\n                                \"strategy\": \"SET_IF_EMPTY\"\n                            },\n                            {\n                                \"id\": \"coupon\",\n                                \"values\": [\"FREETV-CHRISTMAS-SPECIAL\"],\n                                \"strategy\": \"ADD\"\n                            }\n                        ]\n                    ],\n                    \"strategy\": \"UPSERT\"\n                },\n                {\n                    \"id\": \"quantity\",\n                    \"values\": [1],\n                    \"strategy\": \"SET\"\n                }\n            ],\n            \"strategy\": \"UPSERT\"\n        }\n\n    ],\n    \"strategy\": \"UPSERT\"\n}]"
+              Basic delete profile example:
+                description: Delete a single profile
+                value: "[\n    {\n        \"profileId\": \"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\",\n        \"strategy\": \"DELETE\"\n    }\n]"
+        required: true
+      responses:
+        '200':
+          description: "Bulk response \n\n**JSON Response**\n\nEvery bulk operation is returned in the response as well.\nThe state can be one of the following values: `CREATED`, `CONSENT_MISMATCH`, `SKIPPED`, `MODIFIED`, `DELETED`, `UNCHANGED`, `NOTFOUND`, `RESTRICTION_MISMATCH`, `UNAUTHORIZED`. \n`UNAUTHORIZED` is returned in case the user performing the request has invalid (PII) permissions. Please check your OAuth Application configuration.\n\n\n```json\n[{\n    \"state\": \"CREATED\",\n    \"profileId\": \"profile-UUID of the created profile\",\n    \"identifier\": \" my-external-identifier\"\n}]\n```\n\nWhen the profile operation contains timeline events, the response will also contain a response per timeline event supplied. The state can be one of the following values: `CREATED`, `SET`, `MODIFIED`, `REJECTED`, `NOTFOUND` or `DELETED`.\n\n```json\n[{\n    \"state\": \"CREATED\",\n    \"profileId\": \"profile-UUID of the created profile\",\n    \"identifier\": \" my-external-identifier\",\n    \"timeline\": [{\n        \"id\": \"order_1\",\n        \"identifier\": \"my-external-order-identifier\",\n        \"state\": \"REJECTED\",\n        \"validationErrors\": [\"#/total_revenue/0: expected type: Number, found: String\"]\n    }]\n}]      \n```"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BulkResultBean'
+              examples:
+                Example bulk response:
+                  description: Example bulk response
+                  value: "[\n  {\n    \"profileId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"state\": \"MODIFIED\",\n    \"timeline\": []\n  },\n  {\n    \"profileId\": \"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\",\n    \"state\": \"DELETED\"\n  },\n  {\n    \"profileId\": \"324fe9e8-ee83-4c1c-8a32-9132f958f743\",\n    \"state\": \"UNAUTHORIZED\"\n  },\n  {\n    \"profileId\": \"e4c45d3b-f59b-4391-ad46-7413961e8cbd\",\n    \"state\": \"CREATED\",\n    \"timeline\": [\n      {\n        \"id\": \"63cec368-c40e-4c2c-ae08-7d4513edd125\",\n        \"state\": \"SET\"\n      }\n    ]\n  }\n]"
+        '400':
+          description: One or more required parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequestBean'
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Forbidden, invalid permissions to perform the request. Please check your OAuth Application configuration.
+        '413':
+          description: More than the allowed 1000 entries are sent in the request. The entries that are processed are returned in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BulkResultBean'
+              examples:
+                Example bulk response:
+                  description: Example bulk response
+                  value: "[\n  {\n    \"profileId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"state\": \"MODIFIED\",\n    \"timeline\": []\n  },\n  {\n    \"profileId\": \"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\",\n    \"state\": \"DELETED\"\n  },\n  {\n    \"profileId\": \"324fe9e8-ee83-4c1c-8a32-9132f958f743\",\n    \"state\": \"UNAUTHORIZED\"\n  },\n  {\n    \"profileId\": \"e4c45d3b-f59b-4391-ad46-7413961e8cbd\",\n    \"state\": \"CREATED\",\n    \"timeline\": [\n      {\n        \"id\": \"63cec368-c40e-4c2c-ae08-7d4513edd125\",\n        \"state\": \"SET\"\n      }\n    ]\n  }\n]"
+        '429':
+          description: Too many requests are sent concurrently. BlueConic recommends designing your app to be resilient to this scenario. For example, implement a request queue with an exponential backoff algorithm.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - write:profiles
+  /profiles/{profileId}:
+    get:
+      tags:
+      - Profiles
+      summary: Get one profile
+      description: Retrieves the properties of the specified profile, including the IDs of the matching dynamic segments.
+      operationId: getOneProfile
+      parameters:
+      - name: profileId
+        in: path
+        description: The ID of the BlueConic profile.
+        required: true
+        schema:
+          type: string
+        example: 640d01c7-1c30-4085-adf9-afad6560ec99
+      - name: expand
+        in: query
+        description: 'Expand the information in the result set. Use "profile.permissions.exceptions" to include permission level and exception data.
+
+          Use "profile.timeline" to include timeline event information.
+
+          Use "profile.segments" to include the segments a profile is part of.
+
+          Use "profile.segments.tags" to include segment labels (v2 API only).
+
+          Use multiple "expand" querystring parameters to return combinations.
+
+          '
+        schema:
+          type: array
+          items:
+            type: string
+        example: profile.timeline
+      - name: properties
+        in: query
+        description: Only returns the given profile properties in the response.
+        deprecated: true
+        schema:
+          type: string
+        example: email,fullname,visits
+      - name: profileProperty
+        in: query
+        description: When the profileProperty is specified, the response will only return the values for the given profile property. If not specified, the values of all profile properties will be returned, which may result in a large result set.
+        schema:
+          type: array
+          items:
+            type: string
+        example: email
+      - name: groupProperty
+        in: query
+        description: When the groupProperty is specified, the response will only return the values for the given group property. If not specified, the values of all group properties will be returned, which may result in a large result set. Only relevant when `&expand=profiles.profile.groups` is supplied.
+        schema:
+          type: array
+          items:
+            type: string
+        example: city
+      - name: eventTypeId
+        in: query
+        description: Filter returned timeline events for a specific type.
+        schema:
+          type: array
+          items:
+            type: string
+        example: order
+      - name: eventProperty
+        in: query
+        description: When the eventProperty is specified, the response will only return the values for the given property. If not specified, the values of all event properties will be returned, which may result in a large result set.
+        schema:
+          type: array
+          items:
+            type: string
+        example: order.orderline
+      - name: eventCount
+        in: query
+        description: The maximum number of timeline events to return.
+        schema:
+          type: integer
+          format: int32
+          default: 20
+        example: 10
+      - name: fromDate
+        in: query
+        description: Filter to only include timeline events that are dated later than this date. The fromDate is in the ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z').
+        schema:
+          type: string
+        example: 2025-01-22 11:21:33+00:00
+      - name: toDate
+        in: query
+        description: Filter to only include timeline events that are dated before this date. The toDate is in the ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z').
+        schema:
+          type: string
+        example: 2025-02-22 11:21:33+00:00
+      - name: collapse
+        in: query
+        description: Collapse the information in the result set. Use profile.segments to exclude segment information.
+        schema:
+          type: array
+          items:
+            type: string
+            default: ''
+        example: profile.segments
+      responses:
+        '200':
+          description: Returns the specified profile.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/profile'
+              examples:
+                Example profile response:
+                  description: Example profile response
+                  value: "{\n  \"id\": \"640d01c7-1c30-4085-adf9-afad6560ec99\",\n  \"creationDate\": \"2022-10-23T14:47:05.207Z\",\n  \"consentedObjectives\": [\"objective_1\", \"objective_2\"],\n  \"refusedObjectives\": [],\n  \"permissions\": {\n    \"level\": \"PERSONAL\"\n  },\n  \"properties\": [\n    {\n      \"id\": \"clickcount\",\n      \"values\": [\n        \"0\"\n      ]\n    },\n    {\n      \"id\": \"creationdate\",\n      \"values\": [\n        \"1571842025207\"\n      ]\n    },\n    {\n      \"id\": \"engagement\",\n      \"values\": [\n        \"medium\"\n      ]\n    },\n    {\n      \"id\": \"lastmodifieddate\",\n      \"values\": [\n        \"1571842025207\"\n      ]\n    },\n    {\n      \"id\": \"sample_id\",\n      \"values\": [\n        \"26\"\n      ]\n    },\n    {\n      \"id\": \"lastvisitdate\",\n      \"values\": [\n        \"1571842023124\"\n      ]\n    },\n    {\n      \"id\": \"lastvisit\",\n      \"values\": [\n        \"1571842023124\"\n      ]\n    },\n    {\n      \"id\": \"browsers\",\n      \"values\": [\n        \"ie\"\n      ]\n    },\n    {\n      \"id\": \"visits\",\n      \"values\": [\n        \"2\"\n      ]\n    },\n    {\n      \"id\": \"browser\",\n      \"values\": [\n        \"ie\"\n      ]\n    },\n    {\n      \"id\": \"domaingroup\",\n      \"values\": [\n        \"DEFAULT\"\n      ]\n    },\n    {\n      \"id\": \"email\",\n      \"values\": [\n        \"user_017@gmail.com\"\n      ]\n    }\n  ],\n  \"replaces\": [],\n  \"events\": [{\n    \"data\": [{\n      \"id\": \"product\",\n      \"values\": [\n        [{\n          \"id\": \"quantity\",\n          \"values\": [100]\n        }, {\n          \"id\": \"id\",\n          \"values\": [\"987644321\"]\n        }]\n      ]\n    }],\n    \"date\": \"2023-01-01T00:00:00.123Z\",\n    \"eventTypeId\": \"order\",\n    \"id\": \"order_2\",\n    \"source\": \"notebook_9139fb0a-6e65-4e65-9dff-9dd971ac2b21\"\n  }],\n  \"segments\": [\n    {\n      \"id\": \"bfef6ef0-745a-4c5c-b64b-472771096de8\"\n    },\n    {\n      \"id\": \"aaefc4b6-61ef-4252-b78b-5edef1fd8991\"\n    },\n    {\n      \"id\": \"2a04c001-bb27-4c6f-9767-3f333a1144af\"\n    },\n    {\n      \"id\": \"6c02486d-b92a-4696-b6cc-8826049a0208\"\n    },\n    {\n      \"id\": \"ae2c27fb-62ff-4be6-996c-a265e53920c8\"\n    }\n  ]\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '404':
+          description: The specified profile doesn't exist.
+        '408':
+          description: Request timed out.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:profiles
+components:
+  schemas:
+    permissions:
+      type: object
+      properties:
+        level:
+          type: string
+          description: The permission level of the profile
+    BulkResultBean:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        profileId:
+          type: string
+          description: The profile ID of the profile that was created, updated or deleted.
+        state:
+          type: string
+          description: The possible states for profile related changes.
+          enum:
+          - CREATED
+          - SKIPPED
+          - MODIFIED
+          - UNCHANGED
+          - NOTFOUND
+          - RESTRICTION_MISMATCH
+          - CONSENT_MISMATCH
+          - DELETED
+          - UNAUTHORIZED
+        timeline:
+          type: array
+          description: The feedback on the given timeline events.
+          items:
+            $ref: '#/components/schemas/TimelineResultBean'
+        validationErrors:
+          type: object
+          additionalProperties:
+            type: array
+            description: The errors found for the given profile changes (if any).
+            items:
+              type: string
+              description: The errors found for the given profile changes (if any).
+          description: The errors found for the given profile changes (if any).
+    restriction:
+      type: object
+      description: The possible restriction rules when matching profiles. Only "isMemberOfSegment" is available at the moment.
+      properties:
+        isMemberOfSegment:
+          type: string
+          description: The segment ID this profile should be a part of.
+    ProfileProperty:
+      type: object
+      description: 'The rules that will be executed on this profile.</br>The following properties have a special meaning:</br> `privacy_legislation`: the value passed in this property should be one of the [privacy legislation zone values](https://support.blueconic.com/hc/en-us/articles/202528082-BlueConic-REST-API#privacy_legislation), and is used to determine if a profile should be matched against the passed `objectiveIds` in the querystring. </br>`consented_objectives`: the value(s) passed in this property are used to match against the passed `objectiveIds` in the querystring. At least one must match in order for the profile to be created/updated, otherwise `CONSENT_MISMATCH` is returned. </br>`refused_objectives`: the value(s) passed in this property are used to set the explicitly refused objectives.'
+      properties:
+        id:
+          type: string
+          description: The profile property ID to apply to this rule for.
+        restriction:
+          type: string
+          default: ALL_PROFILES
+          description: The restriction to apply to this rule.
+          enum:
+          - ALL_PROFILES
+          - EXISTING_PROFILES_ONLY
+          - NEW_PROFILES_ONLY
+        strategy:
+          type: string
+          description: The strategy to apply to this rule.
+          enum:
+          - ADD
+          - SET
+          - SET_IF_EMPTY
+          - INCREMENT
+          - REMOVE
+        values:
+          type: array
+          description: The values to apply to this rule.
+          items:
+            type: string
+            description: The values to apply to this rule.
+    AbstractBaseBean:
+      type: object
+      description: List of profile IDs that matches search criteria.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the object.
+    matchingGroup:
+      type: object
+      description: Groups that the profile is a part of and match the segment refinements.
+      properties:
+        profilePropertyId:
+          type: string
+          description: The ID of the BlueConic profile property.
+        groupIds:
+          type: array
+          description: The matching group IDs.
+          items:
+            type: string
+            description: The matching group IDs.
+    lifecycleStage:
+      type: object
+      description: Lifecycle stages that the profile is part of.
+      properties:
+        lifecycle:
+          $ref: '#/components/schemas/simpleObject'
+        stage:
+          $ref: '#/components/schemas/simpleObject'
+    profiles:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        profiles:
+          type: array
+          description: List of profile IDs that matches search criteria.
+          items:
+            $ref: '#/components/schemas/AbstractBaseBean'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    profileSegmentBean:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the segment.
+        name:
+          type: string
+          description: The name of the segment.
+        tags:
+          type: array
+          description: The labels of the segment (optionally included).
+          items:
+            type: string
+            description: The labels of the segment (optionally included).
+    profile:
+      type: object
+      description: The profiles that are in this segment.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the object.
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        privacyLegislation:
+          type: string
+          description: The default privacy legislation for creating profiles (not for matching).
+          enum:
+          - NONE
+          - GDPR
+          - PIPEDA
+          - CCPA
+          - SB220
+          - NYPA
+          - PERU_DPL
+          - ARGENTINA_DPL
+          - SB1392
+          - SB190
+          - BRAZIL_LGPD
+          - ISRAEL_PPL
+          - JAPAN_APPI
+          - NEW_ZEALAND_PRIVACY_ACT
+          - SWITZERLAND_DPA
+          - UK_GDPR
+          - CHINA_PIPL
+          - AUSTRALIA_PRIVACY_ACT
+          - CDPA_CTCPDA
+          - UCPA
+          - MEXICO_LFPDPPP
+        consentedObjectives:
+          type: array
+          description: List of objective IDs that the profile has given consent to.
+          items:
+            type: string
+            description: List of objective IDs that the profile has given consent to.
+        refusedObjectives:
+          type: array
+          description: List of objective IDs that the profile has refused consent to.
+          items:
+            type: string
+            description: List of objective IDs that the profile has refused consent to.
+        permissions:
+          $ref: '#/components/schemas/permissions'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
+        groups:
+          type: array
+          description: Groups that the profile is a part of.
+          items:
+            $ref: '#/components/schemas/group'
+        matchingGroups:
+          type: array
+          description: Groups that the profile is a part of and match the segment refinements.
+          items:
+            $ref: '#/components/schemas/matchingGroup'
+        lifecycleStages:
+          type: array
+          description: Lifecycle stages that the profile is part of.
+          items:
+            $ref: '#/components/schemas/lifecycleStage'
+        replacedBy:
+          type: string
+          description: The profile ID that replaced this profile.
+        replaces:
+          type: array
+          description: The IDs of the profiles that are replaced by this profile.
+          items:
+            type: string
+            description: The IDs of the profiles that are replaced by this profile.
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/profileSegmentBean'
+    Property:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Timeline event property ID to apply to this rule for.
+        strategy:
+          type: string
+          description: The strategy to apply to primitive timeline event properties. For nested timeline event properties, SET/UPSERT/UPDATE/DELETE are supported.
+          enum:
+          - ADD
+          - SET
+          - SET_IF_EMPTY
+          writeOnly: true
+        values:
+          type: array
+          description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
+          items:
+            type: object
+            description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
+    event:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        date:
+          type: string
+          format: date-time
+          description: Timestamp for the event. The format of date is "2018-01-01T00:00Z" or with a timezone offset "2018-01-01T00:00+05:00". If empty, "now" will be used.
+        eventTypeId:
+          type: string
+          description: The type identifier of the event. See https://yourserver.blueconic.net/rest/timelineEventTypes?alt=json for the list of defined event types.
+        id:
+          type: string
+          description: An identifier to identify the event. Preferred to be unique, although it isn't required. If an event with the same ID is present on the profile's timeline, it will be overwritten. Note that the combination of ID, event type ID, and date uniquely identifies an event.
+        identifier:
+          type: string
+          description: An (external) identifier which can be passed along with a timeline event operation and is returned in the response.
+        strategy:
+          type: string
+          description: How the event will be applied to the timeline.
+          enum:
+          - SET
+          - UPSERT
+          - UPDATE
+          - DELETE
+          writeOnly: true
+    TimelineResultBean:
+      type: object
+      description: The feedback on the given timeline events.
+      properties:
+        id:
+          type: string
+          description: The ID for this event.
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        state:
+          type: string
+          description: The possible states for timeline events.
+          enum:
+          - CREATED
+          - SET
+          - MODIFIED
+          - REJECTED
+          - NOTFOUND
+          - DELETED
+        validationErrors:
+          type: array
+          description: The errors found for the given timeline event changes (if any).
+          example:
+          - '#/total_revenue/0: expected type: Number, found: String'
+          items:
+            type: string
+            description: The errors found for the given timeline event changes (if any).
+            example: '["#/total_revenue/0: expected type: Number, found: String"]'
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    BulkInputEntryV2:
+      type: object
+      properties:
+        domainGroup:
+          type: string
+          default: DEFAULT
+          description: Specifies the domain group in which a profile is created. Used for matching and creating profiles.
+        identifier:
+          type: string
+          description: An (external) identifier which can be passed along with an operation and is returned in the response.
+          example: '[[{"id": "email", value: "test@test.com"}]]'
+        matching:
+          type: array
+          description: The profile properties to match (only use "Unique Identifier" properties). This is an array of arrays; the items in the outer array have an "OR" relation, the items in the inner array have an "AND" relation.
+          items:
+            type: array
+            description: The profile properties to match (only use "Unique Identifier" properties). This is an array of arrays; the items in the outer array have an "OR" relation, the items in the inner array have an "AND" relation.
+            items:
+              $ref: '#/components/schemas/Criterium'
+        permissionLevel:
+          type: string
+          default: PERSONAL
+          description: Specifies the permission level when creating a profile. Not used for matching.
+          enum:
+          - DO_NOT_TRACK
+          - ANONYMOUS
+          - PERSONAL
+        privacyLegislation:
+          type: string
+          description: Specifies the privacy legislation when creating a profile. Not used for matching.
+          enum:
+          - NONE
+          - GDPR
+          - PIPEDA
+          - CCPA
+          - SB220
+          - NYPA
+          - PERU_DPL
+          - ARGENTINA_DPL
+          - SB1392
+          - SB190
+          - BRAZIL_LGPD
+          - ISRAEL_PPL
+          - JAPAN_APPI
+          - NEW_ZEALAND_PRIVACY_ACT
+          - SWITZERLAND_DPA
+          - UK_GDPR
+          - CHINA_PIPL
+          - AUSTRALIA_PRIVACY_ACT
+          - CDPA_CTCPDA
+          - MEXICO_LFPDPPP
+          - UCPA
+          - TDPSA
+          - MTCDPA
+          - FDBR
+          - OCPA
+          - DPDPA
+          - ICDPA
+          - NHPA
+          - NJDPA
+          - NEDPA
+          - HAITI_APD
+          - JAMAICA_DPA
+          - TRINIDAD_TOBAGO_DPA
+          - COSTA_RICA_L8968
+          - GUATEMALA_LAIP
+          - PANAMA_L81
+          - HONDURAS_LPDCP
+          - EL_SALVADOR
+          - COLOMBIA_L1581_D1377
+          - NICARAGUA_L787
+          - CHILE_L19_628
+          - BELIZE_DPA
+          - TENNESSEE_TIPA
+          - INDIANA_INCDPA
+          - KENTUCKY_KCDPA
+          - MINNESOTA_MCDPA
+          - MARYLAND_MODPA
+          - RHODE_ISLAND_RIDTPPA
+          - SOUTH_KOREA_PIPA
+        profileId:
+          type: string
+          description: The BlueConic profile ID to search for. When specified, it overrides possible matching criteria.
+        properties:
+          type: array
+          description: 'The rules that will be executed on this profile.</br>The following properties have a special meaning:</br> `privacy_legislation`: the value passed in this property should be one of the [privacy legislation zone values](https://support.blueconic.com/hc/en-us/articles/202528082-BlueConic-REST-API#privacy_legislation), and is used to determine if a profile should be matched against the passed `objectiveIds` in the querystring. </br>`consented_objectives`: the value(s) passed in this property are used to match against the passed `objectiveIds` in the querystring. At least one must match in order for the profile to be created/updated, otherwise `CONSENT_MISMATCH` is returned. </br>`refused_objectives`: the value(s) passed in this property are used to set the explicitly refused objectives.'
+          items:
+            $ref: '#/components/schemas/ProfileProperty'
+        restriction:
+          $ref: '#/components/schemas/restriction'
+        strategy:
+          type: string
+          default: UPDATE
+          description: The strategy to apply to the given entry. Can be used to create, update or delete profiles.
+          enum:
+          - UPSERT
+          - UPDATE
+          - DELETE
+        timeline:
+          type: array
+          description: The timeline event entries that will be applied to the timeline for this profile.
+          items:
+            $ref: '#/components/schemas/event'
+        triggerOnEventAdded:
+          type: boolean
+          default: false
+          description: Whether or not to execute the configured triggers (for example, a webhook connection) when a timeline event is created or updated.
+        triggerOnPropertyChange:
+          type: boolean
+          default: true
+          description: Whether or not to execute the configured triggers (for example, a webhook connection) when a profile property value changes.
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+    simpleObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: The object name.
+    Criterium:
+      type: object
+      description: The profile properties to match (only use "Unique Identifier" properties). This is an array of arrays; the items in the outer array have an "OR" relation, the items in the inner array have an "AND" relation.
+      properties:
+        id:
+          type: string
+          description: The profile property ID to match on.
+        value:
+          type: string
+          description: The profile property value to match on.
+    group:
+      type: object
+      description: Groups that the profile is a part of.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        groupTypeId:
+          type: string
+          description: The ID of the BlueConic group type.
+        id:
+          type: string
+          description: The unique identifier for the object.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

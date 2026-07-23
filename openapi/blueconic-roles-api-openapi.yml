@@ -1,0 +1,275 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Roles API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Roles
+  description: A role contains a collection of data privacy and feature access permissions that you can assign to a user. Every BlueConic user is assigned to at least one role. A user can only access the features their role grants to them. [Read more](https://support.blueconic.com/hc/en-us/articles/202607121-BlueConic-Roles?utm_source=BlueConic_User)
+paths:
+  /roles:
+    get:
+      tags:
+      - Roles
+      summary: Get all roles
+      description: Retrieves all roles.
+      operationId: getAllRoles
+      parameters:
+      - name: count
+        in: query
+        description: Specifies the number of results to return.
+        schema:
+          type: integer
+          format: int64
+          default: 20
+          example: 10
+      - name: startIndex
+        in: query
+        description: Specifies the index of the first item to include in the result.
+        schema:
+          type: integer
+          format: int64
+          default: 0
+          example: 0
+      responses:
+        '200':
+          description: Returns the roles.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roles'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"itemsPerPage\" : 10,\n  \"roles\" : [ {\n    \"creationDate\" : \"2024-01-24T14:06:19.100Z\",\n    \"creator\" : {\n      \"fullName\" : \"BlueConic\",\n      \"userName\" : \"BlueConic\"\n    },\n    \"description\" : \"description here\",\n    \"id\" : \"35718e9a-f8d3-4d2d-8501-a020c563cc25\",\n    \"lastModifiedDate\" : \"2024-01-24T14:06:19.100Z\",\n    \"lastModifiedUser\" : {\n      \"fullName\" : \"BlueConic\",\n      \"userName\" : \"BlueConic\"\n    },\n    \"name\" : \"Application Manager\",\n    \"permissions\" : [ \"MANAGE_PROPERTIES\", \"READ_PROFILES\", \"MANAGE_PROFILES\", \"MANAGE_LISTENERS\", \"MANAGE_TRACKERS\", \"MANAGE_SEGMENTS\", \"MANAGE_PROFILE_MERGE_RULES\", \"MANAGE_PROFILE_COMPOSITION_RULES\", \"MANAGE_DIALOGUES\", \"CREATE_POSITIONS\", \"MANAGE_INSIGHTS\", \"MANAGE_EMAIL_NOTIFICATIONS\", \"MANAGE_LIFECYCLES\", \"USE_SIMULATOR\", \"MANAGE_CHANNELS\", \"MANAGE_PLUGINS\", \"MANAGE_CONNECTIONS\", \"MANAGE_API_V1_ACCESS_KEYS\", \"MANAGE_USERS\", \"MANAGE_ROLES\", \"MANAGE_PRIVACY_SETTINGS\", \"MANAGE_GENERAL_SETTINGS\", \"PERSONAL\", \"MANAGE_TEMPLATES\", \"MANAGE_NOTEBOOKS\", \"USE_NOTEBOOK_EDITOR\", \"APPLY_BULK_OPERATIONS\", \"MANAGE_OBJECTIVES\", \"MANAGE_TIMELINE_EVENT_TYPES\", \"READ_GROUPS\", \"MANAGE_GROUPS\", \"MANAGE_PII_VALUES\", \"READ_AUDIT_EVENTS\", \"READ_EXACT_PROFILE_STATISTICS\", \"MANAGE_APPLICATIONS\", \"AUTHORIZE_APPLICATIONS\", \"MANAGE_SINGLE_SIGN_ON_SETTINGS\", \"MANAGE_IP_BASED_ACCESS_SETTINGS\", \"MANAGE_SUPPORT_ACCESS_SETTINGS\", \"MANAGE_TIMELINE_EVENT_ROLLUPS\", \"READ_INACTIVITY_SETTINGS\", \"MANAGE_INACTIVITY_SETTINGS\", \"READ_SECURITY_SETTINGS\", \"MANAGE_SECURITY_SETTINGS\" ],\n    \"tags\" : [ \"a tag here\" ]\n  } ],\n  \"startIndex\" : 0,\n  \"totalPages\" : 14,\n  \"totalResults\" : 14\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:roles
+  /roles/{role}:
+    get:
+      tags:
+      - Roles
+      summary: Get one role
+      description: Retrieves a single role.
+      operationId: getOneRole
+      parameters:
+      - name: role
+        in: path
+        description: The id of the role to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the role.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleBean'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"creationDate\" : \"2024-03-27T12:14:02.651Z\",\n  \"creator\" : {\n    \"fullName\" : \"admin@blueconic.com\",\n    \"userName\" : \"admin@blueconic.com\"\n  },\n  \"description\" : \"Role description here\",\n  \"id\" : \"0d8a5b63-a2c8-4cbd-b5de-415c1743d67c\",\n  \"lastModifiedDate\" : \"2024-03-27T12:26:31.300Z\",\n  \"lastModifiedUser\" : {\n    \"fullName\" : \"admin@blueconic.com\",\n    \"userName\" : \"admin@blueconic.com\"\n  },\n  \"name\" : \"Marketeers\",\n  \"permissions\" : [ \"MANAGE_USERS\", \"READ_EXACT_PROFILE_STATISTICS\", \"MANAGE_APPLICATIONS\", \"AUTHORIZE_APPLICATIONS\" ],\n  \"tags\" : [ \"a tag here\" ]\n}\n"
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '404':
+          description: The role doesn't exist.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:roles
+components:
+  schemas:
+    RoleBean:
+      type: object
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        id:
+          type: string
+          description: The object ID.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        name:
+          type: string
+          description: The object name.
+        permissions:
+          type: array
+          items:
+            type: string
+            enum:
+            - MANAGE_PROPERTIES
+            - READ_PROFILES
+            - MANAGE_PROFILES
+            - MANAGE_LISTENERS
+            - MANAGE_TRACKERS
+            - MANAGE_SEGMENTS
+            - MANAGE_PROFILE_MERGE_RULES
+            - MANAGE_PROFILE_COMPOSITION_RULES
+            - MANAGE_DIALOGUES
+            - CREATE_POSITIONS
+            - MANAGE_INSIGHTS
+            - MANAGE_EMAIL_NOTIFICATIONS
+            - MANAGE_LIFECYCLES
+            - USE_SIMULATOR
+            - MANAGE_CHANNELS
+            - MANAGE_PLUGINS
+            - MANAGE_CONNECTIONS
+            - MANAGE_API_V1_ACCESS_KEYS
+            - EDIT_AI_AGENT
+            - MANAGE_USERS
+            - MANAGE_ROLES
+            - MANAGE_PRIVACY_SETTINGS
+            - MANAGE_GENERAL_SETTINGS
+            - MANAGE_TEMPLATES
+            - MANAGE_NOTEBOOKS
+            - USE_NOTEBOOK_EDITOR
+            - APPLY_BULK_OPERATIONS
+            - MANAGE_OBJECTIVES
+            - MANAGE_TIMELINE_EVENT_TYPES
+            - MANAGE_AI_CANVAS
+            - MANAGE_GROWTH_PLAYS
+            - READ_GROUPS
+            - MANAGE_GROUPS
+            - MANAGE_PII_VALUES
+            - READ_AUDIT_EVENTS
+            - READ_EXACT_PROFILE_STATISTICS
+            - MANAGE_APPLICATIONS
+            - AUTHORIZE_APPLICATIONS
+            - MANAGE_SINGLE_SIGN_ON_SETTINGS
+            - MANAGE_IP_BASED_ACCESS_SETTINGS
+            - MANAGE_SUPPORT_ACCESS_SETTINGS
+            - MANAGE_TIMELINE_EVENT_ROLLUPS
+            - READ_INACTIVITY_SETTINGS
+            - MANAGE_INACTIVITY_SETTINGS
+            - READ_SECURITY_SETTINGS
+            - MANAGE_SECURITY_SETTINGS
+            - MANAGE_MODELS
+            - TRANSFER_CONFIGURATION
+        restrictions:
+          $ref: '#/components/schemas/restrictions'
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+      required:
+      - permissions
+    restrictions:
+      type: object
+      description: Plugin restrictions for the role. Single plugins list; only access 'deny' is supported.
+      properties:
+        plugins:
+          type: array
+          description: List of plugin restriction items (access deny only).
+          items:
+            $ref: '#/components/schemas/pluginRestrictionItem'
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    pluginRestrictionItem:
+      type: object
+      description: 'Single plugin restriction: pluginId, access (only ''deny'' supported), operations (e.g. create, edit).'
+      properties:
+        access:
+          type: string
+          description: Access type; only 'deny' is supported.
+          enum:
+          - deny
+        operations:
+          type: array
+          description: Operations to restrict (e.g. create, edit).
+          items:
+            type: string
+            description: Operations to restrict (e.g. create, edit).
+            enum:
+            - create
+            - edit
+        pluginId:
+          type: string
+          description: Plugin identifier.
+    roles:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleBean'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

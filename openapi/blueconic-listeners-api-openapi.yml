@@ -1,0 +1,223 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Listeners API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Listeners
+  description: Listeners add information about visitors to their profile, based on their online behavior or provided input. Use this endpoint to retrieve listener configuration. [Read more](https://support.blueconic.com/en/articles/247923-listeners-overview)
+paths:
+  /listeners:
+    get:
+      tags:
+      - Listeners
+      summary: Get all listeners
+      description: Retrieves all listeners.
+      operationId: getAllListeners
+      parameters:
+      - name: startIndex
+        in: query
+        description: Specifies the index of the first item to include in the result.
+        schema:
+          type: integer
+          format: int64
+          default: 0
+          example: 0
+      - name: count
+        in: query
+        description: Specifies the number of results to return.
+        schema:
+          type: integer
+          format: int64
+          default: 20
+          example: 10
+      responses:
+        '200':
+          description: Returns the listeners.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listener'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"itemsPerPage\": 10,\n  \"listeners\": [\n    {\n      \"allChannels\": false,\n      \"creationDate\": \"2025-10-01T11:53:43.839Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [\n        {\n          \"id\": \"8d7757cf-9ed0-4807-b974-089ebc0197d0\",\n          \"name\": \"www.blueconic.test\"\n        }\n      ],\n      \"id\": \"28411027-a400-4c29-b962-bcb6910db736\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T14:28:53.215Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"lastActivationDate\": \"2025-11-27T10:35:43.034Z\",\n      \"name\": \"AdBlock Detection\",\n      \"pluginId\": \"listener_adblock\",\n      \"tags\": [],\n      \"targetChannels\": [\n        {\n          \"URLRestrictions\": [\n            {\n              \"pattern\": \"/tenant\",\n              \"previewURL\": \"\",\n              \"restrictionType\": \"RESTRICT\"\n            }\n          ],\n          \"channelId\": \"653d3db6-8016-46e8-96a5-547feceb9d15\"\n        }\n      ]\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:53:44.327Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"efd56981-8c5d-4f2b-b897-fa86938254f8\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T11:53:44.327Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"name\": \"Campaign Tracker Listener\",\n      \"pluginId\": \"listener_campaign_tracker\",\n      \"tags\": [],\n      \"targetChannels\": []\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:53:44.595Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"9eeb2c6d-52e0-496a-81e5-49c7457bfaf7\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T11:53:44.595Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"name\": \"Engagement Listener\",\n      \"pluginId\": \"listener_engagement\",\n      \"tags\": [],\n      \"targetChannels\": []\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:53:43.201Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"9b4885b2-2e87-4941-993b-a2e8b70a788e\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T11:53:43.201Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"name\": \"Exit Intent\",\n      \"pluginId\": \"exitintent\",\n      \"tags\": [],\n      \"targetChannels\": []\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:53:44.832Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"50a79c94-5f86-428f-b098-6f9a29d1ea9b\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T11:53:44.832Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"name\": \"Geolocation Listener\",\n      \"pluginId\": \"listener_geolocation\",\n      \"tags\": [],\n      \"targetChannels\": []\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:53:43.549Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"cb774356-49b4-4bc2-bd98-f9d57f73b167\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T11:53:43.549Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"name\": \"Inactivity\",\n      \"pluginId\": \"inactivitylistener\",\n      \"tags\": [],\n      \"targetChannels\": []\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:53:45.849Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"b61cde55-ea15-4815-935f-2ba22000ffcc\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T11:53:45.849Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"name\": \"Keyword Interest Ranking\",\n      \"pluginId\": \"listener_meta_keywords_ranker\",\n      \"tags\": [],\n      \"targetChannels\": []\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:53:45.644Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"53b7af59-60b2-4f34-a41d-c3b6ef8347f1\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T11:53:45.644Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"name\": \"Preferred Category by URL\",\n      \"pluginId\": \"listener_url_structure\",\n      \"tags\": [],\n      \"targetChannels\": []\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:53:45.292Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"1fa49e3e-b2db-426b-9321-4d6a7e17132c\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T11:53:45.292Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"name\": \"Preferred visit hour listener\",\n      \"pluginId\": \"listener_preferred_hour\",\n      \"tags\": [],\n      \"targetChannels\": []\n    }\n  ],\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 9\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:listeners
+  /listeners/{listener}:
+    get:
+      tags:
+      - Listeners
+      summary: Get one listener
+      description: Retrieves a single listener.
+      operationId: getOneListener
+      parameters:
+      - name: listener
+        in: path
+        description: The ID of the listener.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the listener.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listener'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"allChannels\": false,\n  \"creationDate\": \"2025-10-01T11:53:43.839Z\",\n  \"creator\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"description\": \"\",\n  \"domains\": [\n    {\n      \"id\": \"8d7757cf-9ed0-4807-b974-089ebc0197d0\",\n      \"name\": \"www.blueconic.test\"\n    }\n  ],\n  \"id\": \"28411027-a400-4c29-b962-bcb6910db736\",\n  \"isEnabled\": true,\n  \"lastModifiedDate\": \"2025-10-01T14:28:53.215Z\",\n  \"lastModifiedUser\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"lastActivationDate\": \"2025-11-27T10:35:43.034Z\",\n  \"name\": \"AdBlock Detection\",\n  \"pluginId\": \"listener_adblock\",\n  \"tags\": [],\n  \"targetChannels\": [\n    {\n      \"URLRestrictions\": [\n        {\n          \"pattern\": \"/tenant\",\n          \"previewURL\": \"\",\n          \"restrictionType\": \"RESTRICT\"\n        }\n      ],\n      \"channelId\": \"653d3db6-8016-46e8-96a5-547feceb9d15\"\n    }\n  ]\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '404':
+          description: The listener doesn't exist.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:listeners
+components:
+  schemas:
+    simpleDomain:
+      type: object
+      description: The domain.
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: Name of this object.
+      readOnly: true
+    targetChannels:
+      type: object
+      description: Target channel.
+      properties:
+        URLRestrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UrlRestriction'
+        channelId:
+          type: string
+          description: The ID of the channel.
+      required:
+      - URLRestrictions
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    UrlRestriction:
+      type: object
+      description: URL restriction for a target channel.
+      properties:
+        pattern:
+          type: string
+          description: The URL pattern.
+        previewURL:
+          type: string
+          description: The preview URL.
+        restrictionType:
+          type: string
+          description: The restriction type.
+          enum:
+          - RESTRICT
+          - EXCLUDE
+    Listener:
+      type: object
+      description: A listener
+      properties:
+        allChannels:
+          type: boolean
+          description: Indicates whether the executable is active on all channels
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/simpleDomain'
+        id:
+          type: string
+          description: The object ID.
+        isEnabled:
+          type: boolean
+          description: Indicates whether it is enabled
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        name:
+          type: string
+          description: The object name.
+        pluginId:
+          type: string
+          description: The plugin id
+        requiredPermission:
+          type: string
+          description: The required permission for this executable
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+        targetChannels:
+          type: array
+          description: The channels.
+          items:
+            $ref: '#/components/schemas/targetChannels'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

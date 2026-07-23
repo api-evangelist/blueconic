@@ -1,0 +1,173 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Audit Events
+  description: "The Audit Event API allows users to connect BlueConic to a SIEM system. We recommend using this API to periodically receive security-related activities based on a rolling window. The API has a 30-day retention period.\n\nThe API logs the following audit events:\n\n| Object                     | Events                                                                                         |\n|:---------------------------|:-----------------------------------------------------------------------------------------------|\n| BlueConic hostname         | Create, Update, Delete                                                                         |\n| BlueConic Support Access   | Update (for each change)                                                                       |\n| Channel                    | Create, Update, Delete                                                                         |\n| Clean up rule              | Create, Update, Delete                                                                         |\n| Connection                 | Create, Update, Delete, Manual run, Scheduled run                                              |\n| Dashboard                  | Create, Update, Delete                                                                         |\n| Dialogue                   | Create, Update, Delete                                                                         |\n| Domain Group               | Create, Update, Delete                                                                         |\n| Gen AI Setting             | Update (for each change)                                                                       |\n| Group                      | Read, Update, Delete                                                                           |\n| Group type                 | Create, Update, Delete                                                                         |\n| Ip range                   | Create, Update, Delete                                                                         |\n| Language                   | Create, Update, Delete                                                                         |\n| Lifecycle                  | Create, Update, Delete                                                                         |\n| Merge rule                 | Create, Update, Delete                                                                         |\n| Models                     | Create, Update, Delete                                                                         |\n| Notebook                   | Create, Update, Delete, Manual run, Scheduled run, Editor run                                  |\n| OAuth application          | Create, Update, Delete                                                                         |\n| OAuth token                | Create, Update, Delete                                                                         |\n| Objective                  | Create, Update, Delete                                                                         |\n| Plugin                     | Create, Update, Delete                                                                         |\n| Privacy setting            | Update (for each change)                                                                       |\n| Profile                    | Read, Update, Delete                                                                           |\n| Profile property           | Create, Update, Delete                                                                         |\n| Role                       | Create, Update, Delete                                                                         |\n| Segment                    | Create, Update, Delete                                                                         |\n| Single Sign On Setting     | Update (for each change)                                                                       |\n| Inactvity Setting          | Update (for each change)                                                                       |\n| Supported Legislation Zone | Create, Delete, Update                                                                         |\n| Timeline Event Rollup      | Create, Update, Delete                                                                         |\n| Timeline Event Type        | Create, Update, Delete                                                                         |\n| Tracker                    | Create, Update, Delete                                                                         |\n| User                       | Login, Login failed, Logout, Create, Update, Delete, Password reset requested, Password change |\n\n\nOnly Profile and Group viewed, updated, or deleted by a user from the Profile and Groups tab are logged.\n\nThe following events are not considered as human actions, and therefore not covered in the Platform\nAudit Event API:\n\n- Connections that import or export profiles.\n- Profile and group creation (Profiles can only be created by a visitor or an import connection).\n\n**Event data**\n\nThe following event data is available:\n\n| Field                  | Description      | Example values                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |\n| :---                   | :---             |:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n|date|Datetime in UTC when the event occurred. The date is in the https://www.ietf.org/rfc/rfc3339.txt format.| 2025-04-15T11:24:01.183Z                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |\n|username|(BlueConic) Identifier (email address) of the user who did the action.<br /><br />Value is empty for failed login attempts.| test@blueconic.com                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |\n|objectType|Object of the action.| <ul><li>BLUECONIC_HOSTNAME</li><li>BLUECONIC_SUPPORT_ACCESS_SETTING</li><li>CHANNEL</li><li>CLEAN_UP_RULE</li><li>CONNECTION</li><li>DASHBOARD</li><li>DIALOGUE</li><li>DOMAIN_GROUP</li><li>GEN_AI_SETTING</li><li>GROUP</li><li>GROUP_TYPE</li><li>IP_RANGE</li><li>LANGUAGE</li><li>LIFECYCLE</li><li>LISTENER</li><li>MERGE_RULE</li><li>NOTEBOOK</li><li>OBJECTIVE</li><li>PLUGIN</li><li>PRIVACY_SETTING</li><li>PROFILE</li><li>PROFILE_PROPERTY</li><li>ROLE</li><li>SEGMENT</li><li>SINGLE_SIGN_ON_SETTING</li><li>SUPPORTED_LEGISLATION_ZONE</li><li>TRACKER</li><li>USER</li></ul> |\n|objectId|<ul><li>Email address in case of a user. <ul><li>In the case of LOGIN_FAILED and a user tried to login with an invalid format email address, it could be that the user filled the password in the email address field. In that case the objectId is empty</li></ul></li><li>Grouptype_GroupID in case of a group</li><li> For PRIVACY_SETTING and SINGLE_SIGN_ON_SETTING, the objectId is the name(s) of the changed setting. E.g. Status, Identity_Provider_Issuer_URL_Entity_ID.</li><li> For BLUECONIC_SUPPORT_ACCESS_SETTING the objectID contains the new settings.<ul><li> `\"objects\" : [ {\"name\" : \"No Access\", \"id\" : \"none\" } ]` or </li><li>`\"objects\" : [ {\"name\" : \"User name here\", \"id\" : \"user1@blueconic.com\" },{\"name\" : \"User name 2 here\", \"id\" : \"user2@blueconic.com\" }], (contains the new list)` or</li><li>`\"objects\" : [ {\"name\" : \"All BlueConic support employees\", \"id\" : \"all\" } ],`</li></ul></li><li>UUID or identifier in case of other object types.</li></ul>| <ul><li>1b1e50a5-c46a-4309-a95c-d4e19985fbbb</li><li>test@blueconic.com</li><li>test_objective</li><li>test_profile_property</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                 |\n|objectName|<p>Human readable name of the object.</p><p>For Profiles, the name is determined by the first value that is not empty:</p><ol><li>fullname</li><li>email</li><li>BlueConic ID (UUID)</li></ol><p>For Users, the name is determined by the first value that is not empty:</p><ol><li>fullname</li><li>email</li></ol><ul><li>In the case of LOGIN_FAILED and a user tried to login with an invalid format email address, it could be that the user filled the password in the email address field. In that case, the objectName is empty.</li></ul><p>For groups, the name is the group id.</p><p><span>For PRIVACY_SETTING and SINGLE_SIGN_ON_SETTING, the objectName is the name(s) of the changed setting. E.g. Status, Identity_Provider_Issuer_URL_Entity_ID.</span></p><p>For BLUECONIC_SUPPORT_ACCESS_SETTING the objectName contains the new settings.</p><ul><li><p>`\"objects\" : [ {\"name\" : \"No Access\", \"id\" : \"none\" } ]` or</p></li><li ><p> `\"objects\" : [ {\"name\" : \"User name here\", \"id\" : \"user1@blueconic.com\" },{\"name\" : \"User name 2 here\", \"id\" : \"user2@blueconic.com\" }],` (contains the new list) or</p></li><li><p>`\"objects\" : [ {\"name\" : \"All BlueConic support employees\", \"id\" : \"all\" } ],`</p></li></ul>| <ul><li>SFTP connection</li><li>test@blueconic.om</li><li>Keyword Interest Ranking</li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |\n|operation| Action performed on the object.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | <ul><li>CREATE</li><li>UPDATE</li><li>DELETE</li><li>EDITOR_RUN</li><li>READ</li><li>LOGIN</li><li>LOGIN_FAILED</li><li>LOGOUT</li><li>MANUAL_RUN</li><li>PASSWORD_RESET_REQUESTED</li><li>PASSWORD_CHANGE</li><li>SCHEDULED_RUN</li></ul>                                                                                                                                                                                                                                                                                                                             \n|ipAddress| The source IP address from which the event was triggered.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 192.168.1.100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |\n|application| The application that performed the audit event operation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | blueconic                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |\n\n"
+paths:
+  /auditEvents:
+    get:
+      tags:
+      - Audit Events
+      summary: Get audit events
+      description: Retrieves the audit events.
+      operationId: getAuditEvents
+      parameters:
+      - name: fromDate
+        in: query
+        description: Only return entries that are created later than this date. The fromDate is in the ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z').
+        schema:
+          type: string
+        example: 2025-01-22 11:21:33.872000+00:00
+      - name: count
+        in: query
+        description: Page size for the result.<br />Maximum limit is 1000
+        schema:
+          type: integer
+          format: int32
+          default: 100
+      responses:
+        '200':
+          description: Returns the audit events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditEventsBean'
+              examples:
+                Example response:
+                  description: Example response
+                  value: "{\n  \"auditEvents\": [\n    {\n      \"application\": \"blueconic\",\n      \"date\": \"2025-04-15T11:21:33.872Z\",\n      \"userName\": \"test@blueconic.com\",\n      \"objects\": [\n        {\n          \"id\": \"68a02413-98d0-4a2b-b65c-4617a3c26fd0\",\n          \"name\": \"Campaign Tracker Listener ds\"\n        }\n      ],\n      \"objectType\": \"LISTENER\",\n      \"operation\": \"UPDATE\",\n      \"ipAddress\": \"192.168.1.100\"\n    },\n    {\n      \"application\": \"blueconic\",\n      \"date\": \"2025-04-15T11:21:33.672Z\",\n      \"userName\": \"test@blueconic.com\",\n      \"objectType\": \"PROFILEPROPERTY\",\n      \"objects\": [\n        {\n          \"id\": \"responded_to_campaigns\",\n          \"name\": \"responded_to_campaigns\"\n        }\n      ],\n      \"operation\": \"CREATE\",\n      \"ipAddress\": \"192.168.1.100\"\n    },\n    {\n      \"application\": \"blueconic\",\n      \"date\": \"2023-04-15T12:51:32.702Z\",\n      \"userName\": \"test@blueconic.com\",\n      \"objectType\": \"USER\",\n      \"objects\": [\n        {\n          \"id\": \"test@blueconic.com\",\n          \"name\": \"test@blueconic.com\"\n        }\n      ],\n      \"operation\": \"LOGIN\",\n      \"ipAddress\": \"192.168.1.100\"\n    },\n    {\n      \"application\": \"blueconic\",\n      \"date\": \"2023-04-15T12:51:32.702Z\",\n      \"objectType\": \"USER\",\n      \"objects\": [\n        {\n          \"id\": \"wrongpassword@blueconic.com\",\n          \"name\": \"wrongpassword@blueconic.com\"\n        }\n      ],\n      \"operation\": \"LOGIN_FAILED\",\n      \"ipAddress\": \"192.168.1.100\"\n    },\n    {\n      \"application\": \"blueconic\",\n      \"date\": \"2023-04-15T12:51:32.702Z\",\n      \"objectType\": \"USER\",\n      \"objects\": [\n        {\n          \"id\": \"\",\n          \"name\": \"\"\n        }\n      ],\n      \"operation\": \"LOGIN_FAILED\",\n      \"ipAddress\": \"192.168.1.100\"\n    },\n    {\n      \"application\": \"blueconic\",\n      \"date\": \"2023-04-15T12:51:32.702Z\",\n      \"objectType\": \"USER\",\n      \"objects\": [\n        {\n          \"id\": \"nonexistinguserName@blueconic.com\",\n          \"name\": \"nonexistinguserName@blueconic.com\"\n        }\n      ],\n      \"operation\": \"LOGIN_FAILED\",\n      \"ipAddress\": \"192.168.1.100\"\n    },\n    {\n      \"application\": \"blueconic\",\n      \"date\": \"2023-04-15T12:51:32.702Z\",\n      \"userName\": \"test@blueconic.com\",\n      \"objectType\": \"PROFILE\",\n      \"objects\": [\n        {\n          \"id\": \"4dc2a97e-707e-4049-a03a-badcce564f3c\",\n          \"name\": \"4dc2a97e-707e-4049-a03a-badcce564f3c\"\n        },\n        {\n          \"id\": \"test@blueconic.com\",\n          \"name\": \"33f53658-3dc8-4946-b239-ecb65dea9827\"\n        }\n      ],\n      \"operation\": \"READ\",\n      \"ipAddress\": \"192.168.1.100\"\n    }\n  ]\n}"
+        '400':
+          description: One or more required parameters are missing or invalid.
+        '401':
+          description: Authentication failed (unauthorized).
+      security:
+      - oauth2:
+        - read:audit-events
+components:
+  schemas:
+    AuditEntryBean:
+      type: object
+      properties:
+        application:
+          type: string
+        date:
+          type: string
+          format: date-time
+          description: Datetime in UTC when the event occurred. The date is in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        ipAddress:
+          type: string
+        objectType:
+          type: string
+          enum:
+          - DIALOGUE
+          - LISTENER
+          - CONNECTION
+          - VARIANT
+          - SEGMENT
+          - PROFILE_PROPERTY
+          - GROUP_PROPERTY
+          - TRACKER
+          - DASHBOARD
+          - LIFECYCLE
+          - PLUGIN
+          - USER
+          - ROLE
+          - CHANNEL
+          - BLUECONIC_HOSTNAME
+          - LANGUAGE
+          - CONTENTSTORE
+          - STATISTICS
+          - FAVORITE
+          - TEMPLATE
+          - NOTEBOOK
+          - PRIORITY
+          - GROUP_TYPE
+          - CLEANUP_RULE
+          - MERGE_RULE
+          - COMPOSITION_RULE
+          - OBJECTIVE
+          - TIMELINE_EVENT_TYPE
+          - PROFILE
+          - IP_RANGE
+          - GROUP
+          - SUPPORTED_LEGISLATION_ZONE
+          - DOMAIN_GROUP
+          - DOMAIN
+          - PRIVACY_SETTING
+          - SINGLE_SIGN_ON_SETTING
+          - BLUECONIC_SUPPORT_ACCESS_SETTING
+          - OAUTH_APPLICATION
+          - OAUTH_TOKEN
+          - TIMELINE_EVENT_ROLLUP
+          - INACTIVITY_SETTING
+          - AI_CANVAS
+          - MODEL
+          - GEN_AI_SETTING
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditEntryObjectBean'
+        operation:
+          type: string
+          enum:
+          - CREATE
+          - UPDATE
+          - DELETE
+          - READ
+          - LOGIN
+          - LOGOUT
+          - LOGIN_FAILED
+          - PROFILE_MERGE_TRIGGERED_BY_USER
+          - PASSWORD_RESET_REQUESTED
+          - PASSWORD_CHANGE
+          - MANUAL_RUN
+          - SCHEDULED_RUN
+          - EDITOR_RUN
+        username:
+          type: string
+      required:
+      - date
+      - objectType
+      - operation
+    AuditEntryObjectBean:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    AuditEventsBean:
+      type: object
+      properties:
+        auditEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditEntryBean'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

@@ -1,0 +1,576 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Stores API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Stores
+  description: A store is a database for managing metadata about products or articles. You can populate it using a Product collector or Content collector, which scrapes data from your website. This metadata powers features in the recommendation engine and AI Workbench. Use this endpoint to retrieve, create, update, or delete content and product stores, as well as the items within them. See [Content Stores](https://support.blueconic.com/en/articles/247526-data-storage-in-blueconic#h_588a2cba-7c4d-4bb4-a155-2cf6ee87db76).
+paths:
+  /contentStores/{contentStore}/items:
+    get:
+      tags:
+      - Stores
+      summary: Get store items
+      description: 'To retrieve items from a content store, a `GET` request can be sent to the `/contentStores/{contentStoreId}/items` endpoint.
+
+
+        You can use the `filterValue` query parameter to filter the results based on an expression. The expression format is `property<operator>value`, where the supported operators are `=`, `==`, `<`, `>`, `<=`, and `>=`. For example, `name=foo` returns only items whose name equals `foo`, and `publicationDate>=2024-01-01T00:00Z` returns only items published on or after January 1, 2024. The format of `publicationDate` is `2024-01-01T00:00Z` or with a time zone offset `2024-01-01T00:00+05:00`. When using `filterValue` in a URL, ensure the value is URL-encoded (for example, `>=` should be encoded as `%3E%3D`).
+
+
+        The `filterValue` parameter can be repeated to apply multiple filters. All filters are combined with AND semantics, so only items that match all filters are returned.'
+      operationId: getContentItemsFromStore
+      parameters:
+      - name: contentStore
+        in: path
+        description: The ID of the content store.
+        required: true
+        schema:
+          type: string
+        examples:
+          UUID of the content store:
+            description: UUID of the content store
+            value: 2613c9d6-a179-4c79-b6d2-1618a53fbc64
+      - name: filterValue
+        in: query
+        description: Filters results using an expression of the form `property<operator>value`. Supported operators are `=`, `==`, `<`, `>`, `<=`, and `>=`. This parameter can be repeated to apply multiple filters (AND semantics).
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          Filter by name:
+            description: Filter by name
+            value: name=foo
+          Filter by publication date:
+            description: Filter by publication date
+            value: publicationDate>=2024-01-01T00:00Z
+      - name: startIndex
+        in: query
+        description: Specifies the index of the first item to include in the result.
+        schema:
+          type: integer
+          format: int64
+          default: 0
+          example: 0
+      - name: count
+        in: query
+        description: Specifies the number of results to return.
+        schema:
+          type: integer
+          format: int64
+          default: 20
+          example: 10
+      responses:
+        '200':
+          description: Returns the content items.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/items'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"items\": [\n    {\n      \"URL\": \"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\",\n      \"creationDate\": \"2025-08-19T13:24:31.943Z\",\n      \"description\": \"23andMe’s demise raises thorny legal questions\",\n      \"hash\": \"98f33be71f927141ca5a12e74985f0bc\",\n      \"id\": \"article-1-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\",\n      \"imageURL\": \"https://localhost/rest/v2/contentStores/673498c7-6340-4735-8c48-cc3e1d4b7279/items/https:%252F%252Fwww.economist.com%252Fbusiness%252F2025%252F03%252F27%252Fhow-safe-is-your-dna-in-a-bankruptcy/image?etag=1755609871943\",\n      \"inStock\": true,\n      \"intValue\": 1,\n      \"lastModifiedDate\": \"2025-08-19T13:24:31.943Z\",\n      \"name\": \"How safe is your DNA in a bankruptcy?\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": [\n            \"Business\"\n          ]\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-03-27T15:46:32.000Z\",\n      \"statistics\": {\n        \"view\": 1\n      },\n      \"text\": \"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\"\n    },\n    {\n      \"URL\": \"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\",\n      \"creationDate\": \"2025-08-19T13:24:31.943Z\",\n      \"description\": \"But there are possible pitfalls\",\n      \"hash\": \"7c0419a5660ada4663a2959070a88973\",\n      \"id\": \"article-2-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\",\n      \"imageURL\": \"https://localhost/rest/v2/contentStores/673498c7-6340-4735-8c48-cc3e1d4b7279/items/https:%252F%252Fwww.economist.com%252Ftechnology-quarterly%252F2025%252F02%252F21%252Fediting-pigs-mice-and-mosquitoes-may-save-lives/image?etag=1755609871943\",\n      \"inStock\": true,\n      \"intValue\": 2,\n      \"lastModifiedDate\": \"2025-08-19T13:24:31.943Z\",\n      \"name\": \"Editing pigs, mice and mosquitoes may save lives\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": []\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-02-21T17:47:17.000Z\",\n      \"statistics\": {\n        \"recommendation_view\": 20,\n        \"view\": 150\n      },\n      \"text\": \"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\"\n    }\n  ],\n  \"itemsPerPage\": 2,\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 2\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '404':
+          description: The content store doesn't exist.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:content_stores
+    put:
+      tags:
+      - Stores
+      summary: Add store items
+      description: 'To add items to a content store, a `PUT` request can be sent to the `/contentStores/{contentStoreId}/items` endpoint.
+
+        The request body must be a JSON array of items to be added. Each item in the array should be a JSON object with an `id` and a `properties` object.
+
+        The `properties` object contains key-value pairs representing the properties of the item. '
+      operationId: addContentItemsToStore
+      parameters:
+      - name: contentStore
+        in: path
+        description: The ID of the content store to add items to.
+        required: true
+        schema:
+          type: string
+        examples:
+          UUID of the content store:
+            description: UUID of the content store
+            value: 2613c9d6-a179-4c79-b6d2-1618a53fbc64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/items'
+            examples:
+              Request body:
+                description: Request body
+                value: "{\n  \"items\": [\n    {\n      \"URL\": \"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"23andMe’s demise raises thorny legal questions\",\n      \"hash\": \"98f33be71f927141ca5a12e74985f0bc\",\n      \"id\": \"article-1-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"How safe is your DNA in a bankruptcy?\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": [\n            \"Business\"\n          ]\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-03-27T15:46:32.000Z\",\n      \"text\": \"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\"\n    },\n    {\n      \"URL\": \"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"But there are possible pitfalls\",\n      \"hash\": \"7c0419a5660ada4663a2959070a88973\",\n      \"id\": \"article-2-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"Editing pigs, mice and mosquitoes may save lives\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": []\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-02-21T17:47:17.000Z\",\n      \"text\": \"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\"\n    }\n  ]\n}"
+        required: true
+      responses:
+        '204':
+          description: The content items were added successfully.
+        '400':
+          description: One or more required parameters are missing or invalid.
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '404':
+          description: The content store doesn't exist.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - write:content_stores
+  /contentStores:
+    get:
+      tags:
+      - Stores
+      summary: Get all stores
+      description: Retrieves all content stores.
+      operationId: getAllContentStores
+      parameters:
+      - name: count
+        in: query
+        description: Specifies the number of results to return.
+        schema:
+          type: integer
+          format: int64
+          default: 20
+          example: 10
+      - name: startIndex
+        in: query
+        description: Specifies the index of the first item to include in the result.
+        schema:
+          type: integer
+          format: int64
+          default: 0
+          example: 0
+      responses:
+        '200':
+          description: Returns the content stores.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contentStores'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"itemsPerPage\": 20,\n  \"contentStores\": [\n    {\n      \"id\": \"2613c9d6-a179-4c79-b6d2-1618a53fbc64\",\n      \"name\": \"my content store\",\n      \"description\": \"somedescription\",\n      \"creationDate\": \"2025-04-17T14:00:46.920Z\",\n      \"lastModifiedDate\": \"2025-04-17T14:00:46.920Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n\t  \"storeType\" : \"CONTENT\",\t  \n      \"tags\": []\n    }\n  ],\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 1\n} "
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:content_stores
+    post:
+      tags:
+      - Stores
+      summary: Create store
+      description: 'To create a content store, a request with a JSON object can be sent to the `/contentStores` endpoint via the `POST` method.
+
+        The JSON object must contain all the properties that are required for a content store.'
+      operationId: createContentStore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contentStore'
+            examples:
+              Request body:
+                description: Request body
+                value: "{\n  \"name\": \"my new content store\",\n  \"description\": \"A content store description\",\n  \"properties\": [\n    {\n      \"id\": \"RECENT_HOURS\",\n      \"values\": [\n        \"5\"\n      ]\n    }\n  ],\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}"
+        required: true
+      responses:
+        '200':
+          description: Returns the created content store.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contentStore'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"id\": \"2613c9d6-a179-4c79-b6d2-1618a53fbc64\",\n  \"name\": \"my new content store\",\n  \"description\": \"A content store description\",\n  \"creationDate\": \"2025-04-17T14:00:46.920Z\",\n  \"lastModifiedDate\": \"2025-04-17T14:00:46.920Z\",\n  \"creator\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"lastModifiedUser\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"properties\": [\n    {\n      \"id\": \"RECENT_HOURS\",\n      \"values\": [\n        \"5\"\n      ]\n    }\n  ],\n  \"readOnly\": false,\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}"
+        '400':
+          description: The metadata JSON is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequestBean'
+              examples:
+                Error response body:
+                  description: Error response body
+                  value: "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"A more specific error message.\"\n  }\n} "
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - write:content_stores
+  /contentStores/{contentStore}/items/bulk:
+    delete:
+      tags:
+      - Stores
+      summary: Bulk delete store items
+      description: Deletes multiple items from a content store.
+      operationId: deleteContentItemsFromStore
+      parameters:
+      - name: contentStore
+        in: path
+        description: The ID of the content store.
+        required: true
+        schema:
+          type: string
+        examples:
+          UUID of the content store:
+            description: UUID of the content store
+            value: 2613c9d6-a179-4c79-b6d2-1618a53fbc64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ids'
+            examples:
+              Request body:
+                description: Request body
+                value: "{\n  \"ids\": [\"article-1-id\", \"article-2-id\"]\n}"
+        required: true
+      responses:
+        '200':
+          description: The content items were deleted successfully.
+        '400':
+          description: The request is invalid.
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '404':
+          description: The content store doesn't exist.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - write:content_stores
+  /contentStores/{contentStore}:
+    put:
+      tags:
+      - Stores
+      summary: Update store
+      description: 'To update a content store, a request with a JSON object can be sent to the `/contentStores` endpoint via the `PUT` method.
+
+        The JSON object can contain any of the properties that are part of the content store. <br/>
+
+        Partial updates are supported. You only need to supply the properties that you want to change.<br/>
+
+        At least one property needs to be supplied, otherwise a HTTP 400 is returned.'
+      operationId: updateContentStore
+      parameters:
+      - name: contentStore
+        in: path
+        description: The ID of the content store to update.
+        required: true
+        schema:
+          type: string
+        examples:
+          UUID of the content store:
+            description: UUID of the content store
+            value: 2613c9d6-a179-4c79-b6d2-1618a53fbc64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contentStore'
+            examples:
+              Request body:
+                description: Request body
+                value: "{\n  \"name\": \"my updated name\",\n  \"description\": \"An updated content store description\",\n  \"storeType\": \"CONTENT\"\n}"
+        required: true
+      responses:
+        '200':
+          description: Returns the updated content store.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contentStore'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"id\": \"2613c9d6-a179-4c79-b6d2-1618a53fbc64\",\n  \"name\": \"my content store\",\n  \"description\": \"A content store description\",\n  \"creationDate\": \"2025-04-17T14:00:46.920Z\",\n  \"lastModifiedDate\": \"2025-04-17T14:00:46.920Z\",\n  \"creator\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"lastModifiedUser\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}"
+        '400':
+          description: The metadata JSON is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequestBean'
+              examples:
+                Error response body:
+                  description: Error response body
+                  value: "{\n  \"error\": {\n    \"status\": 400,\n    \"message\": \"A more specific error message.\"\n  }\n} "
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - write:content_stores
+components:
+  schemas:
+    item:
+      type: object
+      properties:
+        URL:
+          type: string
+          description: The URL of the item.
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        description:
+          type: string
+          description: The description of the item.
+        hash:
+          type: string
+          description: The hash of the item.
+        id:
+          type: string
+          description: The ID of the item.
+        image:
+          type: string
+          description: The image of the item.
+        imageURL:
+          type: string
+          description: The image URL of the item.
+        inStock:
+          type: boolean
+          description: Whether the item is in stock
+        intValue:
+          type: integer
+          format: int32
+          description: The integer value of this item
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        name:
+          type: string
+          description: The name of the item.
+        properties:
+          type: array
+          description: The properties of the item. Each property has an ID and one or more values.
+          items:
+            $ref: '#/components/schemas/property'
+        publicationDate:
+          type: string
+          format: date-time
+          description: The publication date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        statistics:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            description: 'A collection of statistics. I.E. "recommendation_view": 20, "view": 1'
+            readOnly: true
+          description: 'A collection of statistics. I.E. "recommendation_view": 20, "view": 1'
+          readOnly: true
+        text:
+          type: string
+          description: The text of the item.
+    ids:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    items:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/item'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+      required:
+      - items
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+    contentStore:
+      type: object
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        id:
+          type: string
+          description: The object ID.
+        itemCount:
+          type: integer
+          format: int32
+          description: The number of items in the store.
+          readOnly: true
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        name:
+          type: string
+          description: The object name.
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+        storeType:
+          type: string
+          description: The store type.
+          enum:
+          - CONTENT
+          - PRODUCT
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+    contentStores:
+      type: object
+      properties:
+        contentStores:
+          type: array
+          items:
+            $ref: '#/components/schemas/contentStore'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

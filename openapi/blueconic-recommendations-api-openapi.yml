@@ -1,0 +1,257 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Recommendations API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Recommendations
+  description: Generate individualized content and product recommendations for a given profile. [Read more](https://support.blueconic.com/hc/en-us/articles/115005971169-Overview-Content-and-Product-Recommendations). To work with recommendations, you have to set up a [content collector](https://support.blueconic.com/hc/en-us/articles/115003214945-Content-Collector) or a [product collector](https://support.blueconic.com/hc/en-us/articles/115003214685-Product-Collector).
+paths:
+  /recommendations:
+    post:
+      tags:
+      - Recommendations
+      summary: Generate recommendations
+      description: Generate BlueConic recommendations for a specific profile based on the provided parameters.
+      operationId: getRecommendationsPostJsonpAsync
+      parameters:
+      - name: profileId
+        in: query
+        description: The ID of the BlueConic profile. Note that the profile ID is required when you use a [recommendation algorithm](https://support.blueconic.com/hc/en-us/articles/360022093313-BlueConic-recommendation-algorithms) that depends on the profile, such as 'Collaborative filtering' or 'Seen articles / Seen products'.
+        schema:
+          type: string
+        example: 640d01c7-1c30-4085-adf9-afad6560ec99
+      - name: storeId
+        in: query
+        description: The ID of the content store to get the items from.
+        required: true
+        schema:
+          type: string
+        example: 0693330e-679a-48db-b94f-a8921b76149e
+      - name: itemId
+        in: query
+        description: ID of the current item being shown. Some algorithms are based on this information. It also excludes this item from being returned in the result.
+        schema:
+          type: string
+      - name: frequencyCap
+        in: query
+        description: The number of times an item can be recommended to a profile before being hidden from future recommendations.
+        schema:
+          type: integer
+          format: int32
+        example: 5
+      - name: imageWidth
+        in: query
+        description: Width of the images to return.
+        schema:
+          type: integer
+          format: int32
+        example: 100
+      - name: imageHeight
+        in: query
+        description: Height of the images to return.
+        schema:
+          type: integer
+          format: int32
+        example: 100
+      - name: manualViewCounting
+        in: query
+        description: Prevent updating recommendation statistics for the recommended items. Can be used to generate offline recommendation items without influencing the profile.
+        schema:
+          type: boolean
+          default: false
+        example: true
+      requestBody:
+        description: "The body of a recommendations request consists of a JSON array that holds one or more sets of recommendation definition objects. Each recommendation definition object contains a combination of algorithms and filters and a number of items that should be returned. This allows you to return items based on different mixes of algorithms. You can also define a default to fall back to when not enough matching recommendations can be found.\n\nThe following [boosting algorithms](https://support.blueconic.com/hc/en-us/articles/360022093313-BlueConic-recommendation-algorithms#breaking-news-top-products-based-on-the-recent-view-field--0-0) are supported:\n\n|Name|Description|Example|\n|:----|:----|:----|\n|Breaking news|Items most viewed by all visitors in the time frame defined in the collector.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"RECENT_VIEW\"}]`\n|Top carted items|Items most added to shopping carts by all visitors in the time frame defined in the collector.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"RECENT_SHOPPINGCART\"}]`\n|Top ordered items|Items most ordered by all visitors in the time frame defined in the collector.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"RECENT_ORDER\"}]`\n|Viral news|Items most used as a landing page by all visitors in the time frame defined in the collector.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"RECENT_ENTRYPAGE\"}]`\n|Recency|Items most recently added items based on the publication date property.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"RECENCY\"}]`\n|Recent high CTRs|Items most clicked-through from BlueConic recommendations by all visitors in the time frame defined in the collector.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"RECENT_CTR\"}]`\n|Recently bought items|Items recently bought by the provided profileId.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"RECENTLY_BOUGHT\"}]`\n|Recently carted items|Items recently put in the shopping cart by the provided profileId.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"RECENTLY_SHOPPINGCART\"}]`\n|Same category|Items of the same category as the item with the provided itemId.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"SAME_CATEGORY\" }]`\n|Look-alike-articles|Items that have similar content to the item with the provided itemId.|`\"boosts\": [{\"value\": 1, \"algorithm\": \" LOOK_ALIKE\" }]`\n|Seen articles|Items the provided profileId recently viewed.|`\"boosts\": [{\"value\": 1, \"algorithm\": \" RECENTLY_VIEWED\" }]`\n|Same interest|Items that look similar to the items already viewed by the provided profileId.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"INTEREST\", \"rampUp\": \"FAST\"}]`\n|Collaborative filtering|Items popular with other profiles who viewed the same items as the provided profileId.|`\"boosts\": [{\"value\": 1, \"algorithm\": \"COLLABORATIVE_FILTERING\", \"rampUp\": \"FAST\"}]`|\n\nRecommendation definition objects may contain filters that restrict the items that will be returned. \n\nFormat:  \n`\"filters\": [\"<property ID>\":<absolute literal value>,<absolute literal value2>\"]`  \nto only include items that have a specific value for a specific profile property.\n\nUse the `!` before the property to **exclude** items. Format:  \n`\"filters\": [\"!<property ID>\":<absolute literal value>,<absolute literal value2>\"]`  \n\nYou can also use the comparison operators `<`, `>`, `<=`, `>=` for data type number, date time, currency, and decimal properties. \nFor example `\"filters\": [\"<property ID>\">=<absolute literal value>,<absolute literal value2>\"]`\n\nWhen combining multiple filters, these have an implicit AND relation.  \nTo combine filters, follow the format `\"filters\": [\"<property ID>\":<absolute literal value>,<absolute literal value2>\", \"<property ID2>\":<absolute literal value3>,<absolute literal value4>\"].`\n\nProfile property value filtering can be done by explicitly passing an absolute literal value. You can’t reference another profile property in the filter or use relative dates (for example, 14 days ago).\n\nSee examples below.\n\n| Example                                                  | Description                                                                                                                                                                          |\n|:---------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `\"filters\": [\"VIEWED\"]`                                  | Exclude the items already viewed by the provided profileId.                                                                                                                          |\n| `\"filters\": [\"SHOPPINGCART\"]`                            | Exclude the items in the shopping cart of the provided profileId.                                                                                                                    |\n| `\"filters\": [\"BOUGHT\"]`                                  | Exclude the items already bought by the provided profileId.                                                                                                                          |\n| `\"filters\": [\"VIEWED_ONLY\"]`                             | Include only items that were viewed by the provided profileId.                                                                                                                       |\n| `\"filters\": [\"SHOPPINGCART_ONLY\"]`                       | Include only items that were in the shopping cart of the provided profileId.                                                                                                         |\n| `\"filters\": [\"BOUGHT_ONLY\"]`                             | Include only items that were bought by the provided profileId.                                                                                                                       |\n| `\"filters\": [\"SAME_CATEGORY\"]`                           | Include only items that have the same category as the provided itemId.                                                                                                               |\n| `\"filters\": [\"IN_STOCK\"]`                                | Include only items that are in stock.                                                                                                                                                |\n| `\"filters\": [\"publicationDate>2023-06-01T00:00+02:00\"]`  | Include only items with a publication date after June 1<sup>st</sup> 2023. The format of publicationDate is `2023-01-01T00:00Z` or with a time zone offset `2023-01-01T00:00+05:00`  |\n| `\"filters\": [\"publicationDate<=2023-06-01T00:00+02:00\"]` | Include only items with a publication date before June 1<sup>st</sup> 2023. The format of publicationDate is `2023-01-01T00:00Z` or with a time zone offset `2023-01-01T00:00+05:00` |\n| `\"filters\": [\"category:politics\"]`                       | Include only items that have a specific value for a specific property, e.g. “politics” for property “category”.                                                                      |\n| `\"filters\": [\"!category:politics\"]`                      | Exclude items that do not have a specific value, e.g. “politics” for property “category”.                                                                                            |\n| `\"filters\": [\"category:politics\",\"category:sports\"]`     | Include only items that have all specific values, e.g. “politics” and “sports” for property “category”.                                                                              |\n| `\"filters\": [\"category:politics,sports\"]`                | Include only items that have any of the specified values, e.g. “politics” or “sports” for property “category”.                                                                       |\n| `\"filters\": [\"!category:politics\",\"!category:sports\"]`   | Include only items that do not have any of the specified values, e.g. “politics” or “sports” for property “category”.                                                                |\n| `\"filters\": [\"!category:politics,sports\"]`               | Include only items that do not have all of the specified values, e.g. “politics” and “sports” for property “category”.                                                               |\n| `\"filters\": [\"hasproperty:image\"]`                       | Include only items that have an image.                                                                                                                                               |\n"
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/RecommendationRequest'
+            examples:
+              Example body:
+                description: Example body
+                value: "[{\n        \"id\": \"first\",\n        \"boosts\": [{\n                \"value\": \"1\",\n                \"algorithm\": \"RECENCY\"\n            },\n            {\n                \"value\": \"2\",\n                \"algorithm\": \"COLLABORATIVE_FILTERING\",\n                \"rampUp\": \"FAST\"\n            },\n            {\n                \"value\": \"1\",\n                \"algorithm\": \"RECENT_VIEW\"\n            },\n            {\n                \"value\": \"1\",\n                \"algorithm\": \"RECENT_CTR\"\n            }\n        ],\n        \"filters\": [\n            \"category:politics\",\n            \"viewed\"\n        ],\n        \"count\": 3\n    },\n    {\n        \"id\": \"second\",\n        \"boosts\": [{\n                \"value\": \"2\",\n                \"algorithm\": \" COLLABORATIVE_FILTERING \",\n                \"rampup\": \"SLOW\"\n            },\n            {\n                \"value\": \"1\",\n                \"algorithm\": \" RECENT_CTR\"\n            }\n        ],\n        \"filters\": [\n            \"category:politics\",\n            \"!category:economie\",\n            \"VIEWED\"\n        ],\n        \"count\": 3\n    },\n    {\n        \"id\": \"default\",\n        \"filters\": [\n            \"publicationDate>2023-04-17T14:30+02:00\",\n            \"!category:economie\",\n            \"VIEWED\"\n        ],\n        \"boosts\": [{\n            \"value\": \"1\",\n            \"algorithm\": \"RECENT_CTR\"\n        }]\n    }\n]"
+        required: true
+      responses:
+        '200':
+          description: The generated recommendations, based on the given request parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationResponse'
+              examples:
+                Example recommendation response:
+                  description: Example recommendation response
+                  value: "{\n    \"recommendationBlock\": [{\n            \"id\": \"first\",\n            \"recommendations\": [{\n                    \"score\": 0.12063565363854145,\n                    \"trackingUrl\": \"http://taylor-news.com/1\",\n                    \"id\": \"www.taylor-news.com/news/1111\",\n                    \"url\": \"https://www.taylor-news.com/news/1111\",\n                    \"name\": \"Name 1\",\n                    \"description\": \"Description 1.\",\n                    \"category\": [\"sport\", \"baseball\"],\n                    \"image\": \"https://img.taylor-news.com/img1.jpg\",\n                    \"customProperties\": {\n                        \"pubdate\": [\"tuesday 12 june 2023, 09:45\"],\n                        \"story\": []\n                    }\n                },\n                {\n                    \"score\": 0.001113261296046081,\n                    \"trackingUrl\": \"http://taylor-news.com/2\",\n                    \"id\": \"www.taylor-news.com/news/2222\",\n                    \"url\": \"https://www.taylor-news.com/news/2222\",\n                    \"name\": \"Name 2\",\n                    \"description\": \"Description 2.\",\n                    \"category\": [\"news\", \"politics\"],\n                    \"image\": \"https://img.taylor-news.com/img2.jpg\",\n                    \"customProperties\": {\n                        \"pubdate\": [\"wednesday 13 june 2023, 09:45\"],\n                        \"story\": []\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": \"second\",\n            \"recommendations\": [{\n                    \"score\": 1.0,\n                    \"trackingUrl\": \"http://taylor-news.com/3\",\n                    \"id\": \"www.taylor-news.com/news/3333\",\n                    \"url\": \"https://www.taylor-news.com/news/2317578\",\n                    \"name\": \"Name 3\",\n                    \"description\": \"Description 3.\",\n                    \"category\": [\"sport\", \"basketball\"],\n                    \"image\": \"https://img.taylor-news.com/img3.jpg\",\n                    \"customProperties\": {\n                        \"pubdate\": [\"tuesday 12 june 2023, 09:45\"],\n                        \"story\": []\n                    }\n                },\n                {\n                    \"score\": 1.0,\n                    \"trackingUrl\": \"http://taylor-news.com/4\",\n                    \"id\": \"www.taylor-news.com/news/4444\",\n                    \"url\": \"https://www.taylor-news.com/news/2317578\",\n                    \"name\": \"Name 4\",\n                    \"description\": \"Description 4.\",\n                    \"category\": [],\n                    \"image\": \"https://img.taylor-news.com/img4.jpg\",\n                    \"customProperties\": {\n                        \"pubdate\": [\"tuesday 12 june 2023, 09:45\"],\n                        \"story\": []\n                    }\n                }\n            ]\n        }\n    ],\n    \"recommendationId\": \"97258279-baf7-45de-aab3-457dc42904be\",\n    \"trackingPixel\": \"http://track.com\"\n}"
+        '400':
+          description: One or more required parameters are missing or invalid.
+        '503':
+          description: The server is too busy to handle the request.
+components:
+  schemas:
+    RecommendationResponse:
+      type: object
+      properties:
+        recommendationBlock:
+          type: array
+          description: The recommendation blocks as defined in the request body.
+          items:
+            $ref: '#/components/schemas/RecommendationSubResponse'
+        recommendationId:
+          type: string
+          description: The unique ID for this recommendation request.
+        trackingPixel:
+          type: string
+          description: The tracking pixel to track this recommendation request.
+    RecommendationItem:
+      type: object
+      description: The recommendations of this block.
+      properties:
+        category:
+          type: array
+          items:
+            type: string
+        customProperties:
+          type: object
+          additionalProperties:
+            type: array
+            description: The properties of this item.
+            items:
+              type: string
+              description: The properties of this item.
+          description: The properties of this item.
+        description:
+          type: string
+        id:
+          type: string
+          description: The ID of this item.
+        image:
+          type: string
+          description: The image of this item.
+        name:
+          type: string
+        publicationDate:
+          type: string
+          description: The publication date of this item.
+        score:
+          type: number
+          format: double
+          description: The recommendation score.
+        trackingUrl:
+          type: string
+          description: The recommendation tracking url.
+        url:
+          type: string
+          description: The url of this item.
+    Boost:
+      type: object
+      description: The algorithms that will be executed to determine the recommendations with their boost value and parameters.
+      example:
+      - value: '1.5'
+        algorithm: RECENCY
+      properties:
+        algorithm:
+          type: string
+          description: Available boosting algorithms
+          enum:
+          - COLLABORATIVE_FILTERING
+          - INTEREST
+          - LOOK_ALIKE
+          - RECENCY
+          - RECENT_CTR
+          - RECENT_ENTRYPAGE
+          - RECENT_ORDER
+          - RECENT_SHOPPINGCART
+          - RECENT_VIEW
+          - RECENTLY_BOUGHT
+          - RECENTLY_SHOPPINGCART
+          - RECENTLY_VIEWED
+          - SAME_CATEGORY
+        rampUp:
+          type: string
+          description: Ramp up value for algorithms that use it
+          enum:
+          - INSTANT
+          - VERY_SLOW
+          - SLOW
+          - NORMAL
+          - FAST
+        value:
+          type: number
+          format: double
+          description: 'Boost value can be a whole or half number: 1, 1.5, 2, 2.5, …, 9.5, 10.'
+      required:
+      - algorithm
+      - value
+    RecommendationSubResponse:
+      type: object
+      description: The recommendation blocks as defined in the request body.
+      properties:
+        id:
+          type: string
+          description: The ID for this recommendation block, as defined in the request body.
+        recommendations:
+          type: array
+          description: The recommendations of this block.
+          items:
+            $ref: '#/components/schemas/RecommendationItem'
+    RecommendationRequest:
+      type: object
+      properties:
+        boosts:
+          type: array
+          description: The algorithms that will be executed to determine the recommendations with their boost value and parameters.
+          example:
+          - value: '1.5'
+            algorithm: RECENCY
+          items:
+            $ref: '#/components/schemas/Boost'
+        count:
+          type: integer
+          format: int32
+          description: The maximum number of items that should be returned for this definition.
+          example: 5
+        filters:
+          type: array
+          description: Item filters, see description.
+          example:
+          - category:news
+          - viewed
+          items:
+            type: string
+            description: Item filters, see description.
+            example: '["category:news","viewed"]'
+        id:
+          type: string
+          description: 'The order of execution of the definition objects: ''first'' will be executed first, ''second'' will be executed next. If the total count has not been reached, the remainder items will be from the ''default'' definition.'
+          example: first
+      required:
+      - boosts
+      - id
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

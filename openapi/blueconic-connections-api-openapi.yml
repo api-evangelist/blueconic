@@ -1,0 +1,421 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Connections API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Connections
+  description: BlueConic Connections lets you connect with other systems to synchronize customer data. The following methods allow you to retrieve the connection configuration and run history.  [Read more](https://support.blueconic.com/hc/en-us/articles/202532092-Synchronizing-your-data-with-Connections?utm_source=BlueConic_User)
+paths:
+  /connections:
+    get:
+      tags:
+      - Connections
+      summary: Get all connections
+      description: Retrieves all connections.
+      operationId: getAllConnections
+      parameters:
+      - name: startIndex
+        in: query
+        description: Specifies the index of the first item to include in the result.
+        schema:
+          type: integer
+          format: int64
+          default: 0
+          example: 0
+      - name: count
+        in: query
+        description: Specifies the number of results to return.
+        schema:
+          type: integer
+          format: int64
+          default: 10
+          example: 10
+      responses:
+        '200':
+          description: Returns the connections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"connections\": [\n    {\n      \"allChannels\": false,\n      \"creationDate\": \"2025-10-01T12:24:30.052Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [\n        {\n          \"id\": \"8d7757cf-9ed0-4807-b974-089ebc0197d0\",\n          \"name\": \"www.blueconic.test\"\n        }\n      ],\n      \"id\": \"0a743354-a7ed-4e03-b662-6b3f033f7caf\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T12:24:30.052Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"lastRun\": {\n        \"endDate\": \"2025-10-22T11:28:14.295Z\",\n        \"goalStatistics\": [\n          {\n            \"id\": \"SUCCESS\",\n            \"values\": [\n              \"1\"\n            ]\n          },\n          {\n            \"id\": \"FAILED\",\n            \"values\": [\n              \"0\"\n            ]\n          },\n          {\n            \"id\": \"TOTAL\",\n            \"values\": [\n              \"2\"\n            ]\n          }\n        ],\n        \"message\": \"<div class=\\\\\"bcpTask\\\\\">Import profiles into BlueConic</div><ul><li>Received 0 updates, created 19 profiles, 0 profiles unchanged, checked 19, the delta file is used.</li><li>See the last 5 profiles created: <a href=\\\\\"/blueconic/static/pages/main.html#id=a5b368bc-dfc0-4b7f-944a-3d7212b6bfb7&type=profile\\\\\">a5b368bc-d...</a>, <a href=\\\\\"/blueconic/static/pages/main.html#id=9cb39103-7db4-4b3d-9661-62df3988d05d&type=profile\\\\\">9cb39103-7...</a>, <a href=\\\\\"/blueconic/static/pages/main.html#id=4ee2900e-a761-4a6f-b494-b72125aa5621&type=profile\\\\\">4ee2900e-a...</a>, <a href=\\\\\"/blueconic/static/pages/main.html#id=835de135-2306-49c1-bbdb-c33ded8ecfc3&type=profile\\\\\">835de135-2...</a>, <a href=\\\\\"/blueconic/static/pages/main.html#id=31f97257-e994-4041-917c-d7fbb0a93dee&type=profile\\\\\">31f97257-e...</a></li></ul>\",\n        \"runCount\": 1,\n        \"runId\": \"20251022112756_16dc7081-8ffb-4957-b8bc-5113127125c3\",\n        \"startDate\": \"2025-10-22T11:27:56.986Z\",\n        \"state\": \"FINISHED\"\n      },\n      \"name\": \"Content collector\",\n      \"pluginId\": \"connection_content_collector\",\n      \"scheduleMode\": \"SCHEDULED\",\n      \"tags\": [],\n      \"targetChannels\": [\n        {\n          \"URLRestrictions\": [\n            {\n              \"pattern\": \"\",\n              \"previewURL\": \"\",\n              \"restrictionType\": \"RESTRICT\"\n            }\n          ],\n          \"channelId\": \"653d3db6-8016-46e8-96a5-547feceb9d15\"\n        }\n      ]\n    },\n    {\n      \"allChannels\": true,\n      \"creationDate\": \"2025-10-01T11:54:49.802Z\",\n      \"creator\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"description\": \"\",\n      \"domains\": [],\n      \"id\": \"0ce3ccb7-1212-4364-bcc9-08e635a7883d\",\n      \"isEnabled\": true,\n      \"lastModifiedDate\": \"2025-10-01T12:32:09.434Z\",\n      \"lastModifiedUser\": {\n        \"fullName\": \"ondemand@blueconic.com\",\n        \"userName\": \"ondemand@blueconic.com\"\n      },\n      \"lastRun\": {\n        \"goalStatistics\": [],\n        \"message\": \"<p>Running…</p>\",\n        \"runCount\": 1,\n        \"runId\": \"20251022112756_40b0e260-ae7a-4ab0-95d3-1dc25edbcba8\",\n        \"startDate\": \"2025-10-22T11:27:56.986Z\",\n        \"state\": \"RUNNING\"\n      },\n      \"name\": \"fb\",\n      \"pluginId\": \"connection_facebook_leads\",\n      \"scheduleMode\": \"SCHEDULED\",\n      \"tags\": [],\n      \"targetChannels\": []\n    }\n  ],\n  \"itemsPerPage\": 10,\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 2\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:connections
+  /connections/{connection}:
+    get:
+      tags:
+      - Connections
+      summary: Get one connection
+      description: Retrieves a single connection.
+      operationId: getOneConnection
+      parameters:
+      - name: connection
+        in: path
+        description: The ID of the connection.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns the connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"allChannels\": false,\n  \"creationDate\": \"2025-10-01T12:24:30.052Z\",\n  \"creator\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"description\": \"\",\n  \"domains\": [\n    {\n      \"id\": \"8d7757cf-9ed0-4807-b974-089ebc0197d0\",\n      \"name\": \"www.blueconic.test\"\n    }\n  ],\n  \"id\": \"0a743354-a7ed-4e03-b662-6b3f033f7caf\",\n  \"isEnabled\": true,\n  \"lastModifiedDate\": \"2025-10-01T12:24:30.052Z\",\n  \"lastModifiedUser\": {\n    \"fullName\": \"ondemand@blueconic.com\",\n    \"userName\": \"ondemand@blueconic.com\"\n  },\n  \"lastRun\": {\n    \"endDate\": \"2025-10-22T11:28:14.295Z\",\n    \"goalStatistics\": [\n      {\n        \"id\": \"SUCCESS\",\n        \"values\": [\n          \"1\"\n        ]\n      },\n      {\n        \"id\": \"FAILED\",\n        \"values\": [\n          \"0\"\n        ]\n      },\n      {\n        \"id\": \"TOTAL\",\n        \"values\": [\n          \"2\"\n        ]\n      }\n    ],\n    \"message\": \"<div class=\\\\\"bcpTask\\\\\">Import profiles into BlueConic</div><ul><li>Received 0 updates, created 19 profiles, 0 profiles unchanged, checked 19, the delta file is used.</li><li>See the last 5 profiles created: <a href=\\\\\"/blueconic/static/pages/main.html#id=a5b368bc-dfc0-4b7f-944a-3d7212b6bfb7&type=profile\\\\\">a5b368bc-d...</a>, <a href=\\\\\"/blueconic/static/pages/main.html#id=9cb39103-7db4-4b3d-9661-62df3988d05d&type=profile\\\\\">9cb39103-7...</a>, <a href=\\\\\"/blueconic/static/pages/main.html#id=4ee2900e-a761-4a6f-b494-b72125aa5621&type=profile\\\\\">4ee2900e-a...</a>, <a href=\\\\\"/blueconic/static/pages/main.html#id=835de135-2306-49c1-bbdb-c33ded8ecfc3&type=profile\\\\\">835de135-2...</a>, <a href=\\\\\"/blueconic/static/pages/main.html#id=31f97257-e994-4041-917c-d7fbb0a93dee&type=profile\\\\\">31f97257-e...</a></li></ul>\",\n    \"runCount\": 1,\n    \"runId\": \"20251022112756_16dc7081-8ffb-4957-b8bc-5113127125c3\",\n    \"startDate\": \"2025-10-22T11:27:56.986Z\",\n    \"state\": \"FINISHED\"\n  },\n  \"name\": \"Content collector\",\n  \"pluginId\": \"connection_content_collector\",\n  \"scheduleMode\": \"SCHEDULED\",\n  \"tags\": [],\n  \"targetChannels\": [\n    {\n      \"URLRestrictions\": [\n        {\n          \"pattern\": \"\",\n          \"previewURL\": \"\",\n          \"restrictionType\": \"RESTRICT\"\n        }\n      ],\n      \"channelId\": \"653d3db6-8016-46e8-96a5-547feceb9d15\"\n    }\n  ]\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '404':
+          description: The connection doesn't exist.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:connections
+  /connections/{connection}/runs:
+    get:
+      tags:
+      - Connections
+      summary: Get the run history of a batch connection
+      description: Returns the run history of a batch connection.
+      operationId: getConnectionRuns
+      parameters:
+      - name: connection
+        in: path
+        description: The ID of the connection.
+        required: true
+        schema:
+          type: string
+      - name: startIndex
+        in: query
+        description: Specifies the index of the first item to include in the result.
+        schema:
+          type: integer
+          format: int64
+          default: 0
+          example: 0
+      - name: count
+        in: query
+        description: Specifies the number of results to return.
+        schema:
+          type: integer
+          format: int64
+          default: 10
+          example: 10
+      responses:
+        '200':
+          description: Returns the history of a batch connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionStatus'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"itemsPerPage\": 10,\n  \"runs\": [\n    {\n      \"endDate\": \"2025-09-24T13:47:37.909Z\",\n      \"goalStatistics\": [\n        {\n          \"id\": \"SUCCESS\",\n          \"values\": [\n            \"1\"\n          ]\n        },\n        {\n          \"id\": \"FAILED\",\n          \"values\": [\n            \"0\"\n          ]\n        },\n        {\n          \"id\": \"TOTAL\",\n          \"values\": [\n            \"2\"\n          ]\n        }\n      ],\n      \"message\": \"<div class=\\\\\"bcpTask\\\\\">Import profiles into BlueConic</div><ul><li>Received 0 updates, created 0 profiles, 0 profiles unchanged, checked 199,836, the delta file is used.</li></ul>\",\n      \"runCount\": 2,\n      \"runId\": \"20250924134648_b5236652-b6d3-44ee-8f5b-6f5970b3bb3b\",\n      \"startDate\": \"2025-09-24T13:46:48.107Z\",\n      \"state\": \"FINISHED\"\n    },\n    {\n      \"endDate\": \"2025-09-24T13:44:43.204Z\",\n      \"goalStatistics\": [\n        {\n          \"id\": \"SUCCESS\",\n          \"values\": [\n            \"0\"\n          ]\n        },\n        {\n          \"id\": \"FAILED\",\n          \"values\": [\n            \"1\"\n          ]\n        },\n        {\n          \"id\": \"TOTAL\",\n          \"values\": [\n            \"2\"\n          ]\n        }\n      ],\n      \"message\": \"<div class=\\\\\"bcpError\\\\\"><div class=\\\\\"bcpTask\\\\\">Import profiles into BlueConic</div><ul>      <li>Missing required setting: importMatching</li>    </ul></div><div>Review the run log for more information.</div>\",\n      \"runCount\": 1,\n      \"runId\": \"20250924134435_b5236652-b6d3-44ee-8f5b-6f5970b3bb3b\",\n      \"startDate\": \"2025-09-24T13:44:35.250Z\",\n      \"state\": \"FINISHED\"\n    }\n  ],\n  \"startIndex\": 0,\n  \"totalPages\": 1,\n  \"totalResults\": 2\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '404':
+          description: The connection doesn't exist.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:connections
+components:
+  schemas:
+    Connection:
+      type: object
+      description: A connection
+      properties:
+        allChannels:
+          type: boolean
+          description: Indicates whether the executable is active on all channels
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/simpleDomain'
+        id:
+          type: string
+          description: The object ID.
+        isEnabled:
+          type: boolean
+          description: Indicates whether it is enabled
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        lastRun:
+          $ref: '#/components/schemas/status'
+        name:
+          type: string
+          description: The object name.
+        pluginId:
+          type: string
+          description: The plugin id
+        requiredPermission:
+          type: string
+          description: The required permission for this executable
+        roles:
+          type: array
+          description: Roles allowed to edit this connection; empty means no role-based restriction
+          items:
+            $ref: '#/components/schemas/SimpleRoleBean'
+        scheduleMode:
+          type: string
+          description: The scheduling mode
+          enum:
+          - SCHEDULED
+          - CONTINUOUS
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+        targetChannels:
+          type: array
+          description: The channels.
+          items:
+            $ref: '#/components/schemas/targetChannels'
+      required:
+      - roles
+    ConnectionStatus:
+      type: object
+      description: The status of a connection run
+      properties:
+        endDate:
+          type: string
+          format: date-time
+          description: The end date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        goalStatistics:
+          type: array
+          description: The goal statistics
+          items:
+            $ref: '#/components/schemas/property'
+        lane:
+          type: string
+          description: The lane in which this run was executed
+          enum:
+          - REGULAR
+          - REGULAR2
+          - REGULAR3
+          - REGULAR4
+          - REGULAR5
+          - REGULAR6
+          - REGULAR7
+          - REGULAR8
+          - EXPRESS
+          - RUN_NOW
+          - CONTINUOUS
+        message:
+          type: string
+          description: The message of the run
+        runCount:
+          type: integer
+          format: int64
+          description: The run count
+        runId:
+          type: string
+          description: The run id
+        startDate:
+          type: string
+          format: date-time
+          description: The start date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        state:
+          type: string
+          description: The state of the run
+          enum:
+          - STARTING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - STOPPING
+          - STOPPED
+    SimpleRoleBean:
+      type: object
+      description: A role with id and name.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the role.
+        name:
+          type: string
+          description: Name of the role.
+    targetChannels:
+      type: object
+      description: Target channel.
+      properties:
+        URLRestrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UrlRestriction'
+        channelId:
+          type: string
+          description: The ID of the channel.
+      required:
+      - URLRestrictions
+    status:
+      type: object
+      description: Notebook run status.
+      properties:
+        endDate:
+          type: string
+          format: date-time
+          description: The end date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        goalStatistics:
+          type: array
+          description: The goal statistics
+          items:
+            $ref: '#/components/schemas/property'
+        lane:
+          type: string
+          description: The lane in which this run was executed
+          enum:
+          - REGULAR
+          - REGULAR2
+          - REGULAR3
+          - REGULAR4
+          - REGULAR5
+          - REGULAR6
+          - REGULAR7
+          - REGULAR8
+          - EXPRESS
+          - RUN_NOW
+          - CONTINUOUS
+        message:
+          type: string
+          description: The message of the run
+        runCount:
+          type: integer
+          format: int64
+          description: The run count
+        runId:
+          type: string
+          description: The run id
+        startDate:
+          type: string
+          format: date-time
+          description: The start date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        state:
+          type: string
+          description: The state of the run
+          enum:
+          - STARTING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - STOPPING
+          - STOPPED
+    simpleDomain:
+      type: object
+      description: The domain.
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: Name of this object.
+      readOnly: true
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+    UrlRestriction:
+      type: object
+      description: URL restriction for a target channel.
+      properties:
+        pattern:
+          type: string
+          description: The URL pattern.
+        previewURL:
+          type: string
+          description: The preview URL.
+        restrictionType:
+          type: string
+          description: The restriction type.
+          enum:
+          - RESTRICT
+          - EXCLUDE
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

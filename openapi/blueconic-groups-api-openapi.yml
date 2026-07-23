@@ -1,0 +1,541 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Groups API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Groups
+  description: 'The following methods allow you to create, modify, retrieve, and delete BlueConic groups. To manage group properties, use the [Properties endpoints](https://rest.apidoc.blueconic.com/#tag--Properties).
+
+    Best practice when updating groups is to use the bulk endpoint rather than a single request for each individual update.'
+paths:
+  /groups/{grouptype}/{group}:
+    get:
+      tags:
+      - Groups
+      summary: Get one group
+      description: Retrieves the properties of the specified group.
+      operationId: getOneGroupOfGroupType
+      parameters:
+      - name: grouptype
+        in: path
+        description: The ID of the BlueConic group type.
+        required: true
+        schema:
+          type: string
+        example: company
+      - name: group
+        in: path
+        description: The ID of the BlueConic group.
+        required: true
+        schema:
+          type: string
+          pattern: (.*)+
+        example: 640d01c7-1c30-4085-adf9-afad6560ec99
+      - name: properties
+        in: query
+        description: Only returns the given group properties in the response.
+        schema:
+          type: string
+        example: email,fullname,visits
+      responses:
+        '200':
+          description: Returns the specified group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/group'
+              examples:
+                Example group response:
+                  description: Example group response
+                  value: "{\n  \"id\" : \"41ebc321-b02b-4e8a-a368-82995c81fb18\",\n  \"groupTypeId\": \"company\",\n  \"creationDate\" : \"2023-03-27T10:36:11.990Z\",\n  \"lastModifiedDate\": \"2024-01-10T12:52:44.816Z\",\n  \"properties\" : [ {\n    \"id\" : \"domaingroup\",\n    \"values\" : [ \"DEFAULT\" ]\n  }, {\n    \"id\" : \"fullname\",\n    \"values\" : [ \"blueconic\" ]\n  }, {\n    \"id\" : \"variant\",\n    \"values\" : [ \"a\" ]\n  }, {\n    \"id\" : \"email\",\n    \"values\" : [ \"example@blueconic.com\" ]\n  }]\n}"
+        '401':
+          description: Authentication failed (unauthorized).
+        '404':
+          description: The specified group doesn't exist.
+        '408':
+          description: Request timed out.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:groups
+  /groups/{grouptype}:
+    get:
+      tags:
+      - Groups
+      summary: Get groups for group type
+      description: Retrieves the groups for the given group type
+      operationId: getAllGroupsByGroupType
+      parameters:
+      - name: grouptype
+        in: path
+        description: The ID of the group type.
+        required: true
+        schema:
+          type: string
+      - name: refinement
+        in: query
+        description: "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+        schema:
+          $ref: '#/components/schemas/RefinementBean'
+        examples:
+          URL encoded example:
+            description: URL encoded example
+            value: '%7B%22property%22%3A%20%22email%22%2C%20%22operator%22%3A%20%22IS_EMPTY%22%7D%0A'
+          Example composite refinement (not yet URL-encoded):
+            description: Example composite refinement (not yet URL-encoded)
+            value: "{\n  \"filters\": [{\n    \"property\": \"email\",\n    \"operator\": \"IS_EMPTY\"\n  }, {\n    \"property\": \"variant\",\n    \"operator\": \"CONTAINS_ANY\",\n    \"values\": [\"VariantA\", \"VariantB\"]\n  }\n  ],\n  \"operator\": \"AND\"\n}"
+          Example property filter refinement (not yet URL-encoded):
+            description: Example property filter refinement (not yet URL-encoded)
+            value: "{\n  \"property\": \"visits\",\n  \"operator\": \"IN_RANGE\",\n  \"fromValue\": 1,\n  \"toValue\": 10\n}\n"
+      - name: cursor
+        in: query
+        description: Defines the starting point of the page for pagination. When cursors are used, each page, except the last page, returns a `nextCursor` value which can be used to retrieve the next page.
+        schema:
+          type: string
+        example: '*'
+      - name: count
+        in: query
+        description: Specifies the number of results to return. Smaller than or equal to 1.000.000.
+        schema:
+          type: integer
+          format: int32
+        example: 20
+      - name: maxHitsAllowed
+        in: query
+        description: When greater than 0, enables fast approximate export by limiting total hits (e.g. maxHitsAllowed=200 and count=20 for max 10 pages). Same behavior as segment export.
+        schema:
+          type: integer
+          format: int32
+      - name: properties
+        in: query
+        description: Specifies which group properties values will be returned for each group. If not specified, the values of all group properties will be returned, which may result in a large result set. One or more group property ids, separated by a comma.
+        schema:
+          type: string
+        example: browserversion,email
+      responses:
+        '200':
+          description: 'Returns the groups of the given group type in a streaming fashion (`Transfer-Encoding: chunked`).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupsAPIGroups'
+              examples:
+                Example groups response:
+                  description: Example groups response
+                  value: "{\n\"itemsPerPage\":20,\n\"totalPages\":5,\n\"totalResults\":100,\n\"cursor\":\"*\",\n\"nextCursor\":\"AoJylraPsPICPwU4ZDZiMzhmYS0yMmYwLTRmZTAtYmE0My1kOWVlNTFjNWE5MDA\",\n  \"links\" : [ {\n    \"href\" : \"https://localhost/rest/v2/groups/company?cursor=%2A&count=20\",\n    \"rel\" : \"first\",\n    \"type\" : \"application/json\"\n  }, {\n    \"href\" : \"https://localhost/rest/v2/groups/company?cursor=AoJylraPsPICPwU4ZDZiMzhmYS0yMmYwLTRmZTAtYmE0My1kOWVlNTFjNWE5MDA&count=20\",\n    \"rel\" : \"last\",\n    \"type\" : \"application/json\"\n  } ]\n,\n\"groups\": [\n{\n  \"id\" : \"41ebc321-b02b-4e8a-a368-82995c81fb18\",\n  \"groupTypeId\": \"company\",\n  \"creationDate\" : \"2023-03-27T10:36:11.990Z\",\n  \"lastModifiedDate\": \"2024-01-10T12:52:44.816Z\",\n  \"properties\" : [ {\n    \"id\" : \"domaingroup\",\n    \"values\" : [ \"DEFAULT\" ]\n  }, {\n    \"id\" : \"fullname\",\n    \"values\" : [ \"blueconic\" ]\n  }, {\n    \"id\" : \"variant\",\n    \"values\" : [ \"a\" ]\n  }, {\n    \"id\" : \"email\",\n    \"values\" : [ \"example@blueconic.com\" ]\n  }]\n}\n]}"
+        '400':
+          description: One or more required parameters are missing or invalid.
+        '404':
+          description: Group type not found.
+        '401':
+          description: Authentication failed (unauthorized).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:groups
+  /groups:
+    put:
+      tags:
+      - Groups
+      summary: Create, update, or delete one or more groups
+      description: Create, update, or delete one or more groups in a single request. This is the recommended way of creating, updating and deleting groups.
+      operationId: createUpdateDeleteGroups
+      requestBody:
+        description: '**Group strategy**
+
+
+          The following values are valid strategies for group operations. These can be used to create, update or delete groups.
+
+
+          | Name         | Description                                                                                |
+
+          | :----------- |:-------------------------------------------------------------------------------------------|
+
+          | UPSERT   | Will update (and insert if not found) the group based on the rules passed along.           |
+
+          | UPDATE   | Will update (but doesn’t insert if not found) the group based on the rules passed along. |
+
+          | DELETE   | Will delete the group with the given ID.                                                 |
+
+
+          **Limits**
+
+
+          * Each request can contain up to 1000 entries. If this limit is exceeded, a HTTP 413 will be thrown (the first 1000 entries will be processed and returned in the response).
+
+          * When too many requests are sent concurrently, a HTTP 429 can be thrown. BlueConic recommends designing your app to be resilient to this scenario. For example, implement a request queue with an exponential backoff algorithm.'
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BulkGroupInputEntry'
+            examples:
+              Basic create group example:
+                description: Example that shows how to create one group.
+                value: "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]"
+              Advanced example:
+                description: "This request contains three operations:\n\n* The first operation looks up a specific BlueConic group by its id, then sets the property with id crm_id to 003Kz4Bsaa14 and adds a new entry to email property. If the group cannot be found, nothing will happen.\n* The second operation deletes a specific BlueConic group by its id.\n* The third operation tries to find a BlueConic group by its id in the specified domain. If the group is found, three properties will be set:\n    * Zipcodes `02111` and `02112` will be added.\n    * `email` will be set to `jane@example.com.`\n    * `crm_id` will be set to `002wC4BadR1w`.\n    * If no group can be found, a new group is created in the specified domaingroup. The three properties will be set on the group.\n"
+                value: "[{\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"properties\": [{\n        \"id\": \"company_test_crm_id\",\n        \"values\": [\"003Kz4Bsaa11\"],\n        \"strategy\": \"SET\"\n    }, {\n        \"id\": \"company_test_email\",\n        \"values\": [\"user_0000@gmail.com\"],\n        \"strategy\": \"ADD\"\n    }]\n},\n    {\n        \"groupId\": \"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\",\n        \"groupType\": \"company_test\",\n        \"strategy\": \"DELETE\"\n    },\n    {\n        \"groupId\": \"f8daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n        \"groupType\": \"company_test\",\n        \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"ADD\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane99@example.com\"],\n            \"strategy\": \"ADD\"\n        },\n        {\n            \"id\": \"company_test_crm_id\",\n            \"values\": [\"002wC5BadR1w\"],\n            \"strategy\": \"SET\"\n        }\n        ],\n        \"strategy\": \"UPSERT\",\n        \"domainGroup\": \"85ee8f33-15a3-4e95-aff5-abfa5bc457ab\"\n    }\n]"
+        required: true
+      responses:
+        '200':
+          description: "Bulk response \n\n**JSON Response**\n\nEvery bulk operation is returned in the response as well.\nThe state can be one of the following values: `CREATED`, `SKIPPED`, `MODIFIED`, `DELETED`, `UNCHANGED`, `NOTFOUND`, or `UNKNOWN_GROUP_TYPE`.\n\n```json\n[{\n    \"state\": \"CREATED\",\n    \"groupId\": \"group-ID of the created group\",\n    \"groupTypeId\": \"group-type-ID of the created group\",\n    \"identifier\": \" my-external-identifier\"\n}]\n```"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BulkGroupResultBean'
+              examples:
+                Example bulk response:
+                  description: Example bulk response
+                  value: "[\n  {\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupTypeId\": \"company_test\",\n    \"state\": \"MODIFIED\"\n  },\n  {\n    \"groupId\": \"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\",\n    \"groupTypeId\": \"company_test\",\n    \"state\": \"DELETED\"\n  }\n]"
+        '400':
+          description: One or more required parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequestBean'
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Forbidden, invalid (PII) permissions to perform the request. Please check your OAuth Application configuration.
+        '413':
+          description: More than the allowed 1000 entries are sent in the request. The entries that are processed are returned in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BulkResultBean'
+              examples:
+                Example bulk response:
+                  description: Example bulk response
+                  value: "[\n  {\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupTypeId\": \"company_test\",\n    \"state\": \"MODIFIED\"\n  },\n  {\n    \"groupId\": \"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\",\n    \"groupTypeId\": \"company_test\",\n    \"state\": \"DELETED\"\n  }\n]"
+        '429':
+          description: Too many requests are sent concurrently. BlueConic recommends designing your app to be resilient to this scenario. For example, implement a request queue with an exponential backoff algorithm.
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - write:groups
+components:
+  schemas:
+    BulkResultBean:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        profileId:
+          type: string
+          description: The profile ID of the profile that was created, updated or deleted.
+        state:
+          type: string
+          description: The possible states for profile related changes.
+          enum:
+          - CREATED
+          - SKIPPED
+          - MODIFIED
+          - UNCHANGED
+          - NOTFOUND
+          - RESTRICTION_MISMATCH
+          - CONSENT_MISMATCH
+          - DELETED
+          - UNAUTHORIZED
+        timeline:
+          type: array
+          description: The feedback on the given timeline events.
+          items:
+            $ref: '#/components/schemas/TimelineResultBean'
+        validationErrors:
+          type: object
+          additionalProperties:
+            type: array
+            description: The errors found for the given profile changes (if any).
+            items:
+              type: string
+              description: The errors found for the given profile changes (if any).
+          description: The errors found for the given profile changes (if any).
+    link:
+      type: object
+      properties:
+        Href:
+          type: string
+          description: The href of the link
+        Rel:
+          type: string
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
+          type: string
+          description: The type of the link e.g. 'application/json'
+    group:
+      type: object
+      description: Groups that the profile is a part of.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        groupTypeId:
+          type: string
+          description: The ID of the BlueConic group type.
+        id:
+          type: string
+          description: The unique identifier for the object.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+    RefinementBean:
+      type: object
+      properties:
+        daysCount:
+          type: integer
+          format: int32
+          description: The days count
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefinementBean'
+        fromDate:
+          type: string
+          description: The from date in ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')
+        fromValue:
+          type: integer
+          format: int32
+          description: The from value
+        groupProperty:
+          type: string
+          description: The group property
+        hoursCount:
+          type: integer
+          format: int32
+          description: The hours count
+        objective:
+          type: string
+          description: The objective
+        operator:
+          type: string
+          description: The operator
+        property:
+          type: string
+          description: The property
+        toDate:
+          type: string
+          description: The to date in ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')
+        toValue:
+          type: integer
+          format: int32
+          description: The to value
+        values:
+          type: array
+          description: The values
+          items:
+            type: string
+            description: The values
+    BulkGroupResultBean:
+      type: object
+      properties:
+        groupId:
+          type: string
+        groupTypeId:
+          type: string
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        state:
+          type: string
+          description: The possible states for group related changes.
+          enum:
+          - CREATED
+          - SKIPPED
+          - MODIFIED
+          - UNCHANGED
+          - NOTFOUND
+          - DELETED
+          - UNKNOWN_GROUP_TYPE
+        validationErrors:
+          type: object
+          additionalProperties:
+            type: array
+            description: The errors found for the given group changes (if any).
+            items:
+              type: string
+              description: The errors found for the given group changes (if any).
+          description: The errors found for the given group changes (if any).
+    BulkGroupInputEntry:
+      type: object
+      properties:
+        domainGroup:
+          type: string
+          default: DEFAULT
+          description: Specifies the domain group in which a group is created. Used for matching and creating groups.
+        groupId:
+          type: string
+          description: The BlueConic group ID to search for.
+        groupTypeId:
+          type: string
+          description: The BlueConic group type ID.
+        identifier:
+          type: string
+          description: An (external) identifier which can be passed along with an operation and is returned in the response.
+          example: '[[{"id": "email", value: "test@test.com"}]]'
+        properties:
+          type: object
+          description: The rules that will be executed on this group.
+          properties:
+            id:
+              type: string
+              description: The profile property ID to apply to this rule for.
+            strategy:
+              type: string
+              description: The strategy to apply to this rule.
+              enum:
+              - ADD
+              - SET
+              - SET_IF_EMPTY
+              - INCREMENT
+              - REMOVE
+            values:
+              type: array
+              description: The values to apply to this rule.
+              items:
+                type: string
+                description: The values to apply to this rule.
+        strategy:
+          type: string
+          default: UPDATE
+          description: The strategy to apply to the given entry. Can be used to create, update or delete groups.
+          enum:
+          - UPSERT
+          - UPDATE
+          - DELETE
+    GroupsAPIGroups:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The cursor of the current page. `*` when not passed.
+        groups:
+          type: array
+          description: The groups.
+          items:
+            $ref: '#/components/schemas/group'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        links:
+          type: array
+          description: The links to the first and next/last page.
+          items:
+            $ref: '#/components/schemas/link'
+        nextCursor:
+          type: string
+          description: The cursor of the next page (if any).
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+    TimelineResultBean:
+      type: object
+      description: The feedback on the given timeline events.
+      properties:
+        id:
+          type: string
+          description: The ID for this event.
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        state:
+          type: string
+          description: The possible states for timeline events.
+          enum:
+          - CREATED
+          - SET
+          - MODIFIED
+          - REJECTED
+          - NOTFOUND
+          - DELETED
+        validationErrors:
+          type: array
+          description: The errors found for the given timeline event changes (if any).
+          example:
+          - '#/total_revenue/0: expected type: Number, found: String'
+          items:
+            type: string
+            description: The errors found for the given timeline event changes (if any).
+            example: '["#/total_revenue/0: expected type: Number, found: String"]'
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

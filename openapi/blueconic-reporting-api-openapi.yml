@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: BlueConic REST API v2 Audit Events Reporting API
+  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
+  contact:
+    name: Contact us
+    url: https://support.blueconic.com/hc/en-us/requests/new
+  license:
+    name: BlueConic
+    url: https://github.com/blueconic/openapi/blob/main/LICENSE.MD
+  version: '100.0'
+servers:
+- url: https://{blueconicHostname}/rest/v2
+  description: The BlueConic server
+  variables:
+    blueconicHostname:
+      description: BlueConic server hostname, e.g. 'tenant.blueconic.net'
+      default: tenantname
+tags:
+- name: Reporting
+  description: All reporting related endpoints.
+paths:
+  /reporting/dialogues:
+    get:
+      tags:
+      - Reporting
+      summary: Retrieve dialogues statistics
+      description: Retrieves all statistics for the given dialogues
+      operationId: getDialogueStatistics
+      parameters:
+      - name: dialogueId
+        in: query
+        description: Specifies the dialogue IDs to return the statistics for.
+        required: true
+        schema:
+          type: array
+          example: 6e264f9d-4305-426e-9a7e-7e6ec9b2a18c
+          items:
+            type: string
+            example: 6e264f9d-4305-426e-9a7e-7e6ec9b2a18c
+      - name: startDate
+        in: query
+        description: Specifies the startDate of the reporting period. Defaults to 30 days ago if not specified. Format is yyyy-MM-dd.
+        schema:
+          type: string
+          example: 2024-11-08
+      - name: endDate
+        in: query
+        description: Specifies the endDate of the reporting period. Defaults to today if not specified. Format is yyyy-MM-dd.
+        schema:
+          type: string
+          example: 2025-01-25
+      - name: excludeControlGroup
+        in: query
+        description: Whether or not to exclude the control group statistics in the response.
+        schema:
+          type: boolean
+          default: false
+          example: true
+      - name: addRatio
+        in: query
+        description: Specifies the additional ratios to return in the response.
+        schema:
+          type: array
+          example: UNIQUETOTALCONVERSION_UNIQUEVIEW
+          items:
+            type: string
+            example: UNIQUETOTALCONVERSION_UNIQUEVIEW
+      responses:
+        '200':
+          description: Returns the dialogue statistics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/result'
+              examples:
+                Response body:
+                  description: Response body
+                  value: "{\n  \"entries\" : [ {\n    \"dialogueId\" : \"7c2c3c90-679b-4cf8-a957-27e629b7a24e\",\n    \"isEnabled\" : false,\n    \"name\" : \"Copy of example LB\",\n    \"statistics\" : {\n      \"clicks\" : 0,\n      \"clickViewRatio\" : null,\n      \"conversionClickRatio\" : null,\n      \"conversions\" : 0,\n      \"conversionUniqueviewRatio\" : null,\n      \"conversionValue\" : 0.00,\n      \"conversionValueClickRatio\" : null,\n      \"conversionValueConversionRatio\" : null,\n      \"conversionValueViewRatio\" : null,\n      \"conversionViewRatio\" : null,\n      \"indirectConversions\" : 0,\n      \"liftClickViewRatio\" : null,\n      \"liftConversionClickRatio\" : null,\n      \"liftConversionUniqueviewRatio\" : null,\n      \"liftConversionValueClickRatio\" : null,\n      \"liftConversionValueConversionRatio\" : null,\n      \"liftConversionValueViewRatio\" : null,\n      \"liftConversionViewRatio\" : null,\n      \"liftUniquetotalconversionUniqueviewRatio\" : null,\n      \"liftViewUniqueviewRatio\" : null,\n      \"totalConversions\" : 0,\n      \"uniqueClickDialogues\" : 0,\n      \"uniqueClicks\" : 0,\n      \"uniqueConversionDialogues\" : 0,\n      \"uniqueConversions\" : 0,\n      \"uniqueIndirectConversionDialogues\" : 0,\n      \"uniqueIndirectConversions\" : 0,\n      \"uniqueTotalConversionDialogues\" : 0,\n      \"uniqueTotalConversions\" : 0,\n      \"uniquetotalconversionUniqueviewRatio\" : null,\n      \"uniqueViewDialogues\" : 0,\n      \"uniqueViews\" : 0,\n      \"views\" : 0,\n      \"viewUniqueviewRatio\" : null\n    }\n  }, {\n    \"dialogueId\" : \"6e264f9d-4305-426e-9a7e-7e6ec9b2a18c\",\n    \"isEnabled\" : true,\n    \"name\" : \"example LB\",\n    \"statistics\" : {\n      \"clicks\" : 0,\n      \"clickViewRatio\" : 0.00,\n      \"conversionClickRatio\" : null,\n      \"conversions\" : 0,\n      \"conversionUniqueviewRatio\" : 0.00,\n      \"conversionValue\" : 0.00,\n      \"conversionValueClickRatio\" : null,\n      \"conversionValueConversionRatio\" : null,\n      \"conversionValueViewRatio\" : 0.00,\n      \"conversionViewRatio\" : 0.00,\n      \"indirectConversions\" : 0,\n      \"liftClickViewRatio\" : null,\n      \"liftConversionClickRatio\" : null,\n      \"liftConversionUniqueviewRatio\" : null,\n      \"liftConversionValueClickRatio\" : null,\n      \"liftConversionValueConversionRatio\" : null,\n      \"liftConversionValueViewRatio\" : null,\n      \"liftConversionViewRatio\" : null,\n      \"liftUniquetotalconversionUniqueviewRatio\" : null,\n      \"liftViewUniqueviewRatio\" : null,\n      \"totalConversions\" : 0,\n      \"uniqueClickDialogues\" : 0,\n      \"uniqueClicks\" : 0,\n      \"uniqueConversionDialogues\" : 0,\n      \"uniqueConversions\" : 0,\n      \"uniqueIndirectConversionDialogues\" : 0,\n      \"uniqueIndirectConversions\" : 0,\n      \"uniqueTotalConversionDialogues\" : 0,\n      \"uniqueTotalConversions\" : 0,\n      \"uniquetotalconversionUniqueviewRatio\" : 0.00,\n      \"uniqueViewDialogues\" : 1,\n      \"uniqueViews\" : 2,\n      \"views\" : 4,\n      \"viewUniqueviewRatio\" : 200.00\n    }\n  } ],\n  \"startIndex\" : 0,\n  \"timestamp\" : \"2025-09-20 to 2025-09-22\",\n  \"totalResults\" : 2\n}"
+        '400':
+          description: One or more required parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRequestBean'
+        '401':
+          description: Authentication failed (unauthorized).
+        '403':
+          description: Authorization failed (incorrect permissions).
+        '503':
+          description: The server is too busy to handle the request.
+      security:
+      - oauth2:
+        - read:dialogues
+components:
+  schemas:
+    DialogueReportingEntry:
+      type: object
+      description: The list of dialogue statistics entries, one per request dialogue UUID.
+      properties:
+        dialogueId:
+          type: string
+          description: The ID of the dialogue.
+        isEnabled:
+          type: boolean
+          description: Whether the dialogue is enabled or not.
+        name:
+          type: string
+          description: The dialogue name.
+        statistics:
+          type: object
+          additionalProperties:
+            type: number
+            description: The statistics in key/value format.
+          description: The statistics in key/value format.
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+    result:
+      type: object
+      properties:
+        dialogueStatistics:
+          type: array
+          description: The list of dialogue statistics entries, one per request dialogue UUID.
+          items:
+            $ref: '#/components/schemas/DialogueReportingEntry'
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of dialogues in the resultset.
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials flow are supported. Make sure to select the correct flow based on which flow the registered client supports. The client id and client secret can be found in BlueConic by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication, follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
+      flows:
+        clientCredentials:
+          tokenUrl: /rest/v2/oauth/token
+        authorizationCode:
+          authorizationUrl: /rest/v2/oauth/authorize
+          tokenUrl: /rest/v2/oauth/token
+          refreshUrl: /rest/v2/oauth/token

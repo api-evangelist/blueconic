@@ -21,7 +21,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/blueconic.png
 url: https://raw.githubusercontent.com/api-evangelist/blueconic/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 tags:
   - Customer Data Platform
@@ -197,12 +197,14 @@ apis:
     \                                                                                                \
     \                                                                                    |"
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Audit Events
   properties:
   - type: OpenAPI
     url: openapi/blueconic-audit-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-audit-events-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -221,12 +223,14 @@ apis:
   description: >-
     The Channel API allows you to retrieve information about [channels in BlueConic](https://support.blueconic.com/hc/en-us/articles/200472632-Overview-What-are-channels-in-BlueConic).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Channels
   properties:
   - type: OpenAPI
     url: openapi/blueconic-channels-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-channels-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -246,12 +250,14 @@ apis:
     BlueConic Connections lets you connect with other systems to synchronize customer data. The following
     methods allow you to retrieve the connection configuration and run history.  [Read more](https://support.blueconic.com/hc/en-us/articles/202532092-Synchronizing-your-data-with-Connections?utm_source=BlueConic_User)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Connections
   properties:
   - type: OpenAPI
     url: openapi/blueconic-connections-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-connections-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -270,12 +276,14 @@ apis:
   description: >-
     A Dialogue is an online (personalized) conversation with a visitor to a channel. [Read more](https://support.blueconic.com/hc/en-us/articles/200456521-What-are-dialogues-)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Dialogues
   properties:
   - type: OpenAPI
     url: openapi/blueconic-dialogues-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-dialogues-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -296,12 +304,14 @@ apis:
     that can be used for segmentation. <a href="https://support.blueconic.com/hc/en-us/articles/360019531594-Creating-and-managing-groups">Read
     more</a>
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Group Types
   properties:
   - type: OpenAPI
     url: openapi/blueconic-group-types-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-group-types-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -324,12 +334,14 @@ apis:
     Best practice when updating groups is to use the bulk endpoint rather than a single request for each
     individual update.
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Groups
   properties:
   - type: OpenAPI
     url: openapi/blueconic-groups-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-groups-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -349,12 +361,14 @@ apis:
     Used to track an interaction (view, click, or conversion) with a BlueConic Dialogue. See [Tracking
     metrics for views, clicks, and conversions](https://support.blueconic.com/hc/en-us/articles/360020105614-Tracking-metrics-for-views-clicks-and-conversions).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Interaction events
   properties:
   - type: OpenAPI
     url: openapi/blueconic-interaction-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-interaction-events-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -376,12 +390,14 @@ apis:
     (for email channels). Read more about [Dialogues](https://support.blueconic.com/hc/en-us/articles/202425271-Dialogues-Overview)
     or [Listeners](https://support.blueconic.com/hc/en-us/articles/202531942-Listeners-Overview).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Interactions
   properties:
   - type: OpenAPI
     url: openapi/blueconic-interactions-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-interactions-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -400,12 +416,14 @@ apis:
   description: >-
     The following methods allow you to retrieve information about lifecycles. See [Lifecycles](https://support.blueconic.com/en/articles/247909-lifecycles-overview).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Lifecycles
   properties:
   - type: OpenAPI
     url: openapi/blueconic-lifecycles-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-lifecycles-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -425,12 +443,14 @@ apis:
     Listeners add information about visitors to their profile, based on their online behavior or provided
     input. Use this endpoint to retrieve listener configuration. [Read more](https://support.blueconic.com/en/articles/247923-listeners-overview)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Listeners
   properties:
   - type: OpenAPI
     url: openapi/blueconic-listeners-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-listeners-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -450,12 +470,14 @@ apis:
     The following methods allow you to create, modify, retrieve, and delete machine learning Models in
     ONNX format. See [Models](https://support.blueconic.com/en/articles/307965-real-time-models).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Models
   properties:
   - type: OpenAPI
     url: openapi/blueconic-models-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-models-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -475,12 +497,14 @@ apis:
     The following methods allow you to retrieve AI Workbench notebooks and their run history. See [AI
     Workbench Overview](https://support.blueconic.com/en/articles/247838-ai-workbench-overview).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Notebooks
   properties:
   - type: OpenAPI
     url: openapi/blueconic-notebooks-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-notebooks-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -500,12 +524,14 @@ apis:
     The OAuth 2.0 API allows external applications to be authenticated and authorized to access the public
     BlueConic API. The OAuth 2.0 specification is implemented according to [RFC 6749](https://www.rfc-editor.org/rfc/rfc6749).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - OAuth 2.0
   properties:
   - type: OpenAPI
     url: openapi/blueconic-oauth-2-0-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-oauth-2-0-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -526,12 +552,14 @@ apis:
     items in the objective only get access to profiles that have given consent to the objective. [Read
     more](https://support.blueconic.com/hc/en-us/articles/360002107054-Overview-Using-BlueConic-Objectives-for-privacy-and-consent?utm_source=BlueConic_User)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Objectives
   properties:
   - type: OpenAPI
     url: openapi/blueconic-objectives-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-objectives-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -551,12 +579,14 @@ apis:
     Pageview events are used to track page views by profiles. This is used by BlueConic Listeners. See
     [Listeners and Trackers](https://support.blueconic.com/hc/en-us/sections/200913331-Listeners-and-Trackers).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Pageview events
   properties:
   - type: OpenAPI
     url: openapi/blueconic-pageview-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-pageview-events-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -575,12 +605,14 @@ apis:
   description: >-
     Retrieve plugins from the gallery, or limit results to installed plugins only. See [Plugins](https://support.blueconic.com/en/articles/248049-plugins-overview).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Plugins
   properties:
   - type: OpenAPI
     url: openapi/blueconic-plugins-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-plugins-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -600,12 +632,14 @@ apis:
     Consent management events for a profile; consent changed or permission level changed. [Read more about
     using Objectives for privacy and consent](https://support.blueconic.com/hc/en-us/articles/360002107054-Overview-Using-BlueConic-Objectives-for-privacy-and-consent).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Profile events
   properties:
   - type: OpenAPI
     url: openapi/blueconic-profile-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-profile-events-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -626,12 +660,14 @@ apis:
     Profiles](https://support.blueconic.com/hc/en-us/articles/115001671965-Overview-BlueConic-Profiles),
     as well as retrieve BlueConic segment information.
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Profiles
   properties:
   - type: OpenAPI
     url: openapi/blueconic-profiles-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-profiles-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -651,12 +687,14 @@ apis:
     The following methods allow you to retrieve and update [Profile Properties](https://support.blueconic.com/hc/en-us/articles/202608231-Capturing-customer-data-in-Profile-Properties)
     and [Group Properties](https://support.blueconic.com/en/articles/247630-creating-and-managing-groups#h_01HCX36VPVENES2WNHEYRHXB2S).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Properties
   properties:
   - type: OpenAPI
     url: openapi/blueconic-properties-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-properties-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -677,12 +715,14 @@ apis:
     To work with recommendations, you have to set up a [content collector](https://support.blueconic.com/hc/en-us/articles/115003214945-Content-Collector)
     or a [product collector](https://support.blueconic.com/hc/en-us/articles/115003214685-Product-Collector).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Recommendations
   properties:
   - type: OpenAPI
     url: openapi/blueconic-recommendations-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-recommendations-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -700,12 +740,14 @@ apis:
   name: BlueConic Reporting API
   description: All reporting related endpoints.
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Reporting
   properties:
   - type: OpenAPI
     url: openapi/blueconic-reporting-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-reporting-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -726,12 +768,14 @@ apis:
     a user. Every BlueConic user is assigned to at least one role. A user can only access the features
     their role grants to them. [Read more](https://support.blueconic.com/hc/en-us/articles/202607121-BlueConic-Roles?utm_source=BlueConic_User)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Roles
   properties:
   - type: OpenAPI
     url: openapi/blueconic-roles-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-roles-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -752,12 +796,14 @@ apis:
     methods allow you to retrieve information from segments and the profiles within a given segment. [Read
     more](https://support.blueconic.com/hc/en-us/articles/202531952-Segments?utm_source=BlueConic_User)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Segments
   properties:
   - type: OpenAPI
     url: openapi/blueconic-segments-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-segments-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -779,12 +825,14 @@ apis:
     features in the recommendation engine and AI Workbench. Use this endpoint to retrieve, create, update,
     or delete content and product stores, as well as the items within them. See [Content Stores](https://support.blueconic.com/en/articles/247526-data-storage-in-blueconic#h_588a2cba-7c4d-4bb4-a155-2cf6ee87db76).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Stores
   properties:
   - type: OpenAPI
     url: openapi/blueconic-stores-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-stores-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -804,12 +852,14 @@ apis:
     Roll up BlueConic timeline event data and store the results in a profile property. You can use that
     profile property for segmentation, reporting, and activation. [Read more](https://support.blueconic.com/en/articles/247617-using-timeline-event-rollups)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Timeline event rollups
   properties:
   - type: OpenAPI
     url: openapi/blueconic-timeline-event-rollups-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-timeline-event-rollups-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -831,12 +881,14 @@ apis:
     a Timeline event type for product orders might define event details such as the date, time, price,
     item URL, and item SKU. The following methods allow you to retrieve timeline event types. [Read more](https://support.blueconic.com/hc/en-us/articles/360035962954-About-Timeline-events-in-BlueConic?utm_source=BlueConic_User)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Timeline Event Types
   properties:
   - type: OpenAPI
     url: openapi/blueconic-timeline-event-types-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-timeline-event-types-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -858,12 +910,14 @@ apis:
     (not visible in the UI) via this REST API directly. You can use external trackers to track customer
     or visitor activity outside domains in your BlueConic tenant. [Read more](https://support.blueconic.com/hc/en-us/articles/202531862-External-Trackers).
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - URL mappings
   properties:
   - type: OpenAPI
     url: openapi/blueconic-url-mappings-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-url-mappings-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -882,12 +936,14 @@ apis:
   description: >-
     Users are the people who have access to the BlueConic environment. [Read more](https://support.blueconic.com/hc/en-us/articles/360000013785-Users)
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-  baseURL: https://[tenantname].blueconic.net
+  baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
   - Users
   properties:
   - type: OpenAPI
     url: openapi/blueconic-users-api-openapi.yml
+  - type: Overlay
+    url: overlays/blueconic-users-api-overlay.yaml
   - type: Documentation
     url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   - type: GettingStarted
@@ -913,7 +969,7 @@ common:
   - type: Website
     url: https://www.blueconic.com/
   - type: Documentation
-    url: https://support.blueconic.com/hc/en-us/categories/200458421-Developers
+    url: https://support.blueconic.com/en/collections/609503-developer-tools
   - type: GitHubOrg
     url: https://github.com/blueconic
   - type: OpenAPI
@@ -942,6 +998,82 @@ common:
     url: rate-limits/blueconic-rate-limits.yml
   - type: FinOps
     url: finops/blueconic-finops.yml
+  - type: Packages
+    url: packages/blueconic-packages.yml
+  - type: SDKs
+    url: packages/blueconic-packages.yml
+  - type: MCPServer
+    name: BlueConic MCP server manifest
+    url: mcp/blueconic-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/blueconic-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/blueconic-llms.txt
+  - type: Conformance
+    url: conformance/blueconic-conformance.yml
+  - type: Compliance
+    url: https://www.blueconic.com/trust-center
+  - type: TrustCenter
+    url: security/blueconic-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/blueconic-vulnerability-disclosure.yml
+  - type: Security
+    url: https://support.blueconic.com/en/articles/266965-guidelines-for-penetration-tests
+  - type: ErrorCatalog
+    url: errors/blueconic-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/blueconic-lifecycle.yml
+  - type: Deprecation
+    url: https://support.blueconic.com/en/articles/248010-blueconic-rest-api-migration
+  - type: ChangeLog
+    url: changelog/blueconic-changelog.yml
+  - type: ChangeLog
+    name: BlueConic product updates
+    url: https://announcekit.co/blueconic-changelog/blueconic-product-updates
+  - type: Conventions
+    url: conventions/blueconic-conventions.yml
+  - type: DataModel
+    url: data-model/blueconic-data-model.yml
+  - type: Sandbox
+    url: sandbox/blueconic-sandbox.yml
+  - type: Webhooks
+    url: asyncapi/blueconic-webhooks.yml
+  - type: Vocabulary
+    url: vocabulary/blueconic-vocabulary.yml
+  - type: SpectralRules
+    url: rules/blueconic-jsonschema-spectral-rules.yml
+  - type: Examples
+    url: examples/getOneProfile-response-200.json
+  - type: Examples
+    url: examples/createUpdateDeleteProfiles-request.json
+  - type: Examples
+    url: examples/getProfilesInSegment-response-200.json
+  - type: Examples
+    url: examples/getAuditEvents-response-200.json
+  - type: JSONSchema
+    url: json-schema/profile.json
+  - type: JSONSchema
+    url: json-schema/segment.json
+  - type: JSONLD
+    url: json-ld/blueconic-context.jsonld
+  - type: DeveloperPortal
+    url: https://support.blueconic.com/en/collections/609503-developer-tools
+  - type: APIReference
+    url: https://rest.apidoc.blueconic.com
+  - type: GettingStarted
+    url: https://support.blueconic.com/en/articles/248009-using-the-blueconic-rest-api-v2
+  - type: TermsOfService
+    url: https://www.blueconic.com/legal/terms
+  - type: PrivacyPolicy
+    url: https://www.blueconic.com/legal/privacy-policy
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 50
+  pass: local-v1

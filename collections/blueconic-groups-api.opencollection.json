@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Groups API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get one group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/groups/:grouptype/:group",
+            "params": [
+              {
+                "name": "grouptype",
+                "value": "company",
+                "type": "path",
+                "description": "The ID of the BlueConic group type."
+              },
+              {
+                "name": "group",
+                "value": "640d01c7-1c30-4085-adf9-afad6560ec99",
+                "type": "path",
+                "description": "The ID of the BlueConic group."
+              },
+              {
+                "name": "properties",
+                "value": "email,fullname,visits",
+                "type": "query",
+                "description": "Only returns the given group properties in the response."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the properties of the specified group."
+        },
+        {
+          "info": {
+            "name": "Get groups for group type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/groups/:grouptype",
+            "params": [
+              {
+                "name": "grouptype",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the group type."
+              },
+              {
+                "name": "refinement",
+                "value": "",
+                "type": "query",
+                "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+              },
+              {
+                "name": "cursor",
+                "value": "*",
+                "type": "query",
+                "description": "Defines the starting point of the page for pagination. When cursors are used, each page, except the last page, returns a `nextCursor` value which can be used to retrieve the next page."
+              },
+              {
+                "name": "count",
+                "value": "20",
+                "type": "query",
+                "description": "Specifies the number of results to return. Smaller than or equal to 1.000.000."
+              },
+              {
+                "name": "maxHitsAllowed",
+                "value": "",
+                "type": "query",
+                "description": "When greater than 0, enables fast approximate export by limiting total hits (e.g. maxHitsAllowed=200 and count=20 for max 10 pages). Same behavior as segment export."
+              },
+              {
+                "name": "properties",
+                "value": "browserversion,email",
+                "type": "query",
+                "description": "Specifies which group properties values will be returned for each group. If not specified, the values of all group properties will be returned, which may result in a large result set. One or more group property ids, separated by a comma."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the groups for the given group type"
+        },
+        {
+          "info": {
+            "name": "Create, update, or delete one or more groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{blueconicHostname}/rest/v2/groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create, update, or delete one or more groups in a single request. This is the recommended way of creating, updating and deleting groups."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

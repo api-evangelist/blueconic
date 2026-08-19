@@ -1,0 +1,172 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Profiles API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/profiles",
+            "params": [
+              {
+                "name": "property",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the id of the profile property to search for."
+              },
+              {
+                "name": "value",
+                "value": "",
+                "type": "query",
+                "description": "The value of the property to search for."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Search for BlueConic profiles based on a specific value for an indexed (unique) property. Multiple name/value pairs can be used to refine the search."
+        },
+        {
+          "info": {
+            "name": "Create, update, or delete one or more profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{blueconicHostname}/rest/v2/profiles",
+            "params": [
+              {
+                "name": "objectiveIds",
+                "value": "",
+                "type": "query",
+                "description": "A list of Objective IDs. If you provide objectiveIDs, profiles will only be updated or created if they have given consent for the provided objectives or consent is not required for the legislation zone of the profile. If a profile would have been created or updated, but is skipped because of an objective mismatch, the response will contain a `CONSENT_MISMATCH` state for that profile. If you don’t provide objectiveIDs, the update will always proceed."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create, update, or delete one or more profiles in a single request. This is the recommended way of creating, updating and deleting profiles."
+        },
+        {
+          "info": {
+            "name": "Get one profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/profiles/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "640d01c7-1c30-4085-adf9-afad6560ec99",
+                "type": "path",
+                "description": "The ID of the BlueConic profile."
+              },
+              {
+                "name": "expand",
+                "value": "profile.timeline",
+                "type": "query",
+                "description": "Expand the information in the result set. Use \"profile.permissions.exceptions\" to include permission level and exception data.\nUse \"profile.timeline\" to include timeline event information.\nUse \"profile.segments\" to include the segments a profile is part of.\nUse \"profile.segments.tags\" to include segment labels (v2 API only).\nUse multiple \"expand\" querystring parameters to return combinations.\n"
+              },
+              {
+                "name": "properties",
+                "value": "email,fullname,visits",
+                "type": "query",
+                "description": "Only returns the given profile properties in the response."
+              },
+              {
+                "name": "profileProperty",
+                "value": "email",
+                "type": "query",
+                "description": "When the profileProperty is specified, the response will only return the values for the given profile property. If not specified, the values of all profile properties will be returned, which may result in a large result set."
+              },
+              {
+                "name": "groupProperty",
+                "value": "city",
+                "type": "query",
+                "description": "When the groupProperty is specified, the response will only return the values for the given group property. If not specified, the values of all group properties will be returned, which may result in a large result set. Only relevant when `&expand=profiles.profile.groups` is supplied."
+              },
+              {
+                "name": "eventTypeId",
+                "value": "order",
+                "type": "query",
+                "description": "Filter returned timeline events for a specific type."
+              },
+              {
+                "name": "eventProperty",
+                "value": "order.orderline",
+                "type": "query",
+                "description": "When the eventProperty is specified, the response will only return the values for the given property. If not specified, the values of all event properties will be returned, which may result in a large result set."
+              },
+              {
+                "name": "eventCount",
+                "value": "10",
+                "type": "query",
+                "description": "The maximum number of timeline events to return."
+              },
+              {
+                "name": "fromDate",
+                "value": "2025-01-22 11:21:33+00:00",
+                "type": "query",
+                "description": "Filter to only include timeline events that are dated later than this date. The fromDate is in the ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')."
+              },
+              {
+                "name": "toDate",
+                "value": "2025-02-22 11:21:33+00:00",
+                "type": "query",
+                "description": "Filter to only include timeline events that are dated before this date. The toDate is in the ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')."
+              },
+              {
+                "name": "collapse",
+                "value": "profile.segments",
+                "type": "query",
+                "description": "Collapse the information in the result set. Use profile.segments to exclude segment information."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the properties of the specified profile, including the IDs of the matching dynamic segments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

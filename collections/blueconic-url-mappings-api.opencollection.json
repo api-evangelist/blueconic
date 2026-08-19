@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events URL mappings API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "URL mappings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create URL mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{blueconicHostname}/rest/v2/urlmappings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new URL mapping (separate from an external tracker)."
+        },
+        {
+          "info": {
+            "name": "Get URL mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/urlmappings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "4Q",
+                "type": "path",
+                "description": "The ID of the URL mapping."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get URL mapping"
+        },
+        {
+          "info": {
+            "name": "Update URL mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{blueconicHostname}/rest/v2/urlmappings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "4Q",
+                "type": "path",
+                "description": "The ID of the URL mapping."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update URL mapping"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Recommendations API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Recommendations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate recommendations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{blueconicHostname}/rest/v2/recommendations",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "640d01c7-1c30-4085-adf9-afad6560ec99",
+                "type": "query",
+                "description": "The ID of the BlueConic profile. Note that the profile ID is required when you use a [recommendation algorithm](https://support.blueconic.com/hc/en-us/articles/360022093313-BlueConic-recommendation-algorithms) that depends on the profile, such as 'Collaborative filtering' or 'Seen articles / Seen products'."
+              },
+              {
+                "name": "storeId",
+                "value": "0693330e-679a-48db-b94f-a8921b76149e",
+                "type": "query",
+                "description": "The ID of the content store to get the items from."
+              },
+              {
+                "name": "itemId",
+                "value": "",
+                "type": "query",
+                "description": "ID of the current item being shown. Some algorithms are based on this information. It also excludes this item from being returned in the result."
+              },
+              {
+                "name": "frequencyCap",
+                "value": "5",
+                "type": "query",
+                "description": "The number of times an item can be recommended to a profile before being hidden from future recommendations."
+              },
+              {
+                "name": "imageWidth",
+                "value": "100",
+                "type": "query",
+                "description": "Width of the images to return."
+              },
+              {
+                "name": "imageHeight",
+                "value": "100",
+                "type": "query",
+                "description": "Height of the images to return."
+              },
+              {
+                "name": "manualViewCounting",
+                "value": "true",
+                "type": "query",
+                "description": "Prevent updating recommendation statistics for the recommended items. Can be used to generate offline recommendation items without influencing the profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate BlueConic recommendations for a specific profile based on the provided parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

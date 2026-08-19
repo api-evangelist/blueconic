@@ -1,0 +1,119 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/blueconic
+description: >-
+  First-party BlueConic client libraries, SDKs and the MCP server package, verified against
+  the public registries (registry.npmjs.org, repo1.maven.org, pub.dev) and the blueconic
+  GitHub organization on 2026-08-13. Versions and publish dates were read from the registry
+  metadata endpoints at fetch time. BlueConic publishes no Python, Go, Ruby, PHP or Rust
+  client for the REST API v2 — the docs point developers at OpenAPI code generation instead
+  (https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api).
+docs: https://support.blueconic.com/en/collections/609503-developer-tools
+packages:
+  - language: javascript
+    registry: npm
+    name: "@blueconic/blueconic-mcp"
+    url: https://www.npmjs.com/package/@blueconic/blueconic-mcp
+    source: https://github.com/blueconic/blueconic-mcp
+    install: npx -y @blueconic/blueconic-mcp
+    official: true
+    version: 1.1.2
+    published: '2026-05-08'
+    note: >-
+      Local (stdio) MCP server. Loads the tenant's own OpenAPI at startup and turns its
+      supported REST operations into MCP tools. Complements the hosted per-tenant endpoint
+      at https://{tenantname}.blueconic.net/mcp. See mcp/blueconic-mcp.yml.
+  - language: javascript
+    registry: npm
+    name: "@blueconic/blueconic-web-sdk"
+    url: https://www.npmjs.com/package/@blueconic/blueconic-web-sdk
+    source: https://support.blueconic.com/en/articles/625934-blueconic-sdk-for-web
+    install: npm install @blueconic/blueconic-web-sdk
+    official: true
+    version: 1.0.0
+    published: '2026-04-20'
+    note: >-
+      Browser/SPA SDK. Distinct from the JavaScript front-end API, which is only available
+      on pages where the BlueConic tag is already loaded.
+  - language: javascript
+    registry: npm
+    name: "@blueconic/blueconic-react-native"
+    url: https://www.npmjs.com/package/@blueconic/blueconic-react-native
+    source: https://support.blueconic.com/en/articles/248017-blueconic-sdk-for-react-native
+    install: npm install @blueconic/blueconic-react-native
+    official: true
+    version: 5.2.1
+    published: '2026-07-01'
+    note: Wraps the native Android and iOS SDKs.
+  - language: brightscript
+    registry: npm
+    name: "@blueconic/blueconic-roku"
+    url: https://www.npmjs.com/package/@blueconic/blueconic-roku
+    source: https://github.com/blueconic/blueconic-roku-sdk
+    install: npm install @blueconic/blueconic-roku
+    official: true
+    version: 1.1.2
+    published: '2025-11-04'
+    note: >-
+      Roku CTV SDK, distributed through npm. GitHub tag 1.1.2 was released the same day
+      (2025-11-04); the repo has had no push since, the oldest release cadence of the set.
+  - language: java
+    registry: maven
+    name: com.blueconic:blueconic-android-lib
+    url: https://repo1.maven.org/maven2/com/blueconic/blueconic-android-lib/
+    source: https://support.blueconic.com/en/articles/248014-blueconic-sdk-for-android
+    install: implementation 'com.blueconic:blueconic-android-lib:7.2.1'
+    official: true
+    version: 7.2.1
+    published: '2026-06-30'
+    note: >-
+      Read from repo1.maven.org/maven2/com/blueconic/blueconic-android-lib/maven-metadata.xml;
+      publish date from the Last-Modified header on the 7.2.1 POM.
+  - language: swift
+    registry: swift-package-manager
+    name: blueconic-ios-sdk
+    url: https://github.com/blueconic/blueconic-ios-sdk
+    source: https://support.blueconic.com/en/articles/248015-blueconic-sdk-for-ios
+    install: https://github.com/blueconic/blueconic-ios-sdk (Package.swift, XCFramework)
+    official: true
+    version: 5.2.2
+    published: '2026-06-30'
+    note: >-
+      Distributed as a Swift Package (Package.swift + BlueConicClient.xcframework) straight
+      from GitHub — there is no CocoaPods trunk entry (trunk.cocoapods.org/api/v1/pods/BlueConic
+      returned 404), so the version/date come from the GitHub release tag, not a package registry.
+  - language: dart
+    registry: pub.dev
+    name: blueconic_flutter
+    url: https://pub.dev/packages/blueconic_flutter
+    source: https://support.blueconic.com/en/articles/421790-blueconic-sdk-for-flutter
+    install: flutter pub add blueconic_flutter
+    official: true
+    version: 1.1.2
+    published: '2026-06-30'
+    note: >-
+      pubspec homepage is https://www.blueconic.com/ and no repository is declared; the SDK
+      is documented as first-party in the BlueConic help center.
+  - language: javascript
+    registry: cdn
+    name: blueconic-mcp .mcpb bundle
+    url: http://plugins.blueconic.net/_static/claude/blueconic-mcp-1.1.2.mcpb
+    source: https://support.blueconic.com/en/articles/415706-blueconic-model-context-protocol-mcp
+    install: Drag the .mcpb file into Claude Desktop > Settings > Extensions
+    official: true
+    version: 1.1.2
+    published: null
+    note: >-
+      Claude Desktop connector bundle, distributed from BlueConic's own CDN rather than a
+      registry, so there is no metadata endpoint to date it. The version is pinned in the URL
+      (blueconic-mcp-1.1.2.mcpb) and matches the npm package. Served over plain HTTP in the
+      docs; HEAD returned 200. published is null because no publish date is discoverable.
+absent:
+  - registry: pypi
+    checked: https://pypi.org/pypi/blueconic/json
+    status: 404
+  - registry: npm
+    name: blueconic
+    note: >-
+      The unscoped `blueconic` npm name is an npm security holding package (0.0.1-security,
+      2024-10-28), not a BlueConic release. All first-party JavaScript ships under @blueconic/.

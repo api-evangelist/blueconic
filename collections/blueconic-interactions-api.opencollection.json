@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Interactions API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Interactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get interactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/interactions",
+            "params": [
+              {
+                "name": "profile",
+                "value": "",
+                "type": "query",
+                "description": "The ID (UUID) of the profile."
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "The URL of the current page. Either this one or `referer` must be provided in order to get interactions returned."
+              },
+              {
+                "name": "referer",
+                "value": "",
+                "type": "query",
+                "description": "The referer of the current target to retrieve the interactions, which can be an URL for web channels, a screen name for mobile or CTV channels, or a campaign ID for email channels."
+              },
+              {
+                "name": "channelId",
+                "value": "00fdd1a5-486f-41d4-bfb2-57f969177266",
+                "type": "query",
+                "description": "The channel ID of the channel to retrieve the interactions for. If not passed, it's derived from the `url` or `referer` parameter."
+              }
+            ]
+          },
+          "docs": "Get interactions"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

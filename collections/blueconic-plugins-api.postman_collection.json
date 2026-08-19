@@ -1,0 +1,777 @@
+{
+  "item": [
+    {
+      "id": "dbb389bb-ba3b-43bc-91a3-d63ab04b55ad",
+      "name": "Plugins",
+      "description": {
+        "content": "Retrieve plugins from the gallery, or limit results to installed plugins only. See [Plugins](https://support.blueconic.com/en/articles/248049-plugins-overview). ",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "158d54a3-8d5f-4f0e-945b-2ee1422c1e3b",
+          "name": "Get one plugin",
+          "request": {
+            "name": "Get one plugin",
+            "description": {
+              "content": "Retrieves a single plugin",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "plugins",
+                ":plugin"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "plugin",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4b3d500f-c913-4601-8170-d7d823f5b9ab",
+              "name": "Returns the plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins",
+                    ":plugin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "plugin",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"URL\\\": \\\"http://plugins.blueconic.net/connection_facebook_ads/5.5.0/connection_facebook_ads.xml\\\",\\n  \\\"channelTypes\\\": [\\n    \\\"WEBSITE\\\"\\n  ],\\n  \\\"creationDate\\\": \\\"2025-09-30T13:51:12.555Z\\\",\\n  \\\"description\\\": \\\"\\\",\\n  \\\"descriptions\\\": [\\n    {\\n      \\\"key\\\": \\\"en_US\\\",\\n      \\\"value\\\": \\\"\\\\\\\\nSend data from BlueConic to Facebook Advertising to enrich Facebook profiles or to target audiences on Facebook and Instagram. Supports conversion API, pixel implementation, and custom audience sync.<br /> Make sure you have no active ad blocker when configuring this connection.<br /> <a href=\\\\\\\\\\\"https://support.blueconic.com/hc/en-us/articles/205377811-Facebook-Advertising-Connection?utm_source=BlueConic_User\\\\\\\\\\\" target=\\\\\\\\\\\"_blank\\\\\\\\\\\">Read more</a>    \\\"\\n    }\\n  ],\\n  \\\"id\\\": \\\"connection_facebook_ads\\\",\\n  \\\"indexURL\\\": \\\"http://plugins.blueconic.net/connection_facebook_ads/index.xml\\\",\\n  \\\"labels\\\": [\\n    {\\n      \\\"key\\\": \\\"en_US\\\",\\n      \\\"value\\\": \\\"Facebook Advertising connection\\\"\\n    }\\n  ],\\n  \\\"lastModifiedDate\\\": \\\"2025-09-30T13:51:12.555Z\\\",\\n  \\\"latestVersion\\\": true,\\n  \\\"name\\\": \\\"connection_facebook_ads\\\",\\n  \\\"positionType\\\": \\\"\\\",\\n  \\\"profileIndependent\\\": false,\\n  \\\"scheduleMode\\\": \\\"SCHEDULED\\\",\\n  \\\"supportLevel\\\": \\\"STANDARD\\\",\\n  \\\"tags\\\": [],\\n  \\\"type\\\": \\\"batchconnection\\\",\\n  \\\"version\\\": \\\"5.5.0\\\"\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "232f8b82-1c26-4373-a1bc-f8f519012ec4",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins",
+                    ":plugin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "plugin",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "924f7d1f-5e72-41ba-9d56-beda34c13658",
+              "name": "Authorization failed (incorrect permissions).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins",
+                    ":plugin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "plugin",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "abecbd88-3f6d-4128-a4fd-59ec27a3c4b6",
+              "name": "The plugin doesn't exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins",
+                    ":plugin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "plugin",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4aad7a69-5e93-4054-99c0-f38b27e79f16",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins",
+                    ":plugin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "plugin",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a0f3339-ce30-4e0f-b37a-10b2bb88fced",
+          "name": "Get all plugins",
+          "request": {
+            "name": "Get all plugins",
+            "description": {
+              "content": "Retrieves all plugins.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "plugins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startIndex",
+                  "value": "0",
+                  "description": "Specifies the index of the first item to include in the result."
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "20",
+                  "description": "Specifies the number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "filterType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "onlyWithPermission",
+                  "value": "<boolean>",
+                  "description": "If true, only plugins that you have all permissions for are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeGallery",
+                  "value": "<boolean>",
+                  "description": "If true, plugins from the gallery that are not installed are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "<string>",
+                  "description": "Locale used for labels and descriptions."
+                },
+                {
+                  "disabled": false,
+                  "key": "channelTypes",
+                  "value": "<string>",
+                  "description": "Only show plugins that have a matching channel type (one or more)."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "461fb00c-66af-4cc3-941b-afa9eb20b53c",
+              "name": "Returns the plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "filterType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onlyWithPermission",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeGallery",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channelTypes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"itemsPerPage\\\": 4,\\n  \\\"plugins\\\": [\\n    {\\n      \\\"URL\\\": \\\"http://plugins.blueconic.net/analyzer_blueconic/1.0.0/analyzer_blueconic.xml\\\",\\n      \\\"channelTypes\\\": [],\\n      \\\"creationDate\\\": \\\"2025-09-30T13:50:54.986Z\\\",\\n      \\\"description\\\": \\\"\\\",\\n      \\\"descriptions\\\": [],\\n      \\\"id\\\": \\\"analyzer_blueconic\\\",\\n      \\\"indexURL\\\": \\\"http://plugins.blueconic.net/analyzer_blueconic/index.xml\\\",\\n      \\\"labels\\\": [\\n        {\\n          \\\"key\\\": \\\"en_US\\\",\\n          \\\"value\\\": \\\"Site Analyzer for BlueConic\\\"\\n        },\\n        {\\n          \\\"key\\\": \\\"nl_NL\\\",\\n          \\\"value\\\": \\\"Site Analyzer for BlueConic\\\"\\n        }\\n      ],\\n      \\\"lastModifiedDate\\\": \\\"2025-09-30T13:50:54.986Z\\\",\\n      \\\"latestVersion\\\": true,\\n      \\\"name\\\": \\\"analyzer_blueconic\\\",\\n      \\\"positionType\\\": \\\"\\\",\\n      \\\"profileIndependent\\\": false,\\n      \\\"supportLevel\\\": \\\"STANDARD\\\",\\n      \\\"tags\\\": [],\\n      \\\"type\\\": \\\"globallistener\\\",\\n      \\\"version\\\": \\\"1.0.0\\\"\\n    },\\n    {\\n      \\\"URL\\\": \\\"http://plugins.blueconic.net/connection/1.0.0/connection.xml\\\",\\n      \\\"channelTypes\\\": [],\\n      \\\"creationDate\\\": \\\"2025-09-30T13:50:36.248Z\\\",\\n      \\\"description\\\": \\\"\\\",\\n      \\\"descriptions\\\": [],\\n      \\\"id\\\": \\\"connection\\\",\\n      \\\"indexURL\\\": \\\"http://plugins.blueconic.net/connection/index.xml\\\",\\n      \\\"labels\\\": [],\\n      \\\"lastModifiedDate\\\": \\\"2025-09-30T13:50:36.248Z\\\",\\n      \\\"latestVersion\\\": true,\\n      \\\"name\\\": \\\"connection\\\",\\n      \\\"supportLevel\\\": \\\"STANDARD\\\",\\n      \\\"tags\\\": [],\\n      \\\"type\\\": \\\"parameter\\\",\\n      \\\"version\\\": \\\"1.0.0\\\"\\n    },\\n    {\\n      \\\"URL\\\": \\\"http://plugins.blueconic.net/connection_facebook_ads/5.5.0/connection_facebook_ads.xml\\\",\\n      \\\"channelTypes\\\": [\\n        \\\"WEBSITE\\\"\\n      ],\\n      \\\"creationDate\\\": \\\"2025-09-30T13:51:12.555Z\\\",\\n      \\\"description\\\": \\\"\\\",\\n      \\\"descriptions\\\": [\\n        {\\n          \\\"key\\\": \\\"en_US\\\",\\n          \\\"value\\\": \\\"\\\\\\\\nSend data from BlueConic to Facebook Advertising to enrich Facebook profiles or to target audiences on Facebook and Instagram. Supports conversion API, pixel implementation, and custom audience sync.<br /> Make sure you have no active ad blocker when configuring this connection.<br /> <a href=\\\\\\\\\\\"https://support.blueconic.com/hc/en-us/articles/205377811-Facebook-Advertising-Connection?utm_source=BlueConic_User\\\\\\\\\\\" target=\\\\\\\\\\\"_blank\\\\\\\\\\\">Read more</a>    \\\"\\n        }\\n      ],\\n      \\\"id\\\": \\\"connection_facebook_ads\\\",\\n      \\\"indexURL\\\": \\\"http://plugins.blueconic.net/connection_facebook_ads/index.xml\\\",\\n      \\\"labels\\\": [\\n        {\\n          \\\"key\\\": \\\"en_US\\\",\\n          \\\"value\\\": \\\"Facebook Advertising connection\\\"\\n        }\\n      ],\\n      \\\"lastModifiedDate\\\": \\\"2025-09-30T13:51:12.555Z\\\",\\n      \\\"latestVersion\\\": true,\\n      \\\"name\\\": \\\"connection_facebook_ads\\\",\\n      \\\"positionType\\\": \\\"\\\",\\n      \\\"profileIndependent\\\": false,\\n      \\\"scheduleMode\\\": \\\"SCHEDULED\\\",\\n      \\\"supportLevel\\\": \\\"STANDARD\\\",\\n      \\\"tags\\\": [],\\n      \\\"type\\\": \\\"batchconnection\\\",\\n      \\\"version\\\": \\\"5.5.0\\\"\\n    },\\n    {\\n      \\\"URL\\\": \\\"http://plugins.blueconic.net/contentinteractiontype/1.4.0/contentinteractiontype.xml\\\",\\n      \\\"channelTypes\\\": [\\n        \\\"WEBSITE\\\"\\n      ],\\n      \\\"creationDate\\\": \\\"2025-09-30T13:50:37.680Z\\\",\\n      \\\"description\\\": \\\"\\\",\\n      \\\"descriptions\\\": [\\n        {\\n          \\\"key\\\": \\\"en_US\\\",\\n          \\\"value\\\": \\\"\\\\\\\\n      \\\\\\\\n        A 'Content' interaction allows you to replace content on a web-based channel. <a href=\\\\\\\\\\\"https://support.blueconic.com/hc/en-us/articles/202421572-Content-Action-?utm_source=BlueConic_User\\\\\\\\\\\" target=\\\\\\\\\\\"_blank\\\\\\\\\\\">Read more</a>\\\\\\\\n     \\\\\\\\n    \\\"\\n        }\\n      ],\\n      \\\"id\\\": \\\"contentinteractiontype\\\",\\n      \\\"indexURL\\\": \\\"http://plugins.blueconic.net/contentinteractiontype/index.xml\\\",\\n      \\\"labels\\\": [\\n        {\\n          \\\"key\\\": \\\"en_US\\\",\\n          \\\"value\\\": \\\"Content\\\"\\n        }\\n      ],\\n      \\\"lastModifiedDate\\\": \\\"2025-09-30T13:50:37.680Z\\\",\\n      \\\"latestVersion\\\": true,\\n      \\\"name\\\": \\\"contentinteractiontype\\\",\\n      \\\"positionType\\\": \\\"position\\\",\\n      \\\"profileIndependent\\\": false,\\n      \\\"supportLevel\\\": \\\"STANDARD\\\",\\n      \\\"tags\\\": [],\\n      \\\"type\\\": \\\"action\\\",\\n      \\\"version\\\": \\\"1.4.0\\\"\\n    }\\n  ],\\n  \\\"startIndex\\\": 0,\\n  \\\"totalPages\\\": 20,\\n  \\\"totalResults\\\": 98\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29630cf9-4eae-4bf9-bd9f-d96073507b09",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "filterType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onlyWithPermission",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeGallery",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channelTypes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5ebdb0f8-4851-461b-bd37-c48ef9a4ca5b",
+              "name": "Authorization failed (incorrect permissions).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "filterType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onlyWithPermission",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeGallery",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channelTypes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "41d3e687-b1ff-4c22-8695-1262fdb65781",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "filterType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "onlyWithPermission",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeGallery",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channelTypes",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "tenantname",
+      "key": "blueconicHostname"
+    },
+    {
+      "type": "string",
+      "value": "https://{{blueconicHostname}}/rest/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "09b79fbd-ab0a-4b79-b0e2-ba4c5d4384b1",
+    "name": "BlueConic REST API v2 Audit Events Plugins API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n\n\nContact Support:\n Name: Contact us",
+      "type": "text/plain"
+    }
+  }
+}

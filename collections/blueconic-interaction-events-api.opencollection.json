@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Interaction events API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Interaction events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create interaction event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{blueconicHostname}/rest/v2/interactionEvents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register an interaction event for a profile. When optional parameter `profile` is set, the interaction ID will be added to the profile property `interactions_viewed` (in case of `VIEW`), `interactions_clicked` (in case of `CLICK`), or `interactions_converted` (in case of `CONVERSION`) of that profile. A `CONVERSION` event can also include a `conversionValue` that will be attributed to the given interaction."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

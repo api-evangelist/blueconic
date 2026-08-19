@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Properties API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Properties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get one property",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/profileProperties/:propertyId",
+            "params": [
+              {
+                "name": "propertyId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the property."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves a single profile or group property."
+        },
+        {
+          "info": {
+            "name": "Create/update property",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{blueconicHostname}/rest/v2/profileProperties/:propertyId",
+            "params": [
+              {
+                "name": "propertyId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the property to create or update. A valid id may consist of letters, numbers, hyphens (-), and underscores (_) and is at least one character long."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create/update property"
+        },
+        {
+          "info": {
+            "name": "Delete property",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{blueconicHostname}/rest/v2/profileProperties/:propertyId",
+            "params": [
+              {
+                "name": "propertyId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the property."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a profile or group property."
+        },
+        {
+          "info": {
+            "name": "Get all properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/profileProperties",
+            "params": [
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the number of results to return."
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the index of the first item to include in the result."
+              },
+              {
+                "name": "filterType",
+                "value": "",
+                "type": "query",
+                "description": "The filterType of the properties e.g. \"SELECT\",\"RANGE\", AND \"DATETIME\". Multiple values are allowed."
+              },
+              {
+                "name": "filterValue",
+                "value": "",
+                "type": "query",
+                "description": "If specified, the name of the profile properties must match the value. "
+              },
+              {
+                "name": "groupTypeId",
+                "value": "",
+                "type": "query",
+                "description": "The group type IDs to retrieve the properties for."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the properties for profiles (no `groupTypeId`) or groups (depending on the passed `groupTypeId`)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.blueconic.com/en/articles/248053-working-with-a-blueconic-sandbox
+description: >-
+  BlueConic's test surface is an ENVIRONMENT, not a test-mode key. There are no test API keys,
+  no test-vs-live key prefixes, no magic test identifiers and no fixture generators — a
+  BlueConic Sandbox is a separate, empty, fully functional BlueConic tenant with its own
+  hostname and its own OAuth applications. Nothing below is invented; there are no published
+  test values to record because BlueConic publishes none.
+model:
+  type: separate-tenant
+  test_live_separation: distinct tenant hostnames ({sandboxname}.blueconic.net vs the production tenant)
+  key_prefixes: null
+  key_prefix_note: >-
+    BlueConic uses OAuth 2.0 client ID / client secret pairs created per tenant under
+    Settings > Access management > Applications. Credentials carry no test/live prefix and are
+    not interchangeable across tenants — the environment, not the key, is what separates test
+    from production.
+  magic_test_values: null
+  test_clock: null
+  fixtures: null
+access:
+  self_serve: false
+  gate: >-
+    "You can only get access to a BlueConic Sandbox environment if the organization you work
+    for has made the appropriate legal arrangements. Please check your BlueConic contract
+    before submitting a request." Requested through BlueConic support / the Customer Success
+    Manager.
+  request_via: https://support.blueconic.com/en/articles/247573-contacting-support
+tooling:
+  - name: BlueConic Chrome Extension
+    url: https://chrome.google.com/webstore/detail/blueconic/fhdhabioobmdidfhaldhdbleeeigkadn
+    docs: https://support.blueconic.com/en/articles/248028-set-up-the-blueconic-chrome-extension
+    cost: free
+    what: >-
+      Ties any website to a sandbox tenant without editing that site. Sites without the
+      BlueConic script get the Sandbox script injected; sites that already carry a BlueConic
+      script have it REPLACED, so production listeners and dialogues do not run — the sandbox
+      tenant's do. Matching is by exact channel hostname and aliases (www.example.com does not
+      cover shop.example.com).
+  - name: Simulator
+    docs: https://support.blueconic.com/en/articles/247530-using-the-simulator
+    what: In-platform simulation of content, listeners and dialogues against a profile.
+  - name: Per-tenant OpenAPI + reference console
+    url: https://rest.apidoc.blueconic.com/?hostname=mytenantname.blueconic.net
+    what: >-
+      The RapiDoc console at rest.apidoc.blueconic.com can be pointed at any tenant — including
+      a sandbox — with the ?hostname= query parameter, and executes live requests against it.
+      https://{tenantname}.blueconic.net/openapi serves that tenant's own specification.
+  - name: Local spec host
+    what: >-
+      Clone github.com/blueconic/openapi, run `npx http-server`, open
+      http://localhost:8080?hostname=localhost. Requires the tenant's CORS configuration to
+      allow the localhost origin.
+webhook_testing:
+  supported: true
+  how: >-
+    The Webhook connection has a built-in test: enter test values for the trigger profile
+    properties and press "Send test request"; "Show request" and "Show response" reveal the
+    exact exchange.
+  source: https://support.blueconic.com/en/articles/247717-webhook-connection
+limitations:
+  - A sandbox starts empty — no seeded data, profiles or configuration.
+  - No published sandbox for the REST API itself; API testing happens against a sandbox tenant.
+  - No anonymous or self-service trial: access is contractual.

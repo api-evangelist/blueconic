@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events OAuth 2.0 API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth 2.0",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start Authorization Code Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/oauth/authorize",
+            "params": [
+              {
+                "name": "response_type",
+                "value": "code",
+                "type": "query",
+                "description": "The response type. Currently only supports the authorization code grant type."
+              },
+              {
+                "name": "client_id",
+                "value": "Zl3QZFUGOKQrABbX2RoGwmgUDOiFAhLq",
+                "type": "query",
+                "description": "The client ID of the external application. The client ID is assigned during client registration."
+              },
+              {
+                "name": "redirect_uri",
+                "value": "https://client.example.com/cb",
+                "type": "query",
+                "description": "The redirect URI to which the user is redirected to after successful authentication. The redirect URI must exactly match the redirect URI provided at client registration."
+              },
+              {
+                "name": "code_challenge",
+                "value": "4MwafmutlwDy7ly8QOtO-bUvSVzU3I_OQEDgmB3Pn5A",
+                "type": "query",
+                "description": "The code challenge for PKCE."
+              },
+              {
+                "name": "code_challenge_method",
+                "value": "S256",
+                "type": "query",
+                "description": "The code challenge method for PKCE."
+              },
+              {
+                "name": "state",
+                "value": "xyz",
+                "type": "query",
+                "description": "An opaque value provided by the client to maintain state between the request and redirect URI. The state value is added to the redirect URI upon redirection."
+              }
+            ]
+          },
+          "docs": "Starts the Authorization Code Flow. The user will be redirected to the authorization server where the user can grant or deny the external application access. The Proof Key for Code Exchange ([PKCE](https://www.rfc-editor.org/rfc/rfc7636)) extension is enforced for the Authorization Code Flow."
+        },
+        {
+          "info": {
+            "name": "Revoke token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{blueconicHostname}/rest/v2/oauth/revoke",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "token_type_hint",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Revokes access and/or refresh tokens."
+        },
+        {
+          "info": {
+            "name": "Get token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{blueconicHostname}/rest/v2/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                },
+                {
+                  "name": "code_verifier",
+                  "value": ""
+                },
+                {
+                  "name": "refresh_token",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Obtains an access token and optional refresh token by presenting an authorization grant or refresh token. [Refresh Token Rotation](https://www.rfc-editor.org/rfc/rfc6819#section-5.2.2.3) is supported by default for the Authorization Code Flow."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

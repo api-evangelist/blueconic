@@ -1,0 +1,79 @@
+generated: '2026-08-13'
+method: probed
+description: >-
+  Probe of the /.well-known/ discovery surface across every BlueConic host in apis.yml and
+  the OpenAPI servers[] block, run 2026-08-13. Status is the HTTP code observed at fetch
+  time. Every path on every BlueConic-operated host returned 404. The single 200 —
+  support.blueconic.com/.well-known/security.txt — is INTERCOM's document, not BlueConic's
+  (see ownership note below), so no WellKnown or SecurityTxt pointer is wired into apis.yml.
+  The REST API baseURL is a per-tenant template (https://{tenantname}.blueconic.net) with no
+  publicly reachable canonical host, so it cannot be probed anonymously.
+hosts:
+  - host: https://www.blueconic.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://support.blueconic.com
+    note: >-
+      BlueConic's CDP help center, served by Intercom on a BlueConic hostname.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        type: text/plain
+        file: blueconic-support-security.txt
+        owner: intercom
+        counts_as_hit: false
+        note: >-
+          Real RFC 9116 document, but it is Intercom's, not BlueConic's — the body reads
+          "Intercom - reporting security vulnerabilities to Intercom", Contact
+          https://bugcrowd.com/intercom and mailto:security@intercom.com, and
+          Canonical https://app.intercom.com/.well-known/security.txt. It is served on this
+          host only because the help center is a CNAME to Intercom. Saved as evidence;
+          NOT credited to BlueConic and NOT wired as a SecurityTxt pointer. BlueConic's own
+          vulnerability-reporting address (security@blueconic.com) is published on its Trust
+          Center instead — see security/blueconic-vulnerability-disclosure.yml.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: https://rest.apidoc.blueconic.com
+    note: The published OpenAPI reference console (GitHub Pages, CNAME from blueconic/openapi).
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://status.blueconic.com
+    documents:
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: https://{tenantname}.blueconic.net
+    note: >-
+      Per-tenant API host. Not anonymously probeable: the literal placeholder host
+      tenantname.blueconic.net resolves and answers, but returns 403 on /mcp, so no
+      /.well-known/ result would be attributable to a real tenant.
+    documents: []
+summary:
+  paths_probed: 24
+  documents_found: 1
+  documents_owned_by_provider: 0

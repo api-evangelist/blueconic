@@ -1,0 +1,2429 @@
+{
+  "item": [
+    {
+      "id": "8afc16c6-01a1-41c4-bfbc-4c045de3b565",
+      "name": "Stores",
+      "description": {
+        "content": "A store is a database for managing metadata about products or articles. You can populate it using a Product collector or Content collector, which scrapes data from your website. This metadata powers features in the recommendation engine and AI Workbench. Use this endpoint to retrieve, create, update, or delete content and product stores, as well as the items within them. See [Content Stores](https://support.blueconic.com/en/articles/247526-data-storage-in-blueconic#h_588a2cba-7c4d-4bb4-a155-2cf6ee87db76).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9e3c0df3-4bca-44a3-a2e4-c865d7482848",
+          "name": "Get store items",
+          "request": {
+            "name": "Get store items",
+            "description": {
+              "content": "To retrieve items from a content store, a `GET` request can be sent to the `/contentStores/{contentStoreId}/items` endpoint.\n\nYou can use the `filterValue` query parameter to filter the results based on an expression. The expression format is `property<operator>value`, where the supported operators are `=`, `==`, `<`, `>`, `<=`, and `>=`. For example, `name=foo` returns only items whose name equals `foo`, and `publicationDate>=2024-01-01T00:00Z` returns only items published on or after January 1, 2024. The format of `publicationDate` is `2024-01-01T00:00Z` or with a time zone offset `2024-01-01T00:00+05:00`. When using `filterValue` in a URL, ensure the value is URL-encoded (for example, `>=` should be encoded as `%3E%3D`).\n\nThe `filterValue` parameter can be repeated to apply multiple filters. All filters are combined with AND semantics, so only items that match all filters are returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contentStores",
+                ":contentStore",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filterValue",
+                  "value": "<string>",
+                  "description": "Filters results using an expression of the form `property<operator>value`. Supported operators are `=`, `==`, `<`, `>`, `<=`, and `>=`. This parameter can be repeated to apply multiple filters (AND semantics)."
+                },
+                {
+                  "disabled": false,
+                  "key": "filterValue",
+                  "value": "<string>",
+                  "description": "Filters results using an expression of the form `property<operator>value`. Supported operators are `=`, `==`, `<`, `>`, `<=`, and `>=`. This parameter can be repeated to apply multiple filters (AND semantics)."
+                },
+                {
+                  "disabled": false,
+                  "key": "startIndex",
+                  "value": "0",
+                  "description": "Specifies the index of the first item to include in the result."
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "20",
+                  "description": "Specifies the number of results to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentStore",
+                  "description": "(Required) The ID of the content store."
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a3e5d4ec-b9a8-4c0b-8882-f7240d552ccf",
+              "name": "Returns the content items.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"items\\\": [\\n    {\\n      \\\"URL\\\": \\\"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\\\",\\n      \\\"creationDate\\\": \\\"2025-08-19T13:24:31.943Z\\\",\\n      \\\"description\\\": \\\"23andMe’s demise raises thorny legal questions\\\",\\n      \\\"hash\\\": \\\"98f33be71f927141ca5a12e74985f0bc\\\",\\n      \\\"id\\\": \\\"article-1-id\\\",\\n      \\\"image\\\": \\\"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\\\",\\n      \\\"imageURL\\\": \\\"https://localhost/rest/v2/contentStores/673498c7-6340-4735-8c48-cc3e1d4b7279/items/https:%252F%252Fwww.economist.com%252Fbusiness%252F2025%252F03%252F27%252Fhow-safe-is-your-dna-in-a-bankruptcy/image?etag=1755609871943\\\",\\n      \\\"inStock\\\": true,\\n      \\\"intValue\\\": 1,\\n      \\\"lastModifiedDate\\\": \\\"2025-08-19T13:24:31.943Z\\\",\\n      \\\"name\\\": \\\"How safe is your DNA in a bankruptcy?\\\",\\n      \\\"properties\\\": [\\n        {\\n          \\\"id\\\": \\\"category\\\",\\n          \\\"values\\\": [\\n            \\\"Business\\\"\\n          ]\\n        },\\n        {\\n          \\\"id\\\": \\\"creator\\\",\\n          \\\"values\\\": [\\n            \\\"The Economist\\\"\\n          ]\\n        }\\n      ],\\n      \\\"publicationDate\\\": \\\"2025-03-27T15:46:32.000Z\\\",\\n      \\\"statistics\\\": {\\n        \\\"view\\\": 1\\n      },\\n      \\\"text\\\": \\\"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\\\"\\n    },\\n    {\\n      \\\"URL\\\": \\\"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\\\",\\n      \\\"creationDate\\\": \\\"2025-08-19T13:24:31.943Z\\\",\\n      \\\"description\\\": \\\"But there are possible pitfalls\\\",\\n      \\\"hash\\\": \\\"7c0419a5660ada4663a2959070a88973\\\",\\n      \\\"id\\\": \\\"article-2-id\\\",\\n      \\\"image\\\": \\\"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\\\",\\n      \\\"imageURL\\\": \\\"https://localhost/rest/v2/contentStores/673498c7-6340-4735-8c48-cc3e1d4b7279/items/https:%252F%252Fwww.economist.com%252Ftechnology-quarterly%252F2025%252F02%252F21%252Fediting-pigs-mice-and-mosquitoes-may-save-lives/image?etag=1755609871943\\\",\\n      \\\"inStock\\\": true,\\n      \\\"intValue\\\": 2,\\n      \\\"lastModifiedDate\\\": \\\"2025-08-19T13:24:31.943Z\\\",\\n      \\\"name\\\": \\\"Editing pigs, mice and mosquitoes may save lives\\\",\\n      \\\"properties\\\": [\\n        {\\n          \\\"id\\\": \\\"category\\\",\\n          \\\"values\\\": []\\n        },\\n        {\\n          \\\"id\\\": \\\"creator\\\",\\n          \\\"values\\\": [\\n            \\\"The Economist\\\"\\n          ]\\n        }\\n      ],\\n      \\\"publicationDate\\\": \\\"2025-02-21T17:47:17.000Z\\\",\\n      \\\"statistics\\\": {\\n        \\\"recommendation_view\\\": 20,\\n        \\\"view\\\": 150\\n      },\\n      \\\"text\\\": \\\"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\\\"\\n    }\\n  ],\\n  \\\"itemsPerPage\\\": 2,\\n  \\\"startIndex\\\": 0,\\n  \\\"totalPages\\\": 1,\\n  \\\"totalResults\\\": 2\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f354894-62cf-44a0-a35c-4be278c08b08",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "071baf19-3c35-4307-b877-f79e28da46e7",
+              "name": "Authorization failed (incorrect permissions).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4046eb5c-c9de-42df-864a-d83e82d88f8e",
+              "name": "The content store doesn't exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d9e41748-c1ff-495a-8aee-800398d657a0",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filterValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecf8c502-126d-4641-b61d-8fe9717a8ccd",
+          "name": "Add store items",
+          "request": {
+            "name": "Add store items",
+            "description": {
+              "content": "To add items to a content store, a `PUT` request can be sent to the `/contentStores/{contentStoreId}/items` endpoint.\nThe request body must be a JSON array of items to be added. Each item in the array should be a JSON object with an `id` and a `properties` object.\nThe `properties` object contains key-value pairs representing the properties of the item. ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contentStores",
+                ":contentStore",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentStore",
+                  "description": "(Required) The ID of the content store to add items to."
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"URL\": \"<string>\",\n      \"description\": \"<string>\",\n      \"hash\": \"<string>\",\n      \"id\": \"<string>\",\n      \"image\": \"<string>\",\n      \"imageURL\": \"<string>\",\n      \"inStock\": \"<boolean>\",\n      \"intValue\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"properties\": [\n        {\n          \"id\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"<dateTime>\",\n      \"text\": \"<string>\"\n    },\n    {\n      \"URL\": \"<string>\",\n      \"description\": \"<string>\",\n      \"hash\": \"<string>\",\n      \"id\": \"<string>\",\n      \"image\": \"<string>\",\n      \"imageURL\": \"<string>\",\n      \"inStock\": \"<boolean>\",\n      \"intValue\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"properties\": [\n        {\n          \"id\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"<dateTime>\",\n      \"text\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5865b0fe-e1ef-4265-b626-25d8bb9d748d",
+              "name": "The content items were added successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to add items to."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"URL\": \"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"23andMe’s demise raises thorny legal questions\",\n      \"hash\": \"98f33be71f927141ca5a12e74985f0bc\",\n      \"id\": \"article-1-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"How safe is your DNA in a bankruptcy?\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": [\n            \"Business\"\n          ]\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-03-27T15:46:32.000Z\",\n      \"text\": \"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\"\n    },\n    {\n      \"URL\": \"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"But there are possible pitfalls\",\n      \"hash\": \"7c0419a5660ada4663a2959070a88973\",\n      \"id\": \"article-2-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"Editing pigs, mice and mosquitoes may save lives\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": []\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-02-21T17:47:17.000Z\",\n      \"text\": \"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9228902f-67fb-465f-a545-b00c4b65dcd3",
+              "name": "One or more required parameters are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to add items to."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"URL\": \"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"23andMe’s demise raises thorny legal questions\",\n      \"hash\": \"98f33be71f927141ca5a12e74985f0bc\",\n      \"id\": \"article-1-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"How safe is your DNA in a bankruptcy?\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": [\n            \"Business\"\n          ]\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-03-27T15:46:32.000Z\",\n      \"text\": \"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\"\n    },\n    {\n      \"URL\": \"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"But there are possible pitfalls\",\n      \"hash\": \"7c0419a5660ada4663a2959070a88973\",\n      \"id\": \"article-2-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"Editing pigs, mice and mosquitoes may save lives\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": []\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-02-21T17:47:17.000Z\",\n      \"text\": \"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6f1a3ee4-9ad6-413a-9eb0-108031f3b44a",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to add items to."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"URL\": \"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"23andMe’s demise raises thorny legal questions\",\n      \"hash\": \"98f33be71f927141ca5a12e74985f0bc\",\n      \"id\": \"article-1-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"How safe is your DNA in a bankruptcy?\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": [\n            \"Business\"\n          ]\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-03-27T15:46:32.000Z\",\n      \"text\": \"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\"\n    },\n    {\n      \"URL\": \"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"But there are possible pitfalls\",\n      \"hash\": \"7c0419a5660ada4663a2959070a88973\",\n      \"id\": \"article-2-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"Editing pigs, mice and mosquitoes may save lives\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": []\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-02-21T17:47:17.000Z\",\n      \"text\": \"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ec7fab75-23e7-4f82-9811-f9cfda428ed6",
+              "name": "Authorization failed (incorrect permissions).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to add items to."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"URL\": \"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"23andMe’s demise raises thorny legal questions\",\n      \"hash\": \"98f33be71f927141ca5a12e74985f0bc\",\n      \"id\": \"article-1-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"How safe is your DNA in a bankruptcy?\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": [\n            \"Business\"\n          ]\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-03-27T15:46:32.000Z\",\n      \"text\": \"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\"\n    },\n    {\n      \"URL\": \"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"But there are possible pitfalls\",\n      \"hash\": \"7c0419a5660ada4663a2959070a88973\",\n      \"id\": \"article-2-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"Editing pigs, mice and mosquitoes may save lives\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": []\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-02-21T17:47:17.000Z\",\n      \"text\": \"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "918aed69-815d-48c1-8c1f-01b9dd1cfbf3",
+              "name": "The content store doesn't exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to add items to."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"URL\": \"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"23andMe’s demise raises thorny legal questions\",\n      \"hash\": \"98f33be71f927141ca5a12e74985f0bc\",\n      \"id\": \"article-1-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"How safe is your DNA in a bankruptcy?\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": [\n            \"Business\"\n          ]\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-03-27T15:46:32.000Z\",\n      \"text\": \"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\"\n    },\n    {\n      \"URL\": \"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"But there are possible pitfalls\",\n      \"hash\": \"7c0419a5660ada4663a2959070a88973\",\n      \"id\": \"article-2-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"Editing pigs, mice and mosquitoes may save lives\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": []\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-02-21T17:47:17.000Z\",\n      \"text\": \"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2606a2d1-02f3-4a8e-97c5-15fe5f208082",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to add items to."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [\n    {\n      \"URL\": \"https://www.economist.com/business/2025/03/27/how-safe-is-your-dna-in-a-bankruptcy\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"23andMe’s demise raises thorny legal questions\",\n      \"hash\": \"98f33be71f927141ca5a12e74985f0bc\",\n      \"id\": \"article-1-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250329_WBD002.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"How safe is your DNA in a bankruptcy?\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": [\n            \"Business\"\n          ]\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-03-27T15:46:32.000Z\",\n      \"text\": \"Spit in a tube and, for about 100 USD, discover secrets held by your DNA. That was the promise of 23andMe, a direct-to-consumer genetic-testing company. It proved popular—more than 15m customers coughed up to receive tailored reports. Insights ranged from the banal (there is a 48% chance you have freckles) to the potentially helpful (you have an increased risk of type-2 diabetes). Ultimately, though, the venture was unprofitable. On March 23rd the firm filed for bankruptcy.\"\n    },\n    {\n      \"URL\": \"https://www.economist.com/technology-quarterly/2025/02/21/editing-pigs-mice-and-mosquitoes-may-save-lives\",\n      \"creationDate\": \"2025-03-31T12:45:17.748Z\",\n      \"description\": \"But there are possible pitfalls\",\n      \"hash\": \"7c0419a5660ada4663a2959070a88973\",\n      \"id\": \"article-2-id\",\n      \"image\": \"https://www.economist.com/content-assets/images/20250301_TQD006.jpg\",\n      \"inStock\": true,\n      \"lastModifiedDate\": \"2025-03-31T12:45:17.748Z\",\n      \"name\": \"Editing pigs, mice and mosquitoes may save lives\",\n      \"properties\": [\n        {\n          \"id\": \"category\",\n          \"values\": []\n        },\n        {\n          \"id\": \"creator\",\n          \"values\": [\n            \"The Economist\"\n          ]\n        }\n      ],\n      \"publicationDate\": \"2025-02-21T17:47:17.000Z\",\n      \"text\": \"ON MARCH 15th 2024, a dark brown, gene-edited pig was driven from its home in the Midwest to a medical facility on the outskirts of Boston, Massachusetts. It had never before been outside the clean room in which it had spent its year-long life. The next day the pig had its kidneys removed. One was for research; the other was transplanted into a man called Richard Slayman. It was the first pig-to-human kidney transplant with a living patient. In the operating theatre at Mass General Hospital, after the surgical team were finished, invited attendees spontaneously clapped.\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "745abee3-dee4-4019-9010-7613928b4287",
+          "name": "Get all stores",
+          "request": {
+            "name": "Get all stores",
+            "description": {
+              "content": "Retrieves all content stores.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contentStores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "20",
+                  "description": "Specifies the number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "startIndex",
+                  "value": "0",
+                  "description": "Specifies the index of the first item to include in the result."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a772c297-7f02-48e7-b97b-6c57a7e05182",
+              "name": "Returns the content stores.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"itemsPerPage\\\": 20,\\n  \\\"contentStores\\\": [\\n    {\\n      \\\"id\\\": \\\"2613c9d6-a179-4c79-b6d2-1618a53fbc64\\\",\\n      \\\"name\\\": \\\"my content store\\\",\\n      \\\"description\\\": \\\"somedescription\\\",\\n      \\\"creationDate\\\": \\\"2025-04-17T14:00:46.920Z\\\",\\n      \\\"lastModifiedDate\\\": \\\"2025-04-17T14:00:46.920Z\\\",\\n      \\\"creator\\\": {\\n        \\\"fullName\\\": \\\"ondemand@blueconic.com\\\",\\n        \\\"userName\\\": \\\"ondemand@blueconic.com\\\"\\n      },\\n      \\\"lastModifiedUser\\\": {\\n        \\\"fullName\\\": \\\"ondemand@blueconic.com\\\",\\n        \\\"userName\\\": \\\"ondemand@blueconic.com\\\"\\n      },\\n\\t  \\\"storeType\\\" : \\\"CONTENT\\\",\\t  \\n      \\\"tags\\\": []\\n    }\\n  ],\\n  \\\"startIndex\\\": 0,\\n  \\\"totalPages\\\": 1,\\n  \\\"totalResults\\\": 1\\n} \"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f3948d1-27e0-43eb-b5dd-9fb550877072",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce42c6de-a1a8-4ed0-b3d8-d62e7ed41451",
+              "name": "Authorization failed (incorrect permissions).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "98b0a418-7e28-4e08-8ded-e5894804a990",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "count",
+                      "value": "10"
+                    },
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b6f2b5c-22ca-4759-a51c-3fd5adf47613",
+          "name": "Create store",
+          "request": {
+            "name": "Create store",
+            "description": {
+              "content": "To create a content store, a request with a JSON object can be sent to the `/contentStores` endpoint via the `POST` method.\nThe JSON object must contain all the properties that are required for a content store.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contentStores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"creator\": {\n    \"fullName\": \"<string>\",\n    \"userName\": \"<string>\"\n  },\n  \"description\": \"<string>\",\n  \"id\": \"<string>\",\n  \"lastModifiedUser\": {\n    \"fullName\": \"<string>\",\n    \"userName\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"properties\": [\n    {\n      \"id\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"storeType\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91fbe7d7-bc90-4e4e-8589-28e12388a624",
+              "name": "Returns the created content store.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my new content store\",\n  \"description\": \"A content store description\",\n  \"properties\": [\n    {\n      \"id\": \"RECENT_HOURS\",\n      \"values\": [\n        \"5\"\n      ]\n    }\n  ],\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"id\\\": \\\"2613c9d6-a179-4c79-b6d2-1618a53fbc64\\\",\\n  \\\"name\\\": \\\"my new content store\\\",\\n  \\\"description\\\": \\\"A content store description\\\",\\n  \\\"creationDate\\\": \\\"2025-04-17T14:00:46.920Z\\\",\\n  \\\"lastModifiedDate\\\": \\\"2025-04-17T14:00:46.920Z\\\",\\n  \\\"creator\\\": {\\n    \\\"fullName\\\": \\\"ondemand@blueconic.com\\\",\\n    \\\"userName\\\": \\\"ondemand@blueconic.com\\\"\\n  },\\n  \\\"lastModifiedUser\\\": {\\n    \\\"fullName\\\": \\\"ondemand@blueconic.com\\\",\\n    \\\"userName\\\": \\\"ondemand@blueconic.com\\\"\\n  },\\n  \\\"properties\\\": [\\n    {\\n      \\\"id\\\": \\\"RECENT_HOURS\\\",\\n      \\\"values\\\": [\\n        \\\"5\\\"\\n      ]\\n    }\\n  ],\\n  \\\"readOnly\\\": false,\\n  \\\"storeType\\\": \\\"CONTENT\\\",\\n  \\\"tags\\\": []\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a645075b-edc0-4677-8b2d-bf67e16f64a7",
+              "name": "The metadata JSON is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my new content store\",\n  \"description\": \"A content store description\",\n  \"properties\": [\n    {\n      \"id\": \"RECENT_HOURS\",\n      \"values\": [\n        \"5\"\n      ]\n    }\n  ],\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": {\\n    \\\"status\\\": 400,\\n    \\\"message\\\": \\\"A more specific error message.\\\"\\n  }\\n} \"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6650ec86-de89-49ae-b207-ee1223a4018e",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my new content store\",\n  \"description\": \"A content store description\",\n  \"properties\": [\n    {\n      \"id\": \"RECENT_HOURS\",\n      \"values\": [\n        \"5\"\n      ]\n    }\n  ],\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "295a123a-b97f-466a-aea6-ba2825d4b1f3",
+              "name": "Authorization failed (incorrect permissions).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my new content store\",\n  \"description\": \"A content store description\",\n  \"properties\": [\n    {\n      \"id\": \"RECENT_HOURS\",\n      \"values\": [\n        \"5\"\n      ]\n    }\n  ],\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a096f474-1e48-4dff-b6d6-9b190ed288a3",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my new content store\",\n  \"description\": \"A content store description\",\n  \"properties\": [\n    {\n      \"id\": \"RECENT_HOURS\",\n      \"values\": [\n        \"5\"\n      ]\n    }\n  ],\n  \"storeType\": \"CONTENT\",\n  \"tags\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d08e5d6-f2f4-4123-92c7-2d97db8e9cd2",
+          "name": "Bulk delete store items",
+          "request": {
+            "name": "Bulk delete store items",
+            "description": {
+              "content": "Deletes multiple items from a content store.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contentStores",
+                ":contentStore",
+                "items",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentStore",
+                  "description": "(Required) The ID of the content store."
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "55de562f-2216-4481-948b-848679870c56",
+              "name": "The content items were deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\"article-1-id\", \"article-2-id\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0c66c992-cf0d-49f7-8724-d015a139c0b7",
+              "name": "The request is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\"article-1-id\", \"article-2-id\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6e7afb22-3939-4b8c-8051-f367a2697680",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\"article-1-id\", \"article-2-id\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "91bb5ccb-8792-4e93-b588-5b84702fbb35",
+              "name": "Authorization failed (incorrect permissions).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\"article-1-id\", \"article-2-id\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "815f44f9-6e5b-4234-a60c-7914ba5ebff6",
+              "name": "The content store doesn't exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\"article-1-id\", \"article-2-id\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ed8d0368-a142-4866-b5d1-940e8a564096",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore",
+                    "items",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ids\": [\"article-1-id\", \"article-2-id\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e271a259-5632-43f2-ae41-7c2e459e4b6d",
+          "name": "Update store",
+          "request": {
+            "name": "Update store",
+            "description": {
+              "content": "To update a content store, a request with a JSON object can be sent to the `/contentStores` endpoint via the `PUT` method.\nThe JSON object can contain any of the properties that are part of the content store. <br/>\nPartial updates are supported. You only need to supply the properties that you want to change.<br/>\nAt least one property needs to be supplied, otherwise a HTTP 400 is returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contentStores",
+                ":contentStore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentStore",
+                  "description": "(Required) The ID of the content store to update."
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"creator\": {\n    \"fullName\": \"<string>\",\n    \"userName\": \"<string>\"\n  },\n  \"description\": \"<string>\",\n  \"id\": \"<string>\",\n  \"lastModifiedUser\": {\n    \"fullName\": \"<string>\",\n    \"userName\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"properties\": [\n    {\n      \"id\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"storeType\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0292df8f-66cb-4eca-8609-12748cc09c7f",
+              "name": "Returns the updated content store.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to update."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my updated name\",\n  \"description\": \"An updated content store description\",\n  \"storeType\": \"CONTENT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"id\\\": \\\"2613c9d6-a179-4c79-b6d2-1618a53fbc64\\\",\\n  \\\"name\\\": \\\"my content store\\\",\\n  \\\"description\\\": \\\"A content store description\\\",\\n  \\\"creationDate\\\": \\\"2025-04-17T14:00:46.920Z\\\",\\n  \\\"lastModifiedDate\\\": \\\"2025-04-17T14:00:46.920Z\\\",\\n  \\\"creator\\\": {\\n    \\\"fullName\\\": \\\"ondemand@blueconic.com\\\",\\n    \\\"userName\\\": \\\"ondemand@blueconic.com\\\"\\n  },\\n  \\\"lastModifiedUser\\\": {\\n    \\\"fullName\\\": \\\"ondemand@blueconic.com\\\",\\n    \\\"userName\\\": \\\"ondemand@blueconic.com\\\"\\n  },\\n  \\\"storeType\\\": \\\"CONTENT\\\",\\n  \\\"tags\\\": []\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67adabf8-e730-4c99-b189-6c9a7e6f7241",
+              "name": "The metadata JSON is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to update."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my updated name\",\n  \"description\": \"An updated content store description\",\n  \"storeType\": \"CONTENT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"error\\\": {\\n    \\\"status\\\": 400,\\n    \\\"message\\\": \\\"A more specific error message.\\\"\\n  }\\n} \"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35ada567-3f85-42e7-9e52-86ada1862a91",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to update."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my updated name\",\n  \"description\": \"An updated content store description\",\n  \"storeType\": \"CONTENT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e342015a-3b62-496c-9df4-1db188115db9",
+              "name": "Authorization failed (incorrect permissions).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to update."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my updated name\",\n  \"description\": \"An updated content store description\",\n  \"storeType\": \"CONTENT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4a0689ab-ceac-4bfe-90e9-76c45b775e42",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contentStores",
+                    ":contentStore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentStore",
+                      "description": "(Required) The ID of the content store to update."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"my updated name\",\n  \"description\": \"An updated content store description\",\n  \"storeType\": \"CONTENT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "tenantname",
+      "key": "blueconicHostname"
+    },
+    {
+      "type": "string",
+      "value": "https://{{blueconicHostname}}/rest/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "77877ab3-8cab-45ae-bea4-558f93558cec",
+    "name": "BlueConic REST API v2 Audit Events Stores API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n\n\nContact Support:\n Name: Contact us",
+      "type": "text/plain"
+    }
+  }
+}

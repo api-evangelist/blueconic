@@ -1,0 +1,56 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for BlueConic REST API v2 Audit Events Dialogues API
+  version: 1.0.0
+extends: openapi/blueconic-dialogues-api-openapi.yml
+generated: '2026-08-13'
+method: generated
+source: openapi/blueconic-dialogues-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist:
+      catalog: https://apis.io/blueconic
+      provider: BlueConic
+      maintainer: Kin Lane <kin@apievangelist.com>
+      artifacts:
+      - apis.yml
+      - vocabulary/blueconic-vocabulary.yml
+      - rules/blueconic-jsonschema-spectral-rules.yml
+      - conformance/blueconic-conformance.yml
+      - errors/blueconic-problem-types.yml
+      - lifecycle/blueconic-lifecycle.yml
+      - packages/blueconic-packages.yml
+      - mcp/blueconic-mcp.yml
+      - mcp/blueconic-tool-crosswalk.yml
+      - conventions/blueconic-conventions.yml
+      - data-model/blueconic-data-model.yml
+      - authentication/blueconic-authentication.yml
+      - scopes/blueconic-scopes.yml
+      - agentic-access/blueconic-agentic-access.yml
+      - security/blueconic-trust-center.yml
+      - sandbox/blueconic-sandbox.yml
+      - changelog/blueconic-changelog.yml
+      - skills/_index.yml
+      - llms/blueconic-llms.txt
+- target: $.info
+  update:
+    x-agent-surface:
+      mcp: https://{tenantname}.blueconic.net/mcp
+      mcp_local: npx -y @blueconic/blueconic-mcp
+      mcp_binding: dynamic — tools are generated from the tenant OpenAPI at startup
+      agent_skill: skills/_index.yml
+      agent_card: null
+      crosswalk: mcp/blueconic-tool-crosswalk.yml
+- target: $.info
+  update:
+    x-runtime-semantics:
+      pagination: offset — startIndex + count query parameters
+      idempotency: not supported; BlueConic documents no idempotency key
+      error_envelope: application/json (ErrorRequestBean / TokenErrorResponse); not RFC 9457
+      backpressure: 429 on concurrent bulk writes, 413 above 1000 entries, 503 when busy
+      conventions: conventions/blueconic-conventions.yml
+- target: $.servers[0]
+  update:
+    x-tenant-scoped: true
+    x-note: Every BlueConic customer gets its own host; there is no shared public API host.

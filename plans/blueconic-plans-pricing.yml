@@ -1,44 +1,67 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.blueconic.com/pricing
 name: BlueConic Plans and Pricing
-description: BlueConic offers custom enterprise pricing for its customer data platform.
-  Pricing is not publicly listed and is based on the number of identifiable profiles
-  and monthly visitor traffic. Prospective customers must contact sales or request
-  a demo to obtain pricing.
-version: '0.1'
+description: >-
+  BlueConic publishes NO pricing. www.blueconic.com/pricing redirects (HTTP 200 after redirect)
+  to www.blueconic.com/contact, and every commercial path on the site — "book a demo",
+  "Request a Demo", "Sign in" — leads to /request-demo. There are no named tiers, no list
+  price, no published quota and no self-service signup. Pricing is negotiated per contract.
+  This file records that absence; it is not a reconstruction of a price list.
+version: '0.2'
 url: https://www.blueconic.com/request-demo
+plan_count: 0
+publishes_pricing: false
+pricing_model:
+  type: contact-sales
+  self_serve: false
+  free_tier: false
+  trial: false
+  billing_period_documented: null
+  cost_drivers:
+    - name: identifiable profiles
+      note: >-
+        The number of identifiable customer profiles is the dimension BlueConic's own FinOps
+        framing and account documentation treat as the primary commercial unit. No rate card
+        is published for it.
+    - name: monthly visitor traffic
+    - name: product subscriptions / licences
+      note: >-
+        Feature availability at each release stage is explicitly "available to all BlueConic
+        customers, depending on product subscriptions or licenses"
+        (https://support.blueconic.com/en/articles/247540-cdp-product-updates-and-current-status),
+        so the platform is licensed by module as well as by volume.
+plans: []
+api_charges:
+  separately_billed: false
+  note: >-
+    No separate API tier, per-call price or API quota is published. REST API v2 access is part
+    of the platform; scope is controlled by OAuth application permissions rather than by plan.
+  webhook_note: >-
+    Webhook calls carry no hard published limit but are "subject to BlueConic's fair use
+    policy" (https://support.blueconic.com/en/articles/247717-webhook-connection).
+sandbox_access:
+  self_serve: false
+  note: >-
+    A BlueConic Sandbox tenant requires the customer's organization to have "made the
+    appropriate legal arrangements" — i.e. it is a contract term, not a signup.
+    See sandbox/blueconic-sandbox.yml.
 contact:
+  demo: https://www.blueconic.com/request-demo
   url: https://www.blueconic.com/contact
   phone: +1 (888) 440-2583
-plans:
-  - name: Enterprise
-    description: Custom enterprise pricing for BlueConic CDP based on number of identifiable
-      profiles and monthly visitor traffic. Includes access to full REST API v2, OAuth
-      2.0 authorization, segments, interactions, audit events, and platform connections.
-      Pricing typically ranges from $100,000 to $200,000 per year depending on profile
-      volume and feature set.
-    type: enterprise
-    pricing:
-      model: custom
-      currency: USD
-      billingPeriod: annual
-      estimatedMin: 100000
-      estimatedMax: 200000
-      note: Pricing is negotiated based on number of identifiable profiles and monthly
-        visitor traffic. Contact sales for a quote.
-    features:
-      - Full REST API v2 access
-      - OAuth 2.0 authentication (client credentials and authorization code flows)
-      - Visitor profile management
-      - Segment creation and management
-      - Interaction tracking
-      - Audit event logging
-      - Platform connections and integrations
-      - iOS and Roku SDK support
-      - BlueConic University training access
-      - Customer success support
-    contact:
-      url: https://www.blueconic.com/request-demo
+evidence:
+  - url: https://www.blueconic.com/pricing
+    status: 200
+    resolved_to: https://www.blueconic.com/contact
+    checked: '2026-08-13'
+  - url: https://www.blueconic.com/request-demo
+    status: 200
+    checked: '2026-08-13'
 notes:
-  - Pricing is not publicly disclosed; contact sales for accurate estimates.
-  - Implementation, training, and add-on fees may apply beyond list price.
-  - The BlueConic API is included as part of the platform subscription; there are
-    no separate API-tier charges.
+  - >-
+    A previous revision of this file carried an "estimatedMin 100000 / estimatedMax 200000 USD
+    per year" band. BlueConic publishes no such figure anywhere on its site, in its terms or in
+    its help center; the band was removed as unsourced rather than left standing as if the
+    provider had stated it.
+  - Implementation, training and add-on fees are not published either way.

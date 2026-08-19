@@ -1,0 +1,139 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.blueconic.com/trust-center
+description: >-
+  Cross-cutting standards and compliance posture for BlueConic. Compliance claims were read
+  from BlueConic's own Trust Center and privacy policy on 2026-08-13; protocol conformance was
+  derived from the OpenAPI in openapi/. Only claims BlueConic itself publishes are recorded —
+  the SOC 2 Type 2 report is described as "available for customers upon request", so it is
+  recorded as an asserted audit rather than a verified artifact.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: >-
+      openapi/_original/blueconic-rest-api-v2-openapi.yml declares openapi 3.0.3;
+      BlueConic publishes the source at github.com/blueconic/openapi and renders it at
+      rest.apidoc.blueconic.com. The upstream definitions/openapi_latest.yaml has since moved
+      to OpenAPI 3.1.0 (info.version 102.0).
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      components.securitySchemes declares a single oauth2 scheme with clientCredentials
+      (tokenUrl /rest/v2/oauth/token) and authorizationCode
+      (authorizationUrl /rest/v2/oauth/authorize) flows.
+  - id: oauth2-pkce
+    conforms: true
+    evidence: >-
+      The authorization code flow requires Proof Key for Code Exchange; the docs instruct
+      developers to generate a code verifier and challenge and to enable "Send Proof Key for
+      Code Exchange" on the registered client.
+      https://support.blueconic.com/en/articles/248009-using-the-blueconic-rest-api-v2
+  - id: oauth2-refresh-token-rotation
+    conforms: true
+    evidence: >-
+      "Handle refresh token rotation — whenever a new access token is requested using the
+      refresh token, a new refresh token is also supplied."
+      https://support.blueconic.com/en/articles/248009-using-the-blueconic-rest-api-v2
+  - id: oidc
+    conforms: false
+    evidence: >-
+      No openIdConnect security scheme, and /.well-known/openid-configuration returned 404 on
+      every BlueConic host probed (see well-known/blueconic-well-known.yml).
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: false
+    evidence: /.well-known/oauth-authorization-server returned 404 on every host probed.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      No application/problem+json response anywhere in the specification; errors use
+      ErrorRequestBean / TokenErrorResponse over application/json.
+      See errors/blueconic-problem-types.yml.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: >-
+      /.well-known/security.txt is 404 on www.blueconic.com. The 200 on
+      support.blueconic.com is Intercom's document, not BlueConic's.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation response headers are declared in the specification, and the
+      REST API v1 retirement was announced by date in the docs rather than by header.
+  - id: json-api
+    conforms: false
+    evidence: Plain JSON resource representations; no JSON:API document structure.
+  - id: odata
+    conforms: false
+  - id: scim
+    conforms: false
+    evidence: >-
+      BlueConic ships SCIM user provisioning as a platform feature (changelog, 2026-06-30
+      "Automate user access management end-to-end with SCIM provisioning"), but no SCIM 2.0
+      endpoints appear in the published REST API v2 specification, so REST conformance
+      cannot be asserted from the contract.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Offset pagination via startIndex + count query parameters (23 operations carry count,
+      20 carry startIndex); two operations additionally expose a cursor parameter.
+  - id: idempotency
+    conforms: false
+    evidence: >-
+      No idempotency key header or parameter in the specification and none documented. Bulk
+      writes instead return 429 with a documented exponential-backoff recommendation.
+  - id: mcp
+    conforms: true
+    evidence: >-
+      Official MCP server, hosted per tenant at https://{tenantname}.blueconic.net/mcp and as
+      the npm stdio package @blueconic/blueconic-mcp.
+      https://support.blueconic.com/en/articles/415706-blueconic-model-context-protocol-mcp
+  - id: a2a
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json returned 404 on every BlueConic
+      host probed on 2026-08-13.
+compliance:
+  published: true
+  url: https://www.blueconic.com/trust-center
+  programs:
+    - name: SOC 2 Type 2
+      scope: Security, Availability, and Confidentiality Trust Services Criteria (AICPA)
+      status: audit completed
+      evidence: >-
+        "BlueConic has completed a SOC 2 Type 2 audit for the Security, Availability, and
+        Confidentiality Trust Services Criteria." Report available to customers on request.
+      source: https://www.blueconic.com/trust-center
+    - name: TRUSTe Verified Privacy Seal
+      status: certified
+      evidence: TRUSTe Verified Privacy and TRUSTe Verified International Privacy Assessment Criteria.
+      source: https://privacy.truste.com/privacy-seal/validation?rid=8b1e2c0e-4547-4a9d-b9b6-fc5975da4b26
+    - name: EU-U.S. Data Privacy Framework
+      status: certified
+      evidence: >-
+        BlueConic has certified to the U.S. Department of Commerce that it adheres to the
+        EU-U.S. Data Privacy Framework Principles, including the UK Extension and the
+        Swiss-U.S. DPF.
+      source: https://www.blueconic.com/legal/privacy-policy
+  regulations_supported:
+    - GDPR (EU)
+    - UK GDPR
+    - CCPA / CPRA (California)
+  not_claimed:
+    - ISO 27001
+    - PCI DSS
+    - HIPAA
+    - FedRAMP
+    - CSA STAR
+  note: >-
+    ISO 27001, PCI DSS, HIPAA and FedRAMP appear nowhere on the Trust Center, the privacy
+    policy or the terms — recorded as not claimed rather than as failures.
+controls_published:
+  hosting: Amazon Web Services (public cloud), multi-tier architecture, private subnets
+  encryption_in_transit: TLS 1.2 and 1.3, minimum 128-bit keys, HTTPS-only UI
+  encryption_at_rest: AES-256, including backups
+  authentication: username + password + MFA, salted password hashes, SAML SSO supported
+  testing: SAST, SCA, DAST in the SDLC plus regular third-party platform pen tests
+  secure_development: design and code review, OWASP Top Ten training
+  availability: redundant clusters across multiple AWS Availability Zones, BC/DR program with regular tests
+  monitoring: 24x7 security monitoring with automated alerting; documented Security Incident Response Plan
+  personnel: background checks, least privilege, regular access reviews, mandatory security training
+  source: https://www.blueconic.com/trust-center

@@ -1,0 +1,1672 @@
+{
+  "item": [
+    {
+      "id": "83ad6695-0d53-42f6-8639-3254d1e4f1b4",
+      "name": "Groups",
+      "description": {
+        "content": "The following methods allow you to create, modify, retrieve, and delete BlueConic groups. To manage group properties, use the [Properties endpoints](https://rest.apidoc.blueconic.com/#tag--Properties).\nBest practice when updating groups is to use the bulk endpoint rather than a single request for each individual update.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6754da21-9fe8-4b13-ae71-041041ff6f14",
+          "name": "Get one group",
+          "request": {
+            "name": "Get one group",
+            "description": {
+              "content": "Retrieves the properties of the specified group.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":grouptype",
+                ":group"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "properties",
+                  "value": "<string>",
+                  "description": "Only returns the given group properties in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "grouptype",
+                  "description": "(Required) The ID of the BlueConic group type."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "group",
+                  "description": "(Required) The ID of the BlueConic group."
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fbf3b49a-4e69-4bcd-84c9-acc83f5c3093",
+              "name": "Returns the specified group.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype",
+                    ":group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the BlueConic group type."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group",
+                      "description": "(Required) The ID of the BlueConic group."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"id\\\" : \\\"41ebc321-b02b-4e8a-a368-82995c81fb18\\\",\\n  \\\"groupTypeId\\\": \\\"company\\\",\\n  \\\"creationDate\\\" : \\\"2023-03-27T10:36:11.990Z\\\",\\n  \\\"lastModifiedDate\\\": \\\"2024-01-10T12:52:44.816Z\\\",\\n  \\\"properties\\\" : [ {\\n    \\\"id\\\" : \\\"domaingroup\\\",\\n    \\\"values\\\" : [ \\\"DEFAULT\\\" ]\\n  }, {\\n    \\\"id\\\" : \\\"fullname\\\",\\n    \\\"values\\\" : [ \\\"blueconic\\\" ]\\n  }, {\\n    \\\"id\\\" : \\\"variant\\\",\\n    \\\"values\\\" : [ \\\"a\\\" ]\\n  }, {\\n    \\\"id\\\" : \\\"email\\\",\\n    \\\"values\\\" : [ \\\"example@blueconic.com\\\" ]\\n  }]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17f0af4b-15b5-4f87-a160-2a963907f263",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype",
+                    ":group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the BlueConic group type."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group",
+                      "description": "(Required) The ID of the BlueConic group."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "73c69cf4-f244-47d3-8cdd-c8308eb5eff3",
+              "name": "The specified group doesn't exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype",
+                    ":group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the BlueConic group type."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group",
+                      "description": "(Required) The ID of the BlueConic group."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "45d71d54-3b40-4509-9ced-8c76ee06d486",
+              "name": "Request timed out.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype",
+                    ":group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the BlueConic group type."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group",
+                      "description": "(Required) The ID of the BlueConic group."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Timeout",
+              "code": 408,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d33a0fe3-a4b5-4177-9c5e-530b5d695f7a",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype",
+                    ":group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the BlueConic group type."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "group",
+                      "description": "(Required) The ID of the BlueConic group."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b4cf351-7292-45bb-8da7-13e7b242b722",
+          "name": "Get groups for group type",
+          "request": {
+            "name": "Get groups for group type",
+            "description": {
+              "content": "Retrieves the groups for the given group type",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":grouptype"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "daysCount",
+                  "value": "<integer>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "[{\"value\":\"<Circular reference to #/components/schemas/RefinementBean detected>\"},{\"value\":\"<Circular reference to #/components/schemas/RefinementBean detected>\"}]",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<string>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromValue",
+                  "value": "<integer>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "groupProperty",
+                  "value": "<string>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "hoursCount",
+                  "value": "<integer>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "objective",
+                  "value": "<string>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "operator",
+                  "value": "<string>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "property",
+                  "value": "<string>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<string>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "toValue",
+                  "value": "<integer>",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "values",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter groups. If not specified, all groups will be returned.\n\nTo filter groups using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a group.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Defines the starting point of the page for pagination. When cursors are used, each page, except the last page, returns a `nextCursor` value which can be used to retrieve the next page."
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "<integer>",
+                  "description": "Specifies the number of results to return. Smaller than or equal to 1.000.000."
+                },
+                {
+                  "disabled": false,
+                  "key": "maxHitsAllowed",
+                  "value": "<integer>",
+                  "description": "When greater than 0, enables fast approximate export by limiting total hits (e.g. maxHitsAllowed=200 and count=20 for max 10 pages). Same behavior as segment export."
+                },
+                {
+                  "disabled": false,
+                  "key": "properties",
+                  "value": "<string>",
+                  "description": "Specifies which group properties values will be returned for each group. If not specified, the values of all group properties will be returned, which may result in a large result set. One or more group property ids, separated by a comma."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "grouptype",
+                  "description": "(Required) The ID of the group type."
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ac54d94a-563b-4358-9e18-5c6cfcab1d40",
+              "name": "Returns the groups of the given group type in a streaming fashion (`Transfer-Encoding: chunked`).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "daysCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object],[object Object]"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hoursCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "objective",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "values",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "*"
+                    },
+                    {
+                      "key": "count",
+                      "value": "20"
+                    },
+                    {
+                      "key": "maxHitsAllowed",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "browserversion,email"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the group type."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n\\\"itemsPerPage\\\":20,\\n\\\"totalPages\\\":5,\\n\\\"totalResults\\\":100,\\n\\\"cursor\\\":\\\"*\\\",\\n\\\"nextCursor\\\":\\\"AoJylraPsPICPwU4ZDZiMzhmYS0yMmYwLTRmZTAtYmE0My1kOWVlNTFjNWE5MDA\\\",\\n  \\\"links\\\" : [ {\\n    \\\"href\\\" : \\\"https://localhost/rest/v2/groups/company?cursor=%2A&count=20\\\",\\n    \\\"rel\\\" : \\\"first\\\",\\n    \\\"type\\\" : \\\"application/json\\\"\\n  }, {\\n    \\\"href\\\" : \\\"https://localhost/rest/v2/groups/company?cursor=AoJylraPsPICPwU4ZDZiMzhmYS0yMmYwLTRmZTAtYmE0My1kOWVlNTFjNWE5MDA&count=20\\\",\\n    \\\"rel\\\" : \\\"last\\\",\\n    \\\"type\\\" : \\\"application/json\\\"\\n  } ]\\n,\\n\\\"groups\\\": [\\n{\\n  \\\"id\\\" : \\\"41ebc321-b02b-4e8a-a368-82995c81fb18\\\",\\n  \\\"groupTypeId\\\": \\\"company\\\",\\n  \\\"creationDate\\\" : \\\"2023-03-27T10:36:11.990Z\\\",\\n  \\\"lastModifiedDate\\\": \\\"2024-01-10T12:52:44.816Z\\\",\\n  \\\"properties\\\" : [ {\\n    \\\"id\\\" : \\\"domaingroup\\\",\\n    \\\"values\\\" : [ \\\"DEFAULT\\\" ]\\n  }, {\\n    \\\"id\\\" : \\\"fullname\\\",\\n    \\\"values\\\" : [ \\\"blueconic\\\" ]\\n  }, {\\n    \\\"id\\\" : \\\"variant\\\",\\n    \\\"values\\\" : [ \\\"a\\\" ]\\n  }, {\\n    \\\"id\\\" : \\\"email\\\",\\n    \\\"values\\\" : [ \\\"example@blueconic.com\\\" ]\\n  }]\\n}\\n]}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdc01950-86bb-4617-9c97-43a56be1c194",
+              "name": "One or more required parameters are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "daysCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object],[object Object]"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hoursCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "objective",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "values",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "*"
+                    },
+                    {
+                      "key": "count",
+                      "value": "20"
+                    },
+                    {
+                      "key": "maxHitsAllowed",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "browserversion,email"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the group type."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a44fbd1f-3f6a-479e-86ce-a6b99af5a5cc",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "daysCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object],[object Object]"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hoursCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "objective",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "values",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "*"
+                    },
+                    {
+                      "key": "count",
+                      "value": "20"
+                    },
+                    {
+                      "key": "maxHitsAllowed",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "browserversion,email"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the group type."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d06537b0-c7b2-4e09-b37a-6c9fde405e66",
+              "name": "Group type not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "daysCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object],[object Object]"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hoursCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "objective",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "values",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "*"
+                    },
+                    {
+                      "key": "count",
+                      "value": "20"
+                    },
+                    {
+                      "key": "maxHitsAllowed",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "browserversion,email"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the group type."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "27cc8294-a284-4d8c-9a00-35efd7c23ef9",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":grouptype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "daysCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object],[object Object]"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hoursCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "objective",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toValue",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "values",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "*"
+                    },
+                    {
+                      "key": "count",
+                      "value": "20"
+                    },
+                    {
+                      "key": "maxHitsAllowed",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "browserversion,email"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "grouptype",
+                      "description": "(Required) The ID of the group type."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f93b053-21c6-4190-a94b-1797acb5f339",
+          "name": "Create, update, or delete one or more groups",
+          "request": {
+            "name": "Create, update, or delete one or more groups",
+            "description": {
+              "content": "Create, update, or delete one or more groups in a single request. This is the recommended way of creating, updating and deleting groups.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"<string>\",\n    \"groupTypeId\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"properties\": {\n      \"id\": \"<string>\",\n      \"strategy\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"strategy\": \"UPDATE\"\n  },\n  {\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"<string>\",\n    \"groupTypeId\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"properties\": {\n      \"id\": \"<string>\",\n      \"strategy\": \"<string>\",\n      \"values\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"strategy\": \"UPDATE\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1ede91b8-8a27-47f1-a2c1-f40cb2937487",
+              "name": "Bulk response \n\n**JSON Response**\n\nEvery bulk operation is returned in the response as well.\nThe state can be one of the following values: `CREATED`, `SKIPPED`, `MODIFIED`, `DELETED`, `UNCHANGED`, `NOTFOUND`, or `UNKNOWN_GROUP_TYPE`.\n\n```json\n[{\n    \"state\": \"CREATED\",\n    \"groupId\": \"group-ID of the created group\",\n    \"groupTypeId\": \"group-type-ID of the created group\",\n    \"identifier\": \" my-external-identifier\"\n}]\n```",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"[\\n  {\\n    \\\"groupId\\\": \\\"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\\\",\\n    \\\"groupTypeId\\\": \\\"company_test\\\",\\n    \\\"state\\\": \\\"MODIFIED\\\"\\n  },\\n  {\\n    \\\"groupId\\\": \\\"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\\\",\\n    \\\"groupTypeId\\\": \\\"company_test\\\",\\n    \\\"state\\\": \\\"DELETED\\\"\\n  }\\n]\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "748b8747-636e-43fd-9f71-d144573a2a32",
+              "name": "One or more required parameters are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1390,\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c946156-d77b-4b00-8577-c8d10d718885",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "42b0961d-9040-43bb-a75a-476f8be2806c",
+              "name": "Forbidden, invalid (PII) permissions to perform the request. Please check your OAuth Application configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "25edaacc-f81f-467c-93cc-db551dfc7602",
+              "name": "More than the allowed 1000 entries are sent in the request. The entries that are processed are returned in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"[\\n  {\\n    \\\"groupId\\\": \\\"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\\\",\\n    \\\"groupTypeId\\\": \\\"company_test\\\",\\n    \\\"state\\\": \\\"MODIFIED\\\"\\n  },\\n  {\\n    \\\"groupId\\\": \\\"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\\\",\\n    \\\"groupTypeId\\\": \\\"company_test\\\",\\n    \\\"state\\\": \\\"DELETED\\\"\\n  }\\n]\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc2c1aa7-e281-4190-ab3c-55f6b34525d9",
+              "name": "Too many requests are sent concurrently. BlueConic recommends designing your app to be resilient to this scenario. For example, implement a request queue with an exponential backoff algorithm.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6d50f68a-54ae-4e25-823f-df438191557c",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"properties\": [{\n            \"id\": \"company_test_zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"company_test_email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"domainGroup\": \"DEFAULT\",\n    \"groupId\": \"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\",\n    \"groupType\": \"company_test\",\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "tenantname",
+      "key": "blueconicHostname"
+    },
+    {
+      "type": "string",
+      "value": "https://{{blueconicHostname}}/rest/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "40f7279c-90ab-4027-80ce-2ce3eb2cf168",
+    "name": "BlueConic REST API v2 Audit Events Groups API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n\n\nContact Support:\n Name: Contact us",
+      "type": "text/plain"
+    }
+  }
+}

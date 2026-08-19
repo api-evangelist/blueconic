@@ -1,0 +1,80 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.blueconic.com/en/articles/247540-cdp-product-updates-and-current-status
+description: >-
+  Versioning, release-stage, deprecation and availability posture for BlueConic, read from
+  BlueConic's own help center, changelog and Trust Center on 2026-08-13.
+versioning:
+  scheme: uri-path
+  current: v2
+  api_version_field: '102.0'
+  api_version_note: >-
+    The REST API carries the BlueConic PLATFORM release number in info.version — the upstream
+    definitions/openapi_latest.yaml at github.com/blueconic/openapi read 102.0 on 2026-08-13,
+    while the copy captured in openapi/_original/ reads 100.0. The URI version (v2) has not
+    changed; the platform number advances with each monthly platform release, and per-release
+    definitions are archived in the same repo under definitions/r89 .. definitions/r101.
+  tenant_spec: https://{tenantname}.blueconic.net/openapi
+  docs: https://support.blueconic.com/en/articles/248009-using-the-blueconic-rest-api-v2
+  reference_console: https://rest.apidoc.blueconic.com
+  version_selector: https://rest.apidoc.blueconic.com/?version=101
+release_stages:
+  source: https://support.blueconic.com/en/articles/247540-cdp-product-updates-and-current-status
+  stages:
+    - name: Private Preview
+      access: invite-only, design partners
+      documentation: none
+    - name: Beta
+      access: invite-only, broader
+      documentation: preliminary
+    - name: Public Preview
+      access: all customers subject to licence
+      documentation: stable
+    - name: General Availability
+      access: all customers subject to licence
+      documentation: complete
+  advance_notice: >-
+    "Any product updates or planned maintenance will be announced at least 7 days in advance."
+  delivery: rolling, per server cluster, announced in-platform via the Notifications menu
+deprecation:
+  policy_url: https://support.blueconic.com/en/articles/248010-blueconic-rest-api-migration
+  policy_published: true
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    BlueConic publishes a dated deprecation-and-retirement schedule for API versions rather
+    than RFC 8594 Sunset/Deprecation headers — no such headers are declared anywhere in the
+    specification.
+  history:
+    - version: REST API v1 / OAuth 1.0
+      deprecated: '2023-07-15'
+      support_ended: '2024-03-31'
+      retired: '2024-07-01'
+      announced_in: Q3-2023 BlueConic Release Notes
+      migration_guide: https://support.blueconic.com/en/articles/248011-guide-for-migration-from-blueconic-api-v1-to-v2
+      window: '24 months from deprecation announcement to retirement'
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in any of the 28 refined specs carries deprecated: true.
+status_page:
+  url: https://status.blueconic.com
+  http_status: 200
+  checked: '2026-08-13'
+  subscribable: true
+  note: >-
+    Per-cluster status. BlueConic runs regional server clusters (US, EU, APAC, Canada); a
+    tenant's cluster is shown in BlueConic Settings > General > Installation.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public uptime SLA or target is published. The Trust Center describes the availability
+    architecture (redundant clusters, multiple AWS Availability Zones, BC/DR program with
+    regular tests) and points at status.blueconic.com for uptime statistics, but names no
+    contractual number. Recorded as absent rather than guessed.
+support:
+  channel: https://support.blueconic.com/en/
+  contacting: https://support.blueconic.com/en/articles/247573-contacting-support
+  penetration_test_response: within 48 hours
+  vulnerability_report_response: non-automated response within 24 hours
+changelog: changelog/blueconic-changelog.yml

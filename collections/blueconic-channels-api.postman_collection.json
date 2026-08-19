@@ -1,0 +1,613 @@
+{
+  "item": [
+    {
+      "id": "2596ecee-743d-4f36-9fb6-fcdd29c21ce8",
+      "name": "Channels",
+      "description": {
+        "content": "The Channel API allows you to retrieve information about [channels in BlueConic](https://support.blueconic.com/hc/en-us/articles/200472632-Overview-What-are-channels-in-BlueConic).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "40ad9861-d50e-4c7d-afdc-0f681e7f6bfc",
+          "name": "Get all channels",
+          "request": {
+            "name": "Get all channels",
+            "description": {
+              "content": "Retrieves all channels.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startIndex",
+                  "value": "<integer>",
+                  "description": "Specifies the index of the first result to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "<integer>",
+                  "description": "Specifies the number of results to return."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1e5f4253-21df-4b88-9603-44b79a94cc51",
+              "name": "Returns the channels.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"channels\\\" : [\\n    {\\n      \\\"aliases\\\" : [ \\\"blueconic.com\\\" ],\\n      \\\"domain\\\": {\\n        \\\"id\\\" : \\\"6398b714-45fd-4c28-ab08-80d8fea50757\\\",\\n        \\\"name\\\" : \\\"blueconic.com\\\"\\n      },\\n      \\\"hostname\\\" : \\\"www.blueconic.com\\\",\\n      \\\"id\\\" : \\\"6b44d80c-73c8-485b-ad76-b53a103751af\\\",\\n      \\\"name\\\" : \\\"www.blueconic.com\\\",\\n      \\\"tags\\\" : [ \\\"Marketing\\\", \\\"Data\\\", \\\"Privacy\\\" ],\\n      \\\"type\\\" : \\\"WEBSITE\\\",\\n      \\\"visitorCount\\\": 10\\n    },\\n    {\\n      \\\"aliases\\\" : [ ],\\n      \\\"domain\\\": {\\n        \\\"id\\\" : \\\"6398b714-45fd-4c28-ab08-80d8fea50757\\\",\\n        \\\"name\\\" : \\\"blueconic.com\\\"\\n      },\\n      \\\"hostname\\\" : \\\"ios://com.blueconic.app\\\",\\n      \\\"id\\\" : \\\"9d7a7b63-7372-4d43-a67f-027a01918d64\\\",\\n      \\\"name\\\" : \\\"BlueConic App\\\",\\n      \\\"tags\\\" : [ \\\"Mobile\\\", \\\"Technology\\\" ],\\n      \\\"type\\\" : \\\"MOBILE\\\",\\n      \\\"visitorCount\\\": 2\\n    },\\n    {\\n      \\\"aliases\\\" : [ ],\\n      \\\"domain\\\": {\\n        \\\"id\\\" : \\\"6398b714-45fd-4c28-ab08-80d8fea50757\\\",\\n        \\\"name\\\" : \\\"blueconic.com\\\"\\n      },\\n      \\\"hostname\\\" : \\\"\\\",\\n      \\\"id\\\" : \\\"e029bde2-3776-4985-a82c-090bf7e7673c\\\",\\n      \\\"name\\\" : \\\"Newsletter\\\",\\n      \\\"tags\\\" : [ \\\"Subscription\\\" ],\\n      \\\"type\\\" : \\\"EMAIL\\\",\\n      \\\"visitorCount\\\": 1\\n    }\\n  ],\\n  \\\"itemsPerPage\\\" : 20,\\n  \\\"startIndex\\\" : 0,\\n  \\\"totalPages\\\" : 1,\\n  \\\"totalResults\\\" : 3\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c68acaa4-b4b1-46aa-b28f-6b80a7365980",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b2373374-7ec5-4a32-bb02-f3d03a3511ef",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startIndex",
+                      "value": "0"
+                    },
+                    {
+                      "key": "count",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a38c25a7-e0f8-4524-a60a-394af7ba8266",
+          "name": "Get one channel",
+          "request": {
+            "name": "Get one channel",
+            "description": {
+              "content": "Retrieves a single channel.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "channels",
+                ":channelId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "channelId",
+                  "description": "(Required) The ID of the channel."
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d695453f-ca8f-42fa-a847-c1e74146487f",
+              "name": "Returns the channel.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels",
+                    ":channelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channelId",
+                      "description": "(Required) The ID of the channel."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"aliases\\\" : [ \\\"blueconic.com\\\" ],\\n  \\\"creationDate\\\" : \\\"2024-01-24T12:30:50.000Z\\\",\\n  \\\"creator\\\" : {\\n    \\\"fullName\\\" : \\\"user@blueconic.com\\\",\\n    \\\"userName\\\" : \\\"user@blueconic.com\\\"\\n  },\\n  \\\"description\\\" : \\\"BlueConic website\\\",\\n  \\\"domain\\\": {\\n    \\\"id\\\" : \\\"6398b714-45fd-4c28-ab08-80d8fea50757\\\",\\n    \\\"name\\\" : \\\"www.blueconic.com\\\"\\n  },\\n  \\\"hostname\\\" : \\\"www.blueconic.com\\\",\\n  \\\"id\\\" : \\\"6b44d80c-73c8-485b-ad76-b53a103751af\\\",\\n  \\\"lastModifiedDate\\\" : \\\"2024-02-01T12:30:50.000Z\\\",\\n  \\\"lastModifiedUser\\\" : {\\n    \\\"fullName\\\" : \\\"user@blueconic.com\\\",\\n    \\\"userName\\\" : \\\"user@blueconic.com\\\"\\n  },\\n  \\\"logo\\\" : \\\"https://bc.blueconic.net/rest/v2/channels/6b44d80c-73c8-485b-ad76-b53a103751af/logo?etag=3082b317eba5029e0aea03b42e3f3ca1\\\",\\n  \\\"name\\\" : \\\"www.blueconic.com\\\",\\n  \\\"tags\\\" : [ \\\"Marketing\\\", \\\"Data\\\", \\\"Privacy\\\" ],\\n  \\\"type\\\" : \\\"WEBSITE\\\",\\n  \\\"visitorCount\\\" : 10\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aaab8f3e-90c8-4127-9731-58d0a8867c7a",
+              "name": "One or more required parameters are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels",
+                    ":channelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channelId",
+                      "description": "(Required) The ID of the channel."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d2a133a2-79ad-4adc-99b9-e289cfeb45df",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels",
+                    ":channelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channelId",
+                      "description": "(Required) The ID of the channel."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "75d9cf60-1d36-41ae-845d-df9a9ca32a97",
+              "name": "Channel not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels",
+                    ":channelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channelId",
+                      "description": "(Required) The ID of the channel."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d3ceb2ad-312a-40aa-974d-7b73f2567024",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels",
+                    ":channelId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "channelId",
+                      "description": "(Required) The ID of the channel."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "tenantname",
+      "key": "blueconicHostname"
+    },
+    {
+      "type": "string",
+      "value": "https://{{blueconicHostname}}/rest/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8c30239b-3ba1-4a58-9493-d2b87dbb2c3c",
+    "name": "BlueConic REST API v2 Audit Events Channels API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n\n\nContact Support:\n Name: Contact us",
+      "type": "text/plain"
+    }
+  }
+}

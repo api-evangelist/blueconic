@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Reporting API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reporting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve dialogues statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/reporting/dialogues",
+            "params": [
+              {
+                "name": "dialogueId",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the dialogue IDs to return the statistics for."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the startDate of the reporting period. Defaults to 30 days ago if not specified. Format is yyyy-MM-dd."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the endDate of the reporting period. Defaults to today if not specified. Format is yyyy-MM-dd."
+              },
+              {
+                "name": "excludeControlGroup",
+                "value": "",
+                "type": "query",
+                "description": "Whether or not to exclude the control group statistics in the response."
+              },
+              {
+                "name": "addRatio",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the additional ratios to return in the response."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves all statistics for the given dialogues"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

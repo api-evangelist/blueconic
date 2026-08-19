@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Segments API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Segments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get profiles in segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/segments/:segment/profiles",
+            "params": [
+              {
+                "name": "segment",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the segment."
+              },
+              {
+                "name": "cursor",
+                "value": "*",
+                "type": "query",
+                "description": "Defines the starting point of the page for pagination. When cursors are used, each page, except the last page, returns a `nextCursor` value which can be used to retrieve the next page."
+              },
+              {
+                "name": "count",
+                "value": "20",
+                "type": "query",
+                "description": "Specifies the number of results to return. Smaller than or equal to 1.000.000."
+              },
+              {
+                "name": "maxHitsAllowed",
+                "value": "0",
+                "type": "query",
+                "description": "When greater than 0, enables fast approximate export by limiting total hits and using segment count from cache. Use with count for consistent paging (e.g. maxHitsAllowed=200 and count=20 for max 10 pages)."
+              },
+              {
+                "name": "properties",
+                "value": "browserversion,email",
+                "type": "query",
+                "description": "Specifies which profile properties values will be returned for each profile. If not specified, the values of all profile properties will be returned, which may result in a large result set. One or more profile property ids, separated by a comma."
+              },
+              {
+                "name": "profileProperty",
+                "value": "email",
+                "type": "query",
+                "description": "When the profileProperty is specified, the response will only return the values for the given profile property. If not specified, the values of all profile properties will be returned, which may result in a large result set."
+              },
+              {
+                "name": "groupProperty",
+                "value": "city",
+                "type": "query",
+                "description": "When the groupProperty is specified, the response will only return the values for the given group property. If not specified, the values of all group properties will be returned, which may result in a large result set. Only relevant when `&expand=profiles.profile.groups` is supplied."
+              },
+              {
+                "name": "refinement",
+                "value": "",
+                "type": "query",
+                "description": "**Refinement**\n\nSpecifies (URL-encoded) the refinement used to filter profiles. If not specified, all profiles of the given segment will be returned.\n\nTo filter profiles using refinements you can use the query parameter refinement. The refinement parameter is a URL-encoded JSON object that contains the refinement in the form of one or more filters.\n\n**Logical operators**\n\nThe logical operators used when combining multiple filters.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| AND                     | All filters should match |\n| OR                      | Any of the filters should match |\n\n**Operators**\n\nThe operators used to filter the property or objectives within a profile.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| IS_EMPTY                | If the given property value is empty | \n| NOT_IS_EMPTY            | If the given property value is not empty |\n| CONTAINS_ANY            | If the given property value contains any of the given values |\n| CONTAINS_ALL            | If the given property value contains all of the given values |\n| NOT_CONTAINS_ANY        | If the given property value does not contain any of the given values |\n| NOT_CONTAINS_ALL        | If the given property value does not contain all of the given values |\n| IN_RANGE                | If the given property value is in the given range |\n| NOT_IN_RANGE            | If the given property value is not in the given range |\n| IN_LAST_DAYS            | If the given property value is in the last given number of days |\n| NOT_IN_LAST_DAYS        | If the given property value is not in the last given number of days |\n| IN_NEXT_DAYS            | If the given property value is in the next given number of days |\n| NOT_IN_NEXT_DAYS        | If the given property value is not in the next given number of days |\n| IN_LAST_HOURS           | If the given property value is in the last given number of hours |\n| NOT_IN_LAST_HOURS       | If the given property value is not in the last given number of hours |\n| IN_NEXT_HOURS           | If the given property value is in the next given number of hours |\n| NOT_IN_NEXT_HOURS       | If the given property value is not in the next given number of hours |\n\n**Objective**\n\nThe objectives used to filter the property or objectives within a profile.\n\n| Name                    | Description |\n| :---------------------- | :---------- |\n| CONSENTED               | Objective consented |\n| REFUSED                 | Objective refused |\n| UNKNOWN                 | Unknown |\n| REFUSED_OR_UNKNOWN      | Refused or unknown | \n| CONSENTED_OR_UNNEEDED   | Consented or unneeded |\n\nCan only be used with the operators CONTAINS_ANY and CONTAINS_ALL"
+              },
+              {
+                "name": "expand",
+                "value": "profiles.profile.segments",
+                "type": "query",
+                "description": "Expand the information in the result set. Use `profiles.profile.permissions` to include permission level. Use `profiles.profile.replace` to include profile merge information. Use `profiles.profile.segments` to include the segments a profile is part of. Use `profiles.profile.timeline` to include timeline event information. Use `profiles.profile.groups` to include group information.  Use `profiles.profile.matchingGroups` to include matching group information. Use multiple `expand` querystring parameters to return combinations."
+              },
+              {
+                "name": "eventTypeId",
+                "value": "order",
+                "type": "query",
+                "description": "Filter for the returned timeline events for specific types. One or more IDs of a timeline event type."
+              },
+              {
+                "name": "eventProperty",
+                "value": "order.orderline",
+                "type": "query",
+                "description": "When the eventProperty is specified, the response will only return the values for the given property. If not specified, the values of all event properties will be returned, which may result in a large result set."
+              },
+              {
+                "name": "eventCount",
+                "value": "20",
+                "type": "query",
+                "description": "The maximum number of timeline events to return."
+              },
+              {
+                "name": "fromDate",
+                "value": "2025-01-22 11:21:33.872000+00:00",
+                "type": "query",
+                "description": "Filter to only include timeline events that are dated later than this date. In the ISO 8601 format '2025-01-22T11:21:33.872Z' or with time zone offset `2025-01-22T11:21:33.872+05:00`."
+              },
+              {
+                "name": "toDate",
+                "value": "2025-02-22 11:21:33.872000+00:00",
+                "type": "query",
+                "description": "Filter to only include timeline events that are dated before this date. In the ISO 8601 format '2025-01-22T11:21:33.872Z' or with time zone offset `2023-01-22T11:21:33.872+05:00`."
+              },
+              {
+                "name": "audienceId",
+                "value": "2f7dfdec-35c4-4f6e-b56d-7ccacc4a3311",
+                "type": "query",
+                "description": "This is used to track if a profile has already been exported to an audience. If a profile has already been exported to this audience then it is only included in the result when there are recent modifications to the given trackProperties."
+              },
+              {
+                "name": "autoCommit",
+                "value": "true",
+                "type": "query",
+                "description": "If the exported profiles should be auto-committed to the given audience."
+              },
+              {
+                "name": "trackPropertiesModifiedSince",
+                "value": "2025-04-15 11:24:01.183000+00:00",
+                "type": "query",
+                "description": "The date since which the provided trackProperties should have changed."
+              },
+              {
+                "name": "trackProperties",
+                "value": "geo_city_name",
+                "type": "query",
+                "description": "The tracked properties that should be checked for changes since the given trackPropertiesModifiedSince date."
+              },
+              {
+                "name": "trackPropertyChangesInNumberOfDays",
+                "value": "32",
+                "type": "query",
+                "description": "The number of days to track property changes."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the profiles of the segment."
+        },
+        {
+          "info": {
+            "name": "Get all segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/segments",
+            "params": [
+              {
+                "name": "startIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Specifies the index of the first item to include in the result."
+              },
+              {
+                "name": "count",
+                "value": "10",
+                "type": "query",
+                "description": "Specifies the number of results to return."
+              },
+              {
+                "name": "filterTag",
+                "value": "Homepage",
+                "type": "query",
+                "description": "When specified, only segments that have at least one matching tag are returned. Multiple values can be provided by repeating the parameter."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves all segments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

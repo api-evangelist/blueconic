@@ -1,0 +1,767 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/ + mcp/blueconic-mcp.yml
+description: 'Crosswalk between the BlueConic MCP surface and the BlueConic REST API v2 OpenAPI. BlueConic''s
+  MCP server is a DYNAMIC OpenAPI adapter: it loads the connected tenant''s own OpenAPI at startup and
+  turns its supported REST operations into tools, so there is no published static tool catalog to align
+  against and tools/list is auth-gated behind tenant OAuth credentials. Every row below is therefore derived
+  from a real operation in openapi/ rather than from an observed tool name, and confidence is set to medium
+  throughout: the operation and its parameters/requestBody are real and are the tool''s true input contract,
+  but the exact tool NAME the server generates was not observed. Delete operations are listed under rest_only
+  because BlueConic documents that the server does not expose them.'
+surfaces:
+  openapi:
+    files: openapi/*.yml
+    original: openapi/_original/blueconic-rest-api-v2-openapi.yml
+    operations: 64
+    gated: false
+  mcp:
+    endpoint: https://{tenantname}.blueconic.net/mcp
+    local: npx -y @blueconic/blueconic-mcp
+    tools_list_gated: true
+    note: Anonymous POST to https://tenantname.blueconic.net/mcp returned HTTP 403 on 2026-08-13.
+  graphql: null
+crosswalk:
+- tool: getAuditEvents
+  category: Audit Events
+  rest:
+  - getAuditEvents
+  binding: rest
+  confidence: medium
+  source: blueconic-audit-events-api-openapi.yml#getAuditEvents
+  method: GET
+  path: /auditEvents
+  scopes:
+  - read:audit-events
+  summary: Get audit events
+- tool: getAllChannels
+  category: Channels
+  rest:
+  - getAllChannels
+  binding: rest
+  confidence: medium
+  source: blueconic-channels-api-openapi.yml#getAllChannels
+  method: GET
+  path: /channels
+  scopes:
+  - read:channels
+  summary: Get all channels
+- tool: getOneChannel
+  category: Channels
+  rest:
+  - getOneChannel
+  binding: rest
+  confidence: medium
+  source: blueconic-channels-api-openapi.yml#getOneChannel
+  method: GET
+  path: /channels/{channelId}
+  scopes:
+  - read:channels
+  summary: Get one channel
+- tool: getAllConnections
+  category: Connections
+  rest:
+  - getAllConnections
+  binding: rest
+  confidence: medium
+  source: blueconic-connections-api-openapi.yml#getAllConnections
+  method: GET
+  path: /connections
+  scopes:
+  - read:connections
+  summary: Get all connections
+- tool: getConnectionRuns
+  category: Connections
+  rest:
+  - getConnectionRuns
+  binding: rest
+  confidence: medium
+  source: blueconic-connections-api-openapi.yml#getConnectionRuns
+  method: GET
+  path: /connections/{connection}/runs
+  scopes:
+  - read:connections
+  summary: Get the run history of a batch connection
+- tool: getOneConnection
+  category: Connections
+  rest:
+  - getOneConnection
+  binding: rest
+  confidence: medium
+  source: blueconic-connections-api-openapi.yml#getOneConnection
+  method: GET
+  path: /connections/{connection}
+  scopes:
+  - read:connections
+  summary: Get one connection
+- tool: getAllDialogues
+  category: Dialogues
+  rest:
+  - getAllDialogues
+  binding: rest
+  confidence: medium
+  source: blueconic-dialogues-api-openapi.yml#getAllDialogues
+  method: GET
+  path: /dialogues
+  scopes:
+  - read:dialogues
+  summary: Get all dialogues
+- tool: getOneDialogue
+  category: Dialogues
+  rest:
+  - getOneDialogue
+  binding: rest
+  confidence: medium
+  source: blueconic-dialogues-api-openapi.yml#getOneDialogue
+  method: GET
+  path: /dialogues/{dialogue}
+  scopes:
+  - read:dialogues
+  summary: Get one dialogue
+- tool: getAllGroupTypes
+  category: Group Types
+  rest:
+  - getAllGroupTypes
+  binding: rest
+  confidence: medium
+  source: blueconic-group-types-api-openapi.yml#getAllGroupTypes
+  method: GET
+  path: /groupTypes
+  scopes:
+  - read:group-types
+  summary: Retrieves all types of groups
+- tool: createUpdateDeleteGroups
+  category: Groups
+  rest:
+  - createUpdateDeleteGroups
+  binding: rest
+  confidence: medium
+  source: blueconic-groups-api-openapi.yml#createUpdateDeleteGroups
+  method: PUT
+  path: /groups
+  scopes:
+  - write:groups
+  summary: Create, update, or delete one or more groups
+- tool: getAllGroupsByGroupType
+  category: Groups
+  rest:
+  - getAllGroupsByGroupType
+  binding: rest
+  confidence: medium
+  source: blueconic-groups-api-openapi.yml#getAllGroupsByGroupType
+  method: GET
+  path: /groups/{grouptype}
+  scopes:
+  - read:groups
+  summary: Get groups for group type
+- tool: getOneGroupOfGroupType
+  category: Groups
+  rest:
+  - getOneGroupOfGroupType
+  binding: rest
+  confidence: medium
+  source: blueconic-groups-api-openapi.yml#getOneGroupOfGroupType
+  method: GET
+  path: /groups/{grouptype}/{group}
+  scopes:
+  - read:groups
+  summary: Get one group
+- tool: createEvent
+  category: Interaction events
+  rest:
+  - createEvent
+  binding: rest
+  confidence: medium
+  source: blueconic-interaction-events-api-openapi.yml#createEvent
+  method: POST
+  path: /interactionEvents
+  summary: Create interaction event
+- tool: getInteractions
+  category: Interactions
+  rest:
+  - getInteractions
+  binding: rest
+  confidence: medium
+  source: blueconic-interactions-api-openapi.yml#getInteractions
+  method: GET
+  path: /interactions
+  summary: Get interactions
+- tool: getAllLifecycles
+  category: Lifecycles
+  rest:
+  - getAllLifecycles
+  binding: rest
+  confidence: medium
+  source: blueconic-lifecycles-api-openapi.yml#getAllLifecycles
+  method: GET
+  path: /lifecycles
+  scopes:
+  - read:lifecycles
+  summary: Get all lifecycles
+- tool: getOneLifecycle
+  category: Lifecycles
+  rest:
+  - getOneLifecycle
+  binding: rest
+  confidence: medium
+  source: blueconic-lifecycles-api-openapi.yml#getOneLifecycle
+  method: GET
+  path: /lifecycles/{lifecycle}
+  scopes:
+  - read:lifecycles
+  summary: Get one lifecycle
+- tool: getAllListeners
+  category: Listeners
+  rest:
+  - getAllListeners
+  binding: rest
+  confidence: medium
+  source: blueconic-listeners-api-openapi.yml#getAllListeners
+  method: GET
+  path: /listeners
+  scopes:
+  - read:listeners
+  summary: Get all listeners
+- tool: getOneListener
+  category: Listeners
+  rest:
+  - getOneListener
+  binding: rest
+  confidence: medium
+  source: blueconic-listeners-api-openapi.yml#getOneListener
+  method: GET
+  path: /listeners/{listener}
+  scopes:
+  - read:listeners
+  summary: Get one listener
+- tool: createModel
+  category: Models
+  rest:
+  - createModel
+  binding: rest
+  confidence: medium
+  source: blueconic-models-api-openapi.yml#createModel
+  method: POST
+  path: /models
+  scopes:
+  - write:models
+  summary: Create model
+- tool: getAllModels
+  category: Models
+  rest:
+  - getAllModels
+  binding: rest
+  confidence: medium
+  source: blueconic-models-api-openapi.yml#getAllModels
+  method: GET
+  path: /models
+  scopes:
+  - read:models
+  summary: Get all models
+- tool: getModelONNXBinary
+  category: Models
+  rest:
+  - getModelONNXBinary
+  binding: rest
+  confidence: medium
+  source: blueconic-models-api-openapi.yml#getModelONNXBinary
+  method: GET
+  path: /models/{model}/model
+  scopes:
+  - read:models
+  summary: Get model binary
+- tool: getOneModelMetadata
+  category: Models
+  rest:
+  - getOneModelMetadata
+  binding: rest
+  confidence: medium
+  source: blueconic-models-api-openapi.yml#getOneModelMetadata
+  method: GET
+  path: /models/{model}
+  scopes:
+  - read:models
+  summary: Get one model
+- tool: updateModel
+  category: Models
+  rest:
+  - updateModel
+  binding: rest
+  confidence: medium
+  source: blueconic-models-api-openapi.yml#updateModel
+  method: PUT
+  path: /models/{model}
+  scopes:
+  - write:models
+  summary: Update model
+- tool: getAllNotebooks
+  category: Notebooks
+  rest:
+  - getAllNotebooks
+  binding: rest
+  confidence: medium
+  source: blueconic-notebooks-api-openapi.yml#getAllNotebooks
+  method: GET
+  path: /notebooks
+  scopes:
+  - read:notebooks
+  summary: Get all notebooks
+- tool: getNotebookRunHistory
+  category: Notebooks
+  rest:
+  - getNotebookRunHistory
+  binding: rest
+  confidence: medium
+  source: blueconic-notebooks-api-openapi.yml#getNotebookRunHistory
+  method: GET
+  path: /notebooks/{notebook}/runs
+  scopes:
+  - read:notebooks
+  summary: Get run history for a notebook
+- tool: getOneNotebook
+  category: Notebooks
+  rest:
+  - getOneNotebook
+  binding: rest
+  confidence: medium
+  source: blueconic-notebooks-api-openapi.yml#getOneNotebook
+  method: GET
+  path: /notebooks/{notebook}
+  scopes:
+  - read:notebooks
+  summary: Get one notebook
+- tool: getToken
+  category: OAuth 2.0
+  rest:
+  - getToken
+  binding: rest
+  confidence: medium
+  source: blueconic-oauth-2-0-api-openapi.yml#getToken
+  method: POST
+  path: /oauth/token
+  summary: Get token
+- tool: revokeToken
+  category: OAuth 2.0
+  rest:
+  - revokeToken
+  binding: rest
+  confidence: medium
+  source: blueconic-oauth-2-0-api-openapi.yml#revokeToken
+  method: POST
+  path: /oauth/revoke
+  summary: Revoke token
+- tool: startAuthorizationCodeFlow
+  category: OAuth 2.0
+  rest:
+  - startAuthorizationCodeFlow
+  binding: rest
+  confidence: medium
+  source: blueconic-oauth-2-0-api-openapi.yml#startAuthorizationCodeFlow
+  method: GET
+  path: /oauth/authorize
+  summary: Start Authorization Code Flow
+- tool: getAllObjectives
+  category: Objectives
+  rest:
+  - getAllObjectives
+  binding: rest
+  confidence: medium
+  source: blueconic-objectives-api-openapi.yml#getAllObjectives
+  method: GET
+  path: /objectives
+  scopes:
+  - read:objectives
+  summary: Get all objectives
+- tool: getOneObjective
+  category: Objectives
+  rest:
+  - getOneObjective
+  binding: rest
+  confidence: medium
+  source: blueconic-objectives-api-openapi.yml#getOneObjective
+  method: GET
+  path: /objectives/{objective}
+  scopes:
+  - read:objectives
+  summary: Get one objective
+- tool: createPageviewEvent
+  category: Pageview events
+  rest:
+  - createPageviewEvent
+  binding: rest
+  confidence: medium
+  source: blueconic-pageview-events-api-openapi.yml#createPageviewEvent
+  method: POST
+  path: /pageviewEvents
+  summary: Create page view event
+- tool: getAllPlugins
+  category: Plugins
+  rest:
+  - getAllPlugins
+  binding: rest
+  confidence: medium
+  source: blueconic-plugins-api-openapi.yml#getAllPlugins
+  method: GET
+  path: /plugins
+  scopes:
+  - read:plugins
+  summary: Get all plugins
+- tool: getOnePlugin
+  category: Plugins
+  rest:
+  - getOnePlugin
+  binding: rest
+  confidence: medium
+  source: blueconic-plugins-api-openapi.yml#getOnePlugin
+  method: GET
+  path: /plugins/{plugin}
+  scopes:
+  - read:plugins
+  summary: Get one plugin
+- tool: getProfileEvents
+  category: Profile events
+  rest:
+  - getProfileEvents
+  binding: rest
+  confidence: medium
+  source: blueconic-profile-events-api-openapi.yml#getProfileEvents
+  method: GET
+  path: /profileEvents/{profileId}
+  scopes:
+  - read:profiles
+  summary: Get profile events
+- tool: createUpdateDeleteProfiles
+  category: Profiles
+  rest:
+  - createUpdateDeleteProfiles
+  binding: rest
+  confidence: medium
+  source: blueconic-profiles-api-openapi.yml#createUpdateDeleteProfiles
+  method: PUT
+  path: /profiles
+  scopes:
+  - write:profiles
+  summary: Create, update, or delete one or more profiles
+- tool: getOneProfile
+  category: Profiles
+  rest:
+  - getOneProfile
+  binding: rest
+  confidence: medium
+  source: blueconic-profiles-api-openapi.yml#getOneProfile
+  method: GET
+  path: /profiles/{profileId}
+  scopes:
+  - read:profiles
+  summary: Get one profile
+- tool: searchProfiles
+  category: Profiles
+  rest:
+  - searchProfiles
+  binding: rest
+  confidence: medium
+  source: blueconic-profiles-api-openapi.yml#searchProfiles
+  method: GET
+  path: /profiles
+  scopes:
+  - read:profiles
+  summary: Search profiles
+- tool: createUpdateProfileOrGroupProperty
+  category: Properties
+  rest:
+  - createUpdateProfileOrGroupProperty
+  binding: rest
+  confidence: medium
+  source: blueconic-properties-api-openapi.yml#createUpdateProfileOrGroupProperty
+  method: PUT
+  path: /profileProperties/{propertyId}
+  scopes:
+  - write:profile-properties
+  summary: Create/update property
+- tool: getAllProfileOrGroupProperties
+  category: Properties
+  rest:
+  - getAllProfileOrGroupProperties
+  binding: rest
+  confidence: medium
+  source: blueconic-properties-api-openapi.yml#getAllProfileOrGroupProperties
+  method: GET
+  path: /profileProperties
+  scopes:
+  - read:profile-properties
+  summary: Get all properties
+- tool: getOneProfileOrGroupProperty
+  category: Properties
+  rest:
+  - getOneProfileOrGroupProperty
+  binding: rest
+  confidence: medium
+  source: blueconic-properties-api-openapi.yml#getOneProfileOrGroupProperty
+  method: GET
+  path: /profileProperties/{propertyId}
+  scopes:
+  - read:profile-properties
+  summary: Get one property
+- tool: getRecommendationsPostJsonpAsync
+  category: Recommendations
+  rest:
+  - getRecommendationsPostJsonpAsync
+  binding: rest
+  confidence: medium
+  source: blueconic-recommendations-api-openapi.yml#getRecommendationsPostJsonpAsync
+  method: POST
+  path: /recommendations
+  summary: Generate recommendations
+- tool: getDialogueStatistics
+  category: Reporting
+  rest:
+  - getDialogueStatistics
+  binding: rest
+  confidence: medium
+  source: blueconic-reporting-api-openapi.yml#getDialogueStatistics
+  method: GET
+  path: /reporting/dialogues
+  scopes:
+  - read:dialogues
+  summary: Retrieve dialogues statistics
+- tool: getAllRoles
+  category: Roles
+  rest:
+  - getAllRoles
+  binding: rest
+  confidence: medium
+  source: blueconic-roles-api-openapi.yml#getAllRoles
+  method: GET
+  path: /roles
+  scopes:
+  - read:roles
+  summary: Get all roles
+- tool: getOneRole
+  category: Roles
+  rest:
+  - getOneRole
+  binding: rest
+  confidence: medium
+  source: blueconic-roles-api-openapi.yml#getOneRole
+  method: GET
+  path: /roles/{role}
+  scopes:
+  - read:roles
+  summary: Get one role
+- tool: getAllSegments
+  category: Segments
+  rest:
+  - getAllSegments
+  binding: rest
+  confidence: medium
+  source: blueconic-segments-api-openapi.yml#getAllSegments
+  method: GET
+  path: /segments
+  scopes:
+  - read:segments
+  summary: Get all segments
+- tool: getProfilesInSegment
+  category: Segments
+  rest:
+  - getProfilesInSegment
+  binding: rest
+  confidence: medium
+  source: blueconic-segments-api-openapi.yml#getProfilesInSegment
+  method: GET
+  path: /segments/{segment}/profiles
+  scopes:
+  - read:segments
+  summary: Get profiles in segment
+- tool: addContentItemsToStore
+  category: Stores
+  rest:
+  - addContentItemsToStore
+  binding: rest
+  confidence: medium
+  source: blueconic-stores-api-openapi.yml#addContentItemsToStore
+  method: PUT
+  path: /contentStores/{contentStore}/items
+  scopes:
+  - write:content_stores
+  summary: Add store items
+- tool: createContentStore
+  category: Stores
+  rest:
+  - createContentStore
+  binding: rest
+  confidence: medium
+  source: blueconic-stores-api-openapi.yml#createContentStore
+  method: POST
+  path: /contentStores
+  scopes:
+  - write:content_stores
+  summary: Create store
+- tool: getAllContentStores
+  category: Stores
+  rest:
+  - getAllContentStores
+  binding: rest
+  confidence: medium
+  source: blueconic-stores-api-openapi.yml#getAllContentStores
+  method: GET
+  path: /contentStores
+  scopes:
+  - read:content_stores
+  summary: Get all stores
+- tool: getContentItemsFromStore
+  category: Stores
+  rest:
+  - getContentItemsFromStore
+  binding: rest
+  confidence: medium
+  source: blueconic-stores-api-openapi.yml#getContentItemsFromStore
+  method: GET
+  path: /contentStores/{contentStore}/items
+  scopes:
+  - read:content_stores
+  summary: Get store items
+- tool: updateContentStore
+  category: Stores
+  rest:
+  - updateContentStore
+  binding: rest
+  confidence: medium
+  source: blueconic-stores-api-openapi.yml#updateContentStore
+  method: PUT
+  path: /contentStores/{contentStore}
+  scopes:
+  - write:content_stores
+  summary: Update store
+- tool: getOneTimelineEventType
+  category: Timeline Event Types
+  rest:
+  - getOneTimelineEventType
+  binding: rest
+  confidence: medium
+  source: blueconic-timeline-event-types-api-openapi.yml#getOneTimelineEventType
+  method: GET
+  path: /timelineEventTypes/{timelineEventType}
+  scopes:
+  - read:timeline-event-types
+  summary: Get one timeline event type
+- tool: getTimelineEventTypes
+  category: Timeline Event Types
+  rest:
+  - getTimelineEventTypes
+  binding: rest
+  confidence: medium
+  source: blueconic-timeline-event-types-api-openapi.yml#getTimelineEventTypes
+  method: GET
+  path: /timelineEventTypes
+  scopes:
+  - read:timeline-event-types
+  summary: Retrieves all timeline event types
+- tool: getAllRollups
+  category: Timeline event rollups
+  rest:
+  - getAllRollups
+  binding: rest
+  confidence: medium
+  source: blueconic-timeline-event-rollups-api-openapi.yml#getAllRollups
+  method: GET
+  path: /timelineEventRollups
+  scopes:
+  - read:timeline_event_rollups
+  summary: Get all timeline event rollups
+- tool: getOneRollup
+  category: Timeline event rollups
+  rest:
+  - getOneRollup
+  binding: rest
+  confidence: medium
+  source: blueconic-timeline-event-rollups-api-openapi.yml#getOneRollup
+  method: GET
+  path: /timelineEventRollups/{rollup}
+  scopes:
+  - read:timeline_event_rollups
+  summary: Get one timeline event rollup
+- tool: createURLMapping
+  category: URL mappings
+  rest:
+  - createURLMapping
+  binding: rest
+  confidence: medium
+  source: blueconic-url-mappings-api-openapi.yml#createURLMapping
+  method: POST
+  path: /urlmappings
+  scopes:
+  - write:url-mappings
+  summary: Create URL mapping
+- tool: getOneURLMapping
+  category: URL mappings
+  rest:
+  - getOneURLMapping
+  binding: rest
+  confidence: medium
+  source: blueconic-url-mappings-api-openapi.yml#getOneURLMapping
+  method: GET
+  path: /urlmappings/{id}
+  scopes:
+  - read:url-mappings
+  summary: Get URL mapping
+- tool: updateURLMapping
+  category: URL mappings
+  rest:
+  - updateURLMapping
+  binding: rest
+  confidence: medium
+  source: blueconic-url-mappings-api-openapi.yml#updateURLMapping
+  method: PUT
+  path: /urlmappings/{id}
+  scopes:
+  - write:url-mappings
+  summary: Update URL mapping
+- tool: getAllUsers
+  category: Users
+  rest:
+  - getAllUsers
+  binding: rest
+  confidence: medium
+  source: blueconic-users-api-openapi.yml#getAllUsers
+  method: GET
+  path: /users
+  scopes:
+  - read:users
+  summary: Get all users
+- tool: getOneUser
+  category: Users
+  rest:
+  - getOneUser
+  binding: rest
+  confidence: medium
+  source: blueconic-users-api-openapi.yml#getOneUser
+  method: GET
+  path: /users/{user}
+  scopes:
+  - read:users
+  summary: Get one user
+mcp_only: []
+rest_only:
+- operation: deleteModel
+  category: Models
+  method: DELETE
+  path: /models/{model}
+  reason: Delete operations are excluded by the BlueConic MCP server by design.
+- operation: deleteProfileOrGroupProperty
+  category: Properties
+  method: DELETE
+  path: /profileProperties/{propertyId}
+  reason: Delete operations are excluded by the BlueConic MCP server by design.
+- operation: deleteContentItemsFromStore
+  category: Stores
+  method: DELETE
+  path: /contentStores/{contentStore}/items/bulk
+  reason: Delete operations are excluded by the BlueConic MCP server by design.
+coverage:
+  rest_operations_total: 64
+  rest_operations_with_a_tool: 61
+  tools_named_by_provider: 0
+  tools_bound: 61
+  mcp_only: 0
+  rest_only: 3
+  note: tools_named_by_provider is 0 because BlueConic publishes no tool list; the binding is dynamic.

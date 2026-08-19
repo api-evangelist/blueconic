@@ -1,36 +1,102 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api,
+  https://support.blueconic.com/en/articles/247717-webhook-connection,
+  openapi/_original/blueconic-rest-api-v2-openapi.yml
 name: BlueConic API Rate Limits
-description: BlueConic does not publicly document specific rate limits for the REST
-  API v2. Rate limits are enforced at the tenant level and may vary based on the customer's
-  contract and environment. Contact BlueConic support or customer success for rate
-  limit details applicable to your tenant.
-version: '0.1'
+description: >-
+  BlueConic publishes NO numeric rate limit for the REST API v2 — no requests-per-second,
+  no requests-per-window, no per-key or per-tenant quota — and the API returns NO rate-limit
+  response headers. What it does publish is a set of hard payload caps and a documented
+  back-pressure contract: 429 on concurrent bulk writes with an explicit exponential-backoff
+  recommendation, 413 above the bulk entry cap, and 503 when the server is busy. An agent
+  cannot read remaining quota at runtime on this API; it has to drive its own backoff.
 url: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
-rateLimits:
-  - name: Default Tenant Rate Limit
-    description: BlueConic enforces rate limits at the individual tenant level. Specific
-      thresholds are not publicly disclosed and depend on the customer's contract and
-      infrastructure allocation.
-    type: tenant
-    scope: all-endpoints
-    disclosed: false
-    notes:
-      - Rate limits are applied per BlueConic tenant environment.
-      - Limits are not publicly documented; contact support for specifics.
-      - The API uses gzip encoding by default to reduce payload sizes and improve
-        efficiency.
-      - Responses are minified by default; use prettyPrint=true for readable output.
-headers:
-  - name: Content-Encoding
-    description: gzip encoding is used by default on API responses
-    value: gzip
+limit_count: 3
+published_request_rate_limit: false
+headers: []
+headers_note: >-
+  No X-RateLimit-*, RateLimit-* (RFC 9331 draft) or Retry-After header is declared on any
+  response in the specification, and none is documented. Zero response headers of any kind are
+  declared across the 64 operations.
+limits:
+  - name: Bulk entry cap
+    scope: per-request
+    type: payload
+    limit: 1000
+    unit: entries
+    endpoints:
+      - PUT /profiles (createUpdateDeleteProfiles)
+      - PUT /groups (createUpdateDeleteGroups)
+    status_on_exhaustion: 413
+    behaviour: >-
+      "More than the allowed 1000 entries are sent in the request. The entries that are
+      processed are returned in the response." Partial success — read the BulkResultBean array
+      on the 413 body rather than assuming the batch failed.
+    source: openapi/_original/blueconic-rest-api-v2-openapi.yml
+  - name: Model upload size cap
+    scope: per-request
+    type: payload
+    limit: 20
+    unit: MB
+    endpoints:
+      - POST /models (createModel)
+      - PUT /models/{model} (updateModel)
+    status_on_exhaustion: 413
+    behaviour: 'Model is too large, cannot exceed 20MB.'
+    source: openapi/_original/blueconic-rest-api-v2-openapi.yml
+  - name: Concurrent bulk write throttle
+    scope: per-tenant
+    type: concurrency
+    limit: null
+    unit: concurrent requests
+    endpoints:
+      - PUT /profiles (createUpdateDeleteProfiles)
+      - PUT /groups (createUpdateDeleteGroups)
+    status_on_exhaustion: 429
+    behaviour: >-
+      "Too many requests are sent concurrently. BlueConic recommends designing your app to be
+      resilient to this scenario. For example, implement a request queue with an exponential
+      backoff algorithm." The threshold itself is not published.
+    source: openapi/_original/blueconic-rest-api-v2-openapi.yml
+back_pressure:
+  status: 503
+  declared_on_operations: 63
+  of_total: 64
+  description: 'The server is too busy to handle the request.'
+  guidance: Retry with backoff; this is the standard BlueConic overload signal, not a failure.
+timeouts:
+  status: 408
+  declared_on_operations: 3
+  description: Request timed out.
+other_caps:
+  - name: Real-time timeline events in a webhook payload
+    limit: 500
+    unit: timeline events
+    source: https://support.blueconic.com/en/articles/247717-webhook-connection
+webhooks:
+  hard_limit: false
+  statement: >-
+    "BlueConic does not impose hard limits on the number of webhook requests, though webhook
+    calls are subject to BlueConic's fair use policy. Excessive concurrent requests or abusive
+    usage patterns may result in throttling or errors."
+  source: https://support.blueconic.com/en/articles/247717-webhook-connection
+efficiency_notes:
+  - Responses use gzip encoding by default.
+  - Responses are minified by default; add prettyPrint=true only when a human is reading them.
+  - Use the `properties` query parameter to cut payload size on profile and group reads.
 authentication:
   type: OAuth 2.0
-  flows:
-    - name: Client Credentials
-      description: Machine-to-machine (M2M) flow for server-side integrations
-      url: https://support.blueconic.com/en/articles/247558-authorizing-applications-using-the-client-credentials-flow
-    - name: Authorization Code
-      description: Flow for web apps executing on a server requiring user authorization
-      url: https://support.blueconic.com/en/articles/247559-authorizing-applications-using-the-authorization-code-flow
+  detail: authentication/blueconic-authentication.yml
 contact:
   url: https://support.blueconic.com/en/
+notes:
+  - >-
+    Limits are enforced per BlueConic tenant environment; because every customer has its own
+    host and cluster, any negotiated ceiling is contractual rather than published. Contact
+    BlueConic support or the Customer Success Manager for tenant-specific figures.
+  - >-
+    limit_count counts the three published, enforceable caps above. It deliberately does not
+    count the undocumented concurrency threshold as a number, because BlueConic states the
+    behaviour without stating the value.

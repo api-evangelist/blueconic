@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://support.blueconic.com/en/articles/415706-blueconic-model-context-protocol-mcp
+description: >-
+  BlueConic ships an official MCP surface in two shapes. Every BlueConic tenant serves a
+  hosted HTTP MCP endpoint at https://{tenantname}.blueconic.net/mcp, and a local stdio
+  server ships as the npm package @blueconic/blueconic-mcp (github.com/blueconic/blueconic-mcp)
+  plus a Claude Desktop .mcpb connector bundle. Both are dynamic OpenAPI adapters: the server
+  loads the connected tenant's own OpenAPI specification at startup and turns its supported
+  REST operations into MCP tools, so the tool list is tenant-derived rather than a fixed
+  published catalog. Read and write access are both supported; write is guarded by extra
+  checks and excludes delete operations.
+deployment:
+  mode: both
+  endpoint: https://{tenantname}.blueconic.net/mcp
+  install: npx -y @blueconic/blueconic-mcp
+  package: https://www.npmjs.com/package/@blueconic/blueconic-mcp
+  auth: oauth
+  verified: searched
+  note: >-
+    The endpoint is templated per tenant — the same shape as the OpenAPI servers[] block
+    (https://{blueconicHostname}/rest/v2) — because BlueConic is a single-tenant-per-customer
+    CDP with no shared public API host. The literal placeholder host
+    https://tenantname.blueconic.net/mcp returned HTTP 403 on an anonymous POST, confirming
+    the path is live and auth-gated rather than absent. A real tools/list could not be
+    captured without tenant credentials.
+server:
+  name: blueconic
+  transport: http
+  url: https://{tenantname}.blueconic.net/mcp
+  auth: oauth2
+  auth_detail: >-
+    OAuth 2.0 client credentials. The tenant admin creates an application under
+    Settings > Access management > Applications with client credentials enabled and the
+    required read scopes, then the MCP client sends X-BlueConic-Client-ID and
+    X-BlueConic-Client-Secret headers (or a combined X-BlueConic-Client-ID-Secret header
+    of the form <client-ID>##<client-secret> for clients that cannot send two custom
+    headers, e.g. n8n), or an Authorization header carrying a token obtained from
+    /rest/v2/oauth/token.
+  scopes: scopes/blueconic-scopes.yml
+local:
+  name: "@blueconic/blueconic-mcp"
+  transport: stdio
+  install: npx -y @blueconic/blueconic-mcp
+  version: 1.1.2
+  source: https://github.com/blueconic/blueconic-mcp
+  package_bundle: http://plugins.blueconic.net/_static/claude/blueconic-mcp-1.1.2.mcpb
+  env:
+    - BLUECONIC_TENANT_URL
+    - OAUTH_CLIENT_ID
+    - OAUTH_CLIENT_SECRET
+clients_documented:
+  - Claude Desktop (.mcpb connector or npx stdio)
+  - Cursor (hosted HTTP or npx stdio)
+  - VS Code GitHub Copilot (hosted HTTP or npx stdio)
+  - Gemini CLI (npx stdio)
+  - n8n (hosted HTTP, combined credential header)
+  - Databricks (https://support.blueconic.com/en/articles/755739-using-the-blueconic-mcp-server-on-databricks)
+tools:
+  binding: dynamic
+  note: >-
+    NO STATIC TOOL LIST IS PUBLISHED. BlueConic states the server "provides dynamic, read and
+    write API access from your tenant's OpenAPI spec" and "works instantly with any BlueConic
+    tenant", so the tools an agent sees are generated per tenant from that tenant's own spec
+    (https://{tenantname}.blueconic.net/openapi). The 64 REST operations captured in
+    openapi/ are therefore the tool surface's upper bound; delete operations are excluded by
+    the server, and the tenant's OAuth application scopes plus its "run as user" permissions
+    further narrow it. See mcp/blueconic-tool-crosswalk.yml for the operation-level mapping.
+    No tool names are asserted here because none are published and tools/list is auth-gated.
+constraints:
+  - Delete operations are not exposed by the MCP server.
+  - Write access is guarded with additional server-side checks.
+  - Application scopes combine with the configured "run as user" permissions to determine access.
+x-evidence:
+  - url: https://support.blueconic.com/en/articles/415706-blueconic-model-context-protocol-mcp
+    http_status: 200
+    fetched: '2026-08-13'
+  - url: https://github.com/blueconic/blueconic-mcp
+    http_status: 200
+    fetched: '2026-08-13'
+  - url: https://registry.npmjs.org/@blueconic/blueconic-mcp
+    http_status: 200
+    fetched: '2026-08-13'
+    note: latest 1.1.2, published 2026-05-08
+  - url: https://tenantname.blueconic.net/mcp
+    http_status: 403
+    fetched: '2026-08-13'
+    note: anonymous request to the documented placeholder host; gated, not absent

@@ -1,0 +1,1759 @@
+{
+  "item": [
+    {
+      "id": "dad5651b-2ab8-42da-9c87-c8fe10e3ee31",
+      "name": "Profiles",
+      "description": {
+        "content": "The following methods allow you to create, modify, retrieve properties from, and delete [BlueConic Profiles](https://support.blueconic.com/hc/en-us/articles/115001671965-Overview-BlueConic-Profiles), as well as retrieve BlueConic segment information.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "37371091-409a-412f-b43a-5d3aeaa1ddbd",
+          "name": "Search profiles",
+          "request": {
+            "name": "Search profiles",
+            "description": {
+              "content": "Search for BlueConic profiles based on a specific value for an indexed (unique) property. Multiple name/value pairs can be used to refine the search.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "property",
+                  "value": "<string>",
+                  "description": "(Required) Specifies the id of the profile property to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "property",
+                  "value": "<string>",
+                  "description": "(Required) Specifies the id of the profile property to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "value",
+                  "value": "<string>",
+                  "description": "(Required) The value of the property to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "value",
+                  "value": "<string>",
+                  "description": "(Required) The value of the property to search for."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "72859aeb-a1a2-4aca-80e1-43754f6d5333",
+              "name": "Searches for BlueConic profiles based on a specific value for an indexed (unique) property. Multiple name/value pairs can be used to refine the search.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"profiles\\\": [\\n    {\\n      \\\"id\\\": \\\"61835134-e910-49da-a09e-79d41af9b96\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"45e2a650-ca17-4e03-8e8d-12d00ed4d9b3\\\"\\n    }\\n  ],\\n  \\\"itemsPerPage\\\": 5,\\n  \\\"startIndex\\\": 0,\\n  \\\"totalPages\\\": 1,\\n  \\\"totalResults\\\": 2\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91727010-495c-4961-b770-04336a65a2f2",
+              "name": "One or more required parameters are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8592ce8c-29f8-4d12-a534-cb6111aca8cb",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "105aa0cc-7cc0-4397-b3fa-ee3dd08548e5",
+              "name": "Request timed out.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Timeout",
+              "code": 408,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5a0e1f50-284c-48ca-b5a7-65fbef7e956e",
+              "name": "The specified property is not classified as indexed (unique) (not implemented).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f0d3c0fc-4716-4597-be05-a1169322fce9",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "property",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "value",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b5ab621-9b94-4d38-86fc-60f3a80f8240",
+          "name": "Create, update, or delete one or more profiles",
+          "request": {
+            "name": "Create, update, or delete one or more profiles",
+            "description": {
+              "content": "Create, update, or delete one or more profiles in a single request. This is the recommended way of creating, updating and deleting profiles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "objectiveIds",
+                  "value": "",
+                  "description": "A list of Objective IDs. If you provide objectiveIDs, profiles will only be updated or created if they have given consent for the provided objectives or consent is not required for the legislation zone of the profile. If a profile would have been created or updated, but is skipped because of an objective mismatch, the response will contain a `CONSENT_MISMATCH` state for that profile. If you don’t provide objectiveIDs, the update will always proceed."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"domainGroup\": \"DEFAULT\",\n    \"identifier\": \"<string>\",\n    \"matching\": [\n      [\n        {\n          \"id\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ],\n      [\n        {\n          \"id\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    ],\n    \"permissionLevel\": \"PERSONAL\",\n    \"privacyLegislation\": \"<string>\",\n    \"profileId\": \"<string>\",\n    \"properties\": [\n      {\n        \"id\": \"<string>\",\n        \"restriction\": \"ALL_PROFILES\",\n        \"strategy\": \"<string>\",\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"restriction\": \"ALL_PROFILES\",\n        \"strategy\": \"<string>\",\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"restriction\": {\n      \"isMemberOfSegment\": \"<string>\"\n    },\n    \"strategy\": \"UPDATE\",\n    \"timeline\": [\n      {\n        \"data\": [\n          {\n            \"id\": \"<string>\",\n            \"strategy\": \"<string>\",\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"id\": \"<string>\",\n            \"strategy\": \"<string>\",\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"date\": \"<dateTime>\",\n        \"eventTypeId\": \"<string>\",\n        \"id\": \"<string>\",\n        \"identifier\": \"<string>\",\n        \"strategy\": \"<string>\"\n      },\n      {\n        \"data\": [\n          {\n            \"id\": \"<string>\",\n            \"strategy\": \"<string>\",\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"id\": \"<string>\",\n            \"strategy\": \"<string>\",\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"date\": \"<dateTime>\",\n        \"eventTypeId\": \"<string>\",\n        \"id\": \"<string>\",\n        \"identifier\": \"<string>\",\n        \"strategy\": \"<string>\"\n      }\n    ],\n    \"triggerOnEventAdded\": false,\n    \"triggerOnPropertyChange\": true\n  },\n  {\n    \"domainGroup\": \"DEFAULT\",\n    \"identifier\": \"<string>\",\n    \"matching\": [\n      [\n        {\n          \"id\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ],\n      [\n        {\n          \"id\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    ],\n    \"permissionLevel\": \"PERSONAL\",\n    \"privacyLegislation\": \"<string>\",\n    \"profileId\": \"<string>\",\n    \"properties\": [\n      {\n        \"id\": \"<string>\",\n        \"restriction\": \"ALL_PROFILES\",\n        \"strategy\": \"<string>\",\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"restriction\": \"ALL_PROFILES\",\n        \"strategy\": \"<string>\",\n        \"values\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"restriction\": {\n      \"isMemberOfSegment\": \"<string>\"\n    },\n    \"strategy\": \"UPDATE\",\n    \"timeline\": [\n      {\n        \"data\": [\n          {\n            \"id\": \"<string>\",\n            \"strategy\": \"<string>\",\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"id\": \"<string>\",\n            \"strategy\": \"<string>\",\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"date\": \"<dateTime>\",\n        \"eventTypeId\": \"<string>\",\n        \"id\": \"<string>\",\n        \"identifier\": \"<string>\",\n        \"strategy\": \"<string>\"\n      },\n      {\n        \"data\": [\n          {\n            \"id\": \"<string>\",\n            \"strategy\": \"<string>\",\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"id\": \"<string>\",\n            \"strategy\": \"<string>\",\n            \"values\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ],\n        \"date\": \"<dateTime>\",\n        \"eventTypeId\": \"<string>\",\n        \"id\": \"<string>\",\n        \"identifier\": \"<string>\",\n        \"strategy\": \"<string>\"\n      }\n    ],\n    \"triggerOnEventAdded\": false,\n    \"triggerOnPropertyChange\": true\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b32b6158-b91b-499a-8afa-215292660ac4",
+              "name": "Bulk response \n\n**JSON Response**\n\nEvery bulk operation is returned in the response as well.\nThe state can be one of the following values: `CREATED`, `CONSENT_MISMATCH`, `SKIPPED`, `MODIFIED`, `DELETED`, `UNCHANGED`, `NOTFOUND`, `RESTRICTION_MISMATCH`, `UNAUTHORIZED`. \n`UNAUTHORIZED` is returned in case the user performing the request has invalid (PII) permissions. Please check your OAuth Application configuration.\n\n\n```json\n[{\n    \"state\": \"CREATED\",\n    \"profileId\": \"profile-UUID of the created profile\",\n    \"identifier\": \" my-external-identifier\"\n}]\n```\n\nWhen the profile operation contains timeline events, the response will also contain a response per timeline event supplied. The state can be one of the following values: `CREATED`, `SET`, `MODIFIED`, `REJECTED`, `NOTFOUND` or `DELETED`.\n\n```json\n[{\n    \"state\": \"CREATED\",\n    \"profileId\": \"profile-UUID of the created profile\",\n    \"identifier\": \" my-external-identifier\",\n    \"timeline\": [{\n        \"id\": \"order_1\",\n        \"identifier\": \"my-external-order-identifier\",\n        \"state\": \"REJECTED\",\n        \"validationErrors\": [\"#/total_revenue/0: expected type: Number, found: String\"]\n    }]\n}]      \n```",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectiveIds",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"[\\n  {\\n    \\\"profileId\\\": \\\"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\\\",\\n    \\\"state\\\": \\\"MODIFIED\\\",\\n    \\\"timeline\\\": []\\n  },\\n  {\\n    \\\"profileId\\\": \\\"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\\\",\\n    \\\"state\\\": \\\"DELETED\\\"\\n  },\\n  {\\n    \\\"profileId\\\": \\\"324fe9e8-ee83-4c1c-8a32-9132f958f743\\\",\\n    \\\"state\\\": \\\"UNAUTHORIZED\\\"\\n  },\\n  {\\n    \\\"profileId\\\": \\\"e4c45d3b-f59b-4391-ad46-7413961e8cbd\\\",\\n    \\\"state\\\": \\\"CREATED\\\",\\n    \\\"timeline\\\": [\\n      {\\n        \\\"id\\\": \\\"63cec368-c40e-4c2c-ae08-7d4513edd125\\\",\\n        \\\"state\\\": \\\"SET\\\"\\n      }\\n    ]\\n  }\\n]\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d45a8261-4378-419b-9ebd-65f88ab18800",
+              "name": "One or more required parameters are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectiveIds",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8147,\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ],\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41e4ab51-c004-48a6-8ea9-6a9c560380b0",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectiveIds",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8eb24036-4e64-41a5-842b-99a509a7ba31",
+              "name": "Forbidden, invalid permissions to perform the request. Please check your OAuth Application configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectiveIds",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "14e99b22-785f-4588-9a3b-eab2d8c28448",
+              "name": "More than the allowed 1000 entries are sent in the request. The entries that are processed are returned in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectiveIds",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"[\\n  {\\n    \\\"profileId\\\": \\\"f7daa9db-5ea0-40c8-b9dc-96e519151f8c\\\",\\n    \\\"state\\\": \\\"MODIFIED\\\",\\n    \\\"timeline\\\": []\\n  },\\n  {\\n    \\\"profileId\\\": \\\"a84fe9e8-ee83-4c1c-8a32-9132f958fe13\\\",\\n    \\\"state\\\": \\\"DELETED\\\"\\n  },\\n  {\\n    \\\"profileId\\\": \\\"324fe9e8-ee83-4c1c-8a32-9132f958f743\\\",\\n    \\\"state\\\": \\\"UNAUTHORIZED\\\"\\n  },\\n  {\\n    \\\"profileId\\\": \\\"e4c45d3b-f59b-4391-ad46-7413961e8cbd\\\",\\n    \\\"state\\\": \\\"CREATED\\\",\\n    \\\"timeline\\\": [\\n      {\\n        \\\"id\\\": \\\"63cec368-c40e-4c2c-ae08-7d4513edd125\\\",\\n        \\\"state\\\": \\\"SET\\\"\\n      }\\n    ]\\n  }\\n]\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "721a8b48-2f19-457c-8fe9-2664f37940fe",
+              "name": "Too many requests are sent concurrently. BlueConic recommends designing your app to be resilient to this scenario. For example, implement a request queue with an exponential backoff algorithm.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectiveIds",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "60beabeb-b088-42fe-828d-9d2ec2db88a1",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "objectiveIds",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[{\n    \"matching\": [\n        [{\n            \"id\": \"email\",\n            \"value\": \"jane@example.com\"\n        }]\n    ],\n    \"properties\": [{\n            \"id\": \"zipcode\",\n            \"values\": [\"02111\", \"02112\"],\n            \"strategy\": \"SET\"\n        },\n        {\n            \"id\": \"email\",\n            \"values\": [\"jane@example.com\"],\n            \"strategy\": \"SET\"\n        }\n    ],\n    \"strategy\": \"UPSERT\"\n}]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cbf24bb-d751-4b78-8bfa-ec23cf1bd192",
+          "name": "Get one profile",
+          "request": {
+            "name": "Get one profile",
+            "description": {
+              "content": "Retrieves the properties of the specified profile, including the IDs of the matching dynamic segments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":profileId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Expand the information in the result set. Use \"profile.permissions.exceptions\" to include permission level and exception data.\nUse \"profile.timeline\" to include timeline event information.\nUse \"profile.segments\" to include the segments a profile is part of.\nUse \"profile.segments.tags\" to include segment labels (v2 API only).\nUse multiple \"expand\" querystring parameters to return combinations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Expand the information in the result set. Use \"profile.permissions.exceptions\" to include permission level and exception data.\nUse \"profile.timeline\" to include timeline event information.\nUse \"profile.segments\" to include the segments a profile is part of.\nUse \"profile.segments.tags\" to include segment labels (v2 API only).\nUse multiple \"expand\" querystring parameters to return combinations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "properties",
+                  "value": "<string>",
+                  "description": "Only returns the given profile properties in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "profileProperty",
+                  "value": "<string>",
+                  "description": "When the profileProperty is specified, the response will only return the values for the given profile property. If not specified, the values of all profile properties will be returned, which may result in a large result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "profileProperty",
+                  "value": "<string>",
+                  "description": "When the profileProperty is specified, the response will only return the values for the given profile property. If not specified, the values of all profile properties will be returned, which may result in a large result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupProperty",
+                  "value": "<string>",
+                  "description": "When the groupProperty is specified, the response will only return the values for the given group property. If not specified, the values of all group properties will be returned, which may result in a large result set. Only relevant when `&expand=profiles.profile.groups` is supplied."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupProperty",
+                  "value": "<string>",
+                  "description": "When the groupProperty is specified, the response will only return the values for the given group property. If not specified, the values of all group properties will be returned, which may result in a large result set. Only relevant when `&expand=profiles.profile.groups` is supplied."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventTypeId",
+                  "value": "<string>",
+                  "description": "Filter returned timeline events for a specific type."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventTypeId",
+                  "value": "<string>",
+                  "description": "Filter returned timeline events for a specific type."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventProperty",
+                  "value": "<string>",
+                  "description": "When the eventProperty is specified, the response will only return the values for the given property. If not specified, the values of all event properties will be returned, which may result in a large result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventProperty",
+                  "value": "<string>",
+                  "description": "When the eventProperty is specified, the response will only return the values for the given property. If not specified, the values of all event properties will be returned, which may result in a large result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "eventCount",
+                  "value": "20",
+                  "description": "The maximum number of timeline events to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<string>",
+                  "description": "Filter to only include timeline events that are dated later than this date. The fromDate is in the ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<string>",
+                  "description": "Filter to only include timeline events that are dated before this date. The toDate is in the ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')."
+                },
+                {
+                  "disabled": false,
+                  "key": "collapse",
+                  "value": "",
+                  "description": "Collapse the information in the result set. Use profile.segments to exclude segment information."
+                },
+                {
+                  "disabled": false,
+                  "key": "collapse",
+                  "value": "",
+                  "description": "Collapse the information in the result set. Use profile.segments to exclude segment information."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profileId",
+                  "description": "(Required) The ID of the BlueConic profile."
+                },
+                {
+                  "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                  "type": "any",
+                  "value": "{{blueconicHostname}}",
+                  "key": "blueconicHostname"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/rest/v2/oauth/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3c7d109b-f2e2-4a54-8f7f-465639210e88",
+              "name": "Returns the specified profile.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventCount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2025-01-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2025-02-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) The ID of the BlueConic profile."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"id\\\": \\\"640d01c7-1c30-4085-adf9-afad6560ec99\\\",\\n  \\\"creationDate\\\": \\\"2022-10-23T14:47:05.207Z\\\",\\n  \\\"consentedObjectives\\\": [\\\"objective_1\\\", \\\"objective_2\\\"],\\n  \\\"refusedObjectives\\\": [],\\n  \\\"permissions\\\": {\\n    \\\"level\\\": \\\"PERSONAL\\\"\\n  },\\n  \\\"properties\\\": [\\n    {\\n      \\\"id\\\": \\\"clickcount\\\",\\n      \\\"values\\\": [\\n        \\\"0\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"creationdate\\\",\\n      \\\"values\\\": [\\n        \\\"1571842025207\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"engagement\\\",\\n      \\\"values\\\": [\\n        \\\"medium\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"lastmodifieddate\\\",\\n      \\\"values\\\": [\\n        \\\"1571842025207\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"sample_id\\\",\\n      \\\"values\\\": [\\n        \\\"26\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"lastvisitdate\\\",\\n      \\\"values\\\": [\\n        \\\"1571842023124\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"lastvisit\\\",\\n      \\\"values\\\": [\\n        \\\"1571842023124\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"browsers\\\",\\n      \\\"values\\\": [\\n        \\\"ie\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"visits\\\",\\n      \\\"values\\\": [\\n        \\\"2\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"browser\\\",\\n      \\\"values\\\": [\\n        \\\"ie\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"domaingroup\\\",\\n      \\\"values\\\": [\\n        \\\"DEFAULT\\\"\\n      ]\\n    },\\n    {\\n      \\\"id\\\": \\\"email\\\",\\n      \\\"values\\\": [\\n        \\\"user_017@gmail.com\\\"\\n      ]\\n    }\\n  ],\\n  \\\"replaces\\\": [],\\n  \\\"events\\\": [{\\n    \\\"data\\\": [{\\n      \\\"id\\\": \\\"product\\\",\\n      \\\"values\\\": [\\n        [{\\n          \\\"id\\\": \\\"quantity\\\",\\n          \\\"values\\\": [100]\\n        }, {\\n          \\\"id\\\": \\\"id\\\",\\n          \\\"values\\\": [\\\"987644321\\\"]\\n        }]\\n      ]\\n    }],\\n    \\\"date\\\": \\\"2023-01-01T00:00:00.123Z\\\",\\n    \\\"eventTypeId\\\": \\\"order\\\",\\n    \\\"id\\\": \\\"order_2\\\",\\n    \\\"source\\\": \\\"notebook_9139fb0a-6e65-4e65-9dff-9dd971ac2b21\\\"\\n  }],\\n  \\\"segments\\\": [\\n    {\\n      \\\"id\\\": \\\"bfef6ef0-745a-4c5c-b64b-472771096de8\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"aaefc4b6-61ef-4252-b78b-5edef1fd8991\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2a04c001-bb27-4c6f-9767-3f333a1144af\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"6c02486d-b92a-4696-b6cc-8826049a0208\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"ae2c27fb-62ff-4be6-996c-a265e53920c8\\\"\\n    }\\n  ]\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1ad95e1-657a-4a2b-a580-149be35151b4",
+              "name": "Authentication failed (unauthorized).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventCount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2025-01-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2025-02-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) The ID of the BlueConic profile."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c12e5af7-a6d3-4879-9034-372b68dae116",
+              "name": "The specified profile doesn't exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventCount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2025-01-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2025-02-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) The ID of the BlueConic profile."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7c4cf1d0-5aec-4473-af7f-d7f16fac468a",
+              "name": "Request timed out.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventCount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2025-01-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2025-02-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) The ID of the BlueConic profile."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Timeout",
+              "code": 408,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae7601f0-000f-4fd0-8549-67b383f401ba",
+              "name": "The server is too busy to handle the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "properties",
+                      "value": "email,fullname,visits"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "profileProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventTypeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventProperty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventCount",
+                      "value": "10"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2025-01-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2025-02-22 11:21:33+00:00"
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    },
+                    {
+                      "key": "collapse",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profileId",
+                      "description": "(Required) The ID of the BlueConic profile."
+                    },
+                    {
+                      "description": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+                      "type": "any",
+                      "value": "{{blueconicHostname}}",
+                      "key": "blueconicHostname"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "BlueConic server hostname, e.g. 'tenant.blueconic.net'",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "tenantname",
+      "key": "blueconicHostname"
+    },
+    {
+      "type": "string",
+      "value": "https://{{blueconicHostname}}/rest/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bd2984c3-990b-4658-a1d6-708e2b8cff14",
+    "name": "BlueConic REST API v2 Audit Events Profiles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n\n\nContact Support:\n Name: Contact us",
+      "type": "text/plain"
+    }
+  }
+}

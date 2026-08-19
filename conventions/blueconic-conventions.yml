@@ -1,0 +1,124 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api,
+  https://support.blueconic.com/en/articles/248009-using-the-blueconic-rest-api-v2,
+  openapi/_original/blueconic-rest-api-v2-openapi.yml
+description: >-
+  Cross-cutting request/response semantics for the BlueConic REST API v2, read from the
+  BlueConic help center and derived from the published OpenAPI. Where BlueConic documents no
+  convention, that is recorded as an explicit absence rather than filled in.
+base_url:
+  template: https://{tenantname}.blueconic.net/rest/v2
+  tenant_scoped: true
+  note: >-
+    Every BlueConic customer runs on its own host in a regional cluster (US, EU, APAC,
+    Canada). There is no shared public API host, so the base URL is necessarily templated —
+    the OpenAPI declares it as https://{blueconicHostname}/rest/v2 with the example
+    'tenant.blueconic.net'.
+authentication:
+  style: OAuth 2.0 bearer token
+  flows: [clientCredentials, authorizationCode]
+  token_endpoint: /rest/v2/oauth/token
+  authorization_endpoint: /rest/v2/oauth/authorize
+  pkce_required: true
+  refresh_token_rotation: true
+  header: 'Authorization: Bearer <token>'
+  application_registration: BlueConic settings > Access management > Applications
+  scopes: scopes/blueconic-scopes.yml
+  detail: authentication/blueconic-authentication.yml
+  docs: https://support.blueconic.com/en/articles/247557-authorizing-applications-granting-external-applications-to-access-blueconic
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    BlueConic documents no idempotency key and the specification declares no
+    Idempotency-Key header or parameter on any of the 64 operations. Bulk writes signal
+    contention with HTTP 429 and the docs direct clients to "implement a request queue with
+    an exponential backoff algorithm" instead. Recorded as unsupported — no Idempotency
+    pointer is wired into apis.yml.
+pagination:
+  style: offset
+  parameters:
+    - name: startIndex
+      in: query
+      operations: 20
+      description: Zero-based index of the first item to return.
+    - name: count
+      in: query
+      operations: 23
+      description: Number of items to return.
+    - name: cursor
+      in: query
+      operations: 2
+      description: >-
+        Cursor-based continuation, available only on the two operations that expose it
+        (profile search / segment profile listing).
+  response_fields: []
+  response_fields_note: >-
+    The specification declares no standard envelope field for a next-page token or total
+    count; collection responses are typed per resource.
+filtering_and_shaping:
+  - name: properties
+    in: query
+    what: Restrict which profile/group properties are returned.
+  - name: expand
+    in: query
+    what: Expand referenced objects inline.
+  - name: filterType / filterValue
+    in: query
+    what: Server-side filtering on selected collection endpoints.
+  - name: refinement
+    in: query
+    what: Additional narrowing on profile queries.
+  - name: prettyPrint
+    in: query
+    what: >-
+      Response bodies are minified by default; prettyPrint=true returns readable JSON.
+      Documented in the REST API overview.
+content:
+  request_media_type: application/json
+  response_media_type: application/json
+  xml_supported: false
+  compression: >-
+    "By default, our endpoints primarily use gzip encoding" — responses are gzip-encoded
+    unless the client says otherwise.
+  minification: Responses are minified by default (see prettyPrint above).
+request_tracing:
+  request_id_header: null
+  note: No correlation/request-id header is documented or declared in the specification.
+versioning:
+  style: uri-path
+  current: v2
+  platform_version_in_spec: info.version carries the BlueConic platform release (102.0 upstream on 2026-08-13)
+  detail: lifecycle/blueconic-lifecycle.yml
+errors:
+  envelope: application/json
+  schemas: [ErrorRequestBean, TokenErrorResponse, BulkResultBean]
+  problem_json: false
+  catalog: errors/blueconic-problem-types.yml
+  common_statuses: [400, 401, 403, 404, 408, 413, 429, 501, 503]
+rate_limiting:
+  headers: []
+  headers_note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After response headers are declared anywhere in the
+    specification, and none are documented. An agent cannot read remaining quota at runtime.
+  exhaustion_status: 429
+  payload_caps:
+    - 1000 entries per bulk PUT /profiles or PUT /groups request (413 above it, with the processed entries returned)
+    - 20MB per ONNX model upload (413 above it)
+  backpressure_status: 503
+  detail: rate-limits/blueconic-rate-limits.yml
+bulk_operations:
+  endpoints:
+    - PUT /profiles (createUpdateDeleteProfiles)
+    - PUT /groups (createUpdateDeleteGroups)
+  semantics: >-
+    Create, update and delete are expressed in a single bulk PUT; per-entry outcomes come back
+    as an array of BulkResultBean, including on the 413 partial-success path.
+agent_surface:
+  mcp: mcp/blueconic-mcp.yml
+  crosswalk: mcp/blueconic-tool-crosswalk.yml
+  skills: skills/_index.yml
+  agentic_access: agentic-access/blueconic-agentic-access.yml
+  llms_txt: llms/blueconic-llms.txt

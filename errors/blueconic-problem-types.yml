@@ -1,0 +1,349 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/*.yml (derived) + https://support.blueconic.com/en/articles/248009-using-the-blueconic-rest-api-v2
+  (searched)
+format: vendor-json
+description: 'Error catalogue for the BlueConic REST API v2, derived from every 4xx/5xx response declared
+  across the 28 refined OpenAPI documents in openapi/. BlueConic does NOT use RFC 9457 application/problem+json:
+  all error bodies are plain application/json, typed as ErrorRequestBean (general errors), TokenErrorResponse
+  (OAuth 2.0 errors) or, for bulk endpoints, an array of BulkResultBean. There is no error-code registry,
+  no machine-readable type URI and no error-code enum in the spec — the discriminator is the HTTP status
+  plus the human-readable description, which is what is recorded here. Nothing below is invented; every
+  title is the verbatim response description from the specification.'
+envelope:
+  media_type: application/json
+  schemas:
+  - ErrorRequestBean
+  - TokenErrorResponse
+  - BulkResultBean
+  problem_json: false
+  note: No application/problem+json response exists anywhere in the specification.
+problems:
+- status: 400
+  title: One or more required parameters are missing or invalid.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-audit-events-api-openapi.yml#getAuditEvents
+  - openapi/blueconic-channels-api-openapi.yml#getOneChannel
+  - openapi/blueconic-groups-api-openapi.yml#getAllGroupsByGroupType
+  - openapi/blueconic-groups-api-openapi.yml#createUpdateDeleteGroups
+  - openapi/blueconic-interaction-events-api-openapi.yml#createEvent
+  - openapi/blueconic-interactions-api-openapi.yml#getInteractions
+  occurrences: 17
+- status: 400
+  title: The metadata JSON is invalid or the ONNX model is invalid.
+  schema: '#/components/schemas/ErrorRequestBean'
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-models-api-openapi.yml#createModel
+  - openapi/blueconic-models-api-openapi.yml#updateModel
+  occurrences: 2
+- status: 400
+  title: The metadata JSON is invalid.
+  schema: '#/components/schemas/ErrorRequestBean'
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-stores-api-openapi.yml#createContentStore
+  - openapi/blueconic-stores-api-openapi.yml#updateContentStore
+  occurrences: 2
+- status: 400
+  title: The model cannot be deleted because it's still in use by other related objects.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-models-api-openapi.yml#deleteModel
+  occurrences: 1
+- status: 400
+  title: 'The JSON is invalid or: Either, the specified property exists but is created by a plugin and
+    cannot be created / updated through REST, or the id, filtertype, permission level, or merge strategy
+    is invalid.'
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-properties-api-openapi.yml#createUpdateProfileOrGroupProperty
+  occurrences: 1
+- status: 400
+  title: The request is invalid.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-stores-api-openapi.yml#deleteContentItemsFromStore
+  occurrences: 1
+- status: 401
+  title: Authentication failed (unauthorized).
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-audit-events-api-openapi.yml#getAuditEvents
+  - openapi/blueconic-channels-api-openapi.yml#getAllChannels
+  - openapi/blueconic-channels-api-openapi.yml#getOneChannel
+  - openapi/blueconic-connections-api-openapi.yml#getAllConnections
+  - openapi/blueconic-connections-api-openapi.yml#getOneConnection
+  - openapi/blueconic-connections-api-openapi.yml#getConnectionRuns
+  occurrences: 59
+- status: 403
+  title: Authorization failed (incorrect permissions).
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-connections-api-openapi.yml#getAllConnections
+  - openapi/blueconic-connections-api-openapi.yml#getOneConnection
+  - openapi/blueconic-connections-api-openapi.yml#getConnectionRuns
+  - openapi/blueconic-dialogues-api-openapi.yml#getAllDialogues
+  - openapi/blueconic-dialogues-api-openapi.yml#getOneDialogue
+  - openapi/blueconic-lifecycles-api-openapi.yml#getAllLifecycles
+  occurrences: 37
+- status: 403
+  title: Forbidden, invalid (PII) permissions to perform the request. Please check your OAuth Application
+    configuration.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-groups-api-openapi.yml#createUpdateDeleteGroups
+  occurrences: 1
+- status: 403
+  title: Forbidden, invalid permissions to perform the request. Please check your OAuth Application configuration.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-profiles-api-openapi.yml#createUpdateDeleteProfiles
+  occurrences: 1
+- status: 404
+  title: The content store doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-stores-api-openapi.yml#getContentItemsFromStore
+  - openapi/blueconic-stores-api-openapi.yml#addContentItemsToStore
+  - openapi/blueconic-stores-api-openapi.yml#deleteContentItemsFromStore
+  occurrences: 3
+- status: 404
+  title: The connection doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-connections-api-openapi.yml#getOneConnection
+  - openapi/blueconic-connections-api-openapi.yml#getConnectionRuns
+  occurrences: 2
+- status: 404
+  title: The model doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-models-api-openapi.yml#getOneModelMetadata
+  - openapi/blueconic-models-api-openapi.yml#getModelONNXBinary
+  occurrences: 2
+- status: 404
+  title: The notebook doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-notebooks-api-openapi.yml#getOneNotebook
+  - openapi/blueconic-notebooks-api-openapi.yml#getNotebookRunHistory
+  occurrences: 2
+- status: 404
+  title: The specified property doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-properties-api-openapi.yml#getOneProfileOrGroupProperty
+  - openapi/blueconic-properties-api-openapi.yml#deleteProfileOrGroupProperty
+  occurrences: 2
+- status: 404
+  title: The specified URL mapping doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-url-mappings-api-openapi.yml#getOneURLMapping
+  - openapi/blueconic-url-mappings-api-openapi.yml#updateURLMapping
+  occurrences: 2
+- status: 404
+  title: Channel not found.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-channels-api-openapi.yml#getOneChannel
+  occurrences: 1
+- status: 404
+  title: The dialogue doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-dialogues-api-openapi.yml#getOneDialogue
+  occurrences: 1
+- status: 404
+  title: The specified group doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-groups-api-openapi.yml#getOneGroupOfGroupType
+  occurrences: 1
+- status: 404
+  title: Group type not found.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-groups-api-openapi.yml#getAllGroupsByGroupType
+  occurrences: 1
+- status: 404
+  title: The lifecycle doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-lifecycles-api-openapi.yml#getOneLifecycle
+  occurrences: 1
+- status: 404
+  title: The listener doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-listeners-api-openapi.yml#getOneListener
+  occurrences: 1
+- status: 404
+  title: The objective doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-objectives-api-openapi.yml#getOneObjective
+  occurrences: 1
+- status: 404
+  title: The plugin doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-plugins-api-openapi.yml#getOnePlugin
+  occurrences: 1
+- status: 404
+  title: The profile doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-profile-events-api-openapi.yml#getProfileEvents
+  occurrences: 1
+- status: 404
+  title: The specified profile doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-profiles-api-openapi.yml#getOneProfile
+  occurrences: 1
+- status: 404
+  title: The role doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-roles-api-openapi.yml#getOneRole
+  occurrences: 1
+- status: 404
+  title: Segment not found.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-segments-api-openapi.yml#getProfilesInSegment
+  occurrences: 1
+- status: 404
+  title: The rollup doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-timeline-event-rollups-api-openapi.yml#getOneRollup
+  occurrences: 1
+- status: 404
+  title: The timeline event type doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-timeline-event-types-api-openapi.yml#getOneTimelineEventType
+  occurrences: 1
+- status: 404
+  title: The user doesn't exist.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-users-api-openapi.yml#getOneUser
+  occurrences: 1
+- status: 408
+  title: Request timed out.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-groups-api-openapi.yml#getOneGroupOfGroupType
+  - openapi/blueconic-profiles-api-openapi.yml#searchProfiles
+  - openapi/blueconic-profiles-api-openapi.yml#getOneProfile
+  occurrences: 3
+- status: 413
+  title: More than the allowed 1000 entries are sent in the request. The entries that are processed are
+    returned in the response.
+  schema: array
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-groups-api-openapi.yml#createUpdateDeleteGroups
+  - openapi/blueconic-profiles-api-openapi.yml#createUpdateDeleteProfiles
+  occurrences: 2
+- status: 413
+  title: Model is too large, cannot exceed 20MB.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-models-api-openapi.yml#createModel
+  - openapi/blueconic-models-api-openapi.yml#updateModel
+  occurrences: 2
+- status: 429
+  title: Too many requests are sent concurrently. BlueConic recommends designing your app to be resilient
+    to this scenario. For example, implement a request queue with an exponential backoff algorithm.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-groups-api-openapi.yml#createUpdateDeleteGroups
+  - openapi/blueconic-profiles-api-openapi.yml#createUpdateDeleteProfiles
+  occurrences: 2
+- status: 501
+  title: The specified property is not classified as indexed (unique) (not implemented).
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-profiles-api-openapi.yml#searchProfiles
+  occurrences: 1
+- status: 503
+  title: The server is too busy to handle the request.
+  schema: null
+  media_type: application/json
+  source_operations:
+  - openapi/blueconic-channels-api-openapi.yml#getAllChannels
+  - openapi/blueconic-channels-api-openapi.yml#getOneChannel
+  - openapi/blueconic-connections-api-openapi.yml#getAllConnections
+  - openapi/blueconic-connections-api-openapi.yml#getOneConnection
+  - openapi/blueconic-connections-api-openapi.yml#getConnectionRuns
+  - openapi/blueconic-dialogues-api-openapi.yml#getAllDialogues
+  occurrences: 63
+summary:
+  distinct_problems: 37
+  statuses:
+  - 400
+  - 401
+  - 403
+  - 404
+  - 408
+  - 413
+  - 429
+  - 501
+  - 503
+  total_declared_error_responses: 223
+notable:
+- status: 429
+  meaning: Too many requests sent concurrently.
+  remediation: BlueConic recommends a request queue with exponential backoff. Declared only on the bulk
+    PUT /profiles and PUT /groups operations.
+  source: openapi/blueconic-profiles-api-openapi.yml#createUpdateDeleteProfiles
+- status: 413
+  meaning: 'Payload cap exceeded: more than 1000 entries in a bulk request, or an ONNX model larger than
+    20MB.'
+  remediation: Split the batch to 1000 entries or fewer; the entries that were processed are returned
+    in the 413 body.
+  source: openapi/blueconic-profiles-api-openapi.yml#createUpdateDeleteProfiles
+- status: 503
+  meaning: The server is too busy to handle the request.
+  remediation: Declared on 63 of 64 operations — the standard BlueConic back-pressure signal. Retry with
+    backoff.
+  source: openapi/_original/blueconic-rest-api-v2-openapi.yml

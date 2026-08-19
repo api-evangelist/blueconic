@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: derived
 source: openapi/blueconic-rest-api-v2-openapi.yml
 schemes:
@@ -10,17 +10,15 @@ schemes:
   - flow: authorizationCode
     authorizationUrl: /rest/v2/oauth/authorize
     tokenUrl: /rest/v2/oauth/token
-  description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and
-    Client credentials flow are supported. Make sure to select the correct flow based on which
-    flow the registered client supports. The client id and client secret can be found in BlueConic
-    by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:**
-    When using the Authorization code flow, the redirect URL of the registered client in BlueConic
-    must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html` and ''Send Proof
-    Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication,
-    follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the
-    token in the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request
-    to access protected resources.<br/>4. Handle token expiration by refreshing or obtaining
-    a new token.'
+  description: 'Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials
+    flow are supported. Make sure to select the correct flow based on which flow the registered client
+    supports. The client id and client secret can be found in BlueConic by opening the registered client
+    under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization
+    code flow, the redirect URL of the registered client in BlueConic must be set to `https://rest.apidoc.blueconic.com/oauth-receiver.html`
+    and ''Send Proof Key for Code Exchange'' must be enabled.<br/><br/>To use a Bearer token for authentication,
+    follow these steps: <br/>1. Acquire the token through authentication.<br/>2. Include the token in
+    the request''s Authorization header as Bearer \<token\>.<br/>3. Send the request to access protected
+    resources.<br/>4. Handle token expiration by refreshing or obtaining a new token.'
 scopes:
 - scope: read:audit-events
   sources:
@@ -103,3 +101,15 @@ scopes:
 - scope: write:url-mappings
   sources:
   - openapi/blueconic-rest-api-v2-openapi.yml
+docs: https://support.blueconic.com/en/articles/247557-authorizing-applications-granting-external-applications-to-access-blueconic
+docs_note: BlueConic documents the Scope SETTING but publishes no scope reference page enumerating the
+  scope strings — they are chosen in the tenant UI under Settings > Access management > Applications.
+  The 24 scopes below are therefore derived from the operation security[] requirements in the published
+  OpenAPI, which is the only public enumeration that exists. method stays "derived" for that reason.
+effective_access: Scope alone does not determine access. For the client credentials flow the application
+  also has a "Run as user"; requests not permitted by that user are blocked and every action is logged
+  under that user in the audit event log. The app is further limited to the domains its related users
+  can reach, and an optional per-application IPv4/IPv6 allowlist can restrict the calling addresses.
+unscoped_operations: The OAuth 2.0 operations themselves (getToken, startAuthorizationCodeFlow, revokeToken)
+  and the public collection endpoints createEvent, createPageviewEvent, getInteractions and getRecommendationsPostJsonpAsync
+  declare no scope requirement in the specification.

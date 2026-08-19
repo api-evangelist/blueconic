@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Channels API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/channels",
+            "params": [
+              {
+                "name": "startIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Specifies the index of the first result to return."
+              },
+              {
+                "name": "count",
+                "value": "10",
+                "type": "query",
+                "description": "Specifies the number of results to return."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves all channels."
+        },
+        {
+          "info": {
+            "name": "Get one channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/channels/:channelId",
+            "params": [
+              {
+                "name": "channelId",
+                "value": "3b55d90d-91b8-263a-bd87-c43a104862ef",
+                "type": "path",
+                "description": "The ID of the channel."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves a single channel."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

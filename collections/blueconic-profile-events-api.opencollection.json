@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Profile events API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Profile events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get profile events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/profileEvents/:profileId",
+            "params": [
+              {
+                "name": "profileId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "0",
+                "type": "query",
+                "description": "Specifies the index of the first item to include in the result."
+              },
+              {
+                "name": "count",
+                "value": "20",
+                "type": "query",
+                "description": "Specifies the number of results to return."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the consent management events for a profile; consent changed or permission level changed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

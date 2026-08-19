@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Pageview events API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pageview events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create page view event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{blueconicHostname}/rest/v2/pageviewEvents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register that a profile visited a certain web page."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

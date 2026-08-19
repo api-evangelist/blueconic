@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audit Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get audit events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/auditEvents",
+            "params": [
+              {
+                "name": "fromDate",
+                "value": "2025-01-22 11:21:33.872000+00:00",
+                "type": "query",
+                "description": "Only return entries that are created later than this date. The fromDate is in the ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Page size for the result.<br />Maximum limit is 1000"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves the audit events."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

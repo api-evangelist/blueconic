@@ -1,5 +1,5 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-08-13'
+method: searched
 source: openapi/blueconic-rest-api-v2-openapi.yml
 summary:
   types:
@@ -18,10 +18,42 @@ schemes:
     authorizationUrl: /rest/v2/oauth/authorize
     tokenUrl: /rest/v2/oauth/token
     scopes: 0
-  description: Authenticates a registered OAuth 2.0 client. The Authorization code flow and
-    Client credentials flow are supported. Make sure to select the correct flow based on which
-    flow the registered client supports. The client id and client secret can be found in BlueConic
-    by opening the registered client under *Settings* > *Access management* > *Applications*.<br/>**NOTE:**
-    When using the Authorization code
+  description: Authenticates a registered OAuth 2.0 client. The Authorization code flow and Client credentials
+    flow are supported. Make sure to select the correct flow based on which flow the registered client
+    supports. The client id and client secret can be found in BlueConic by opening the registered client
+    under *Settings* > *Access management* > *Applications*.<br/>**NOTE:** When using the Authorization
+    code
   sources:
   - openapi/blueconic-rest-api-v2-openapi.yml
+docs: https://support.blueconic.com/en/articles/247557-authorizing-applications-granting-external-applications-to-access-blueconic
+docs_pages:
+  overview: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
+  using_the_api: https://support.blueconic.com/en/articles/248009-using-the-blueconic-rest-api-v2
+  registering_an_application: https://support.blueconic.com/en/articles/247557-authorizing-applications-granting-external-applications-to-access-blueconic
+  client_credentials_flow: https://support.blueconic.com/en/articles/247558-authorizing-applications-using-the-client-credentials-flow
+  authorization_code_flow: https://support.blueconic.com/en/articles/247559-authorizing-applications-using-the-authorization-code-flow
+  roles_and_permissions: https://support.blueconic.com/en/articles/247531-manage-roles-and-permissions
+  sso: https://support.blueconic.com/en/articles/248057-using-single-sign-on-sso-with-blueconic
+documented:
+  pkce_required: true
+  pkce_note: The registered client must have "Send Proof Key for Code Exchange" enabled; the app generates
+    a code verifier and challenge.
+  refresh_token_rotation: true
+  refresh_token_note: Every refresh returns a new refresh token alongside the new access token.
+  revocation: POST /rest/v2/oauth/revoke (revokeToken); after revocation a new authorization grant is
+    required.
+  token_transport: 'Authorization: Bearer <token>'
+  api_keys: false
+  api_keys_note: The REST API v2 has no API-key auth. A generated API key exists only for INBOUND Webhook
+    connection goals (see asyncapi/blueconic-webhooks.yml), not for the REST API.
+  credential_location: BlueConic settings > Access management > Applications (client id + client secret).
+  run_as_user: Client credentials applications execute as a selected BlueConic user with the "Authorize
+    applications" permission; that user's permissions cap what the token can do, and all actions are audit-logged
+    under them.
+  ip_allowlist: Optional per-application IPv4/IPv6 range allowlist, on top of the tenant-wide allowlist.
+  redirect_url_note: The BlueConic API reference console requires the registered client's redirect URL
+    to be https://rest.apidoc.blueconic.com/oauth-receiver.html.
+  human_login: The BlueConic UI itself uses username + password + MFA, with optional SAML SSO. That is
+    separate from API authentication.
+tenant_scoped: true
+tenant_note: 'Token endpoints are relative to the customer tenant host: https://{tenantname}.blueconic.net/rest/v2/oauth/token.'

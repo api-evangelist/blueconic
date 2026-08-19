@@ -1,0 +1,218 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BlueConic REST API v2 Audit Events Stores API",
+    "version": "100.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get store items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/contentStores/:contentStore/items",
+            "params": [
+              {
+                "name": "contentStore",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the content store."
+              },
+              {
+                "name": "filterValue",
+                "value": "",
+                "type": "query",
+                "description": "Filters results using an expression of the form `property<operator>value`. Supported operators are `=`, `==`, `<`, `>`, `<=`, and `>=`. This parameter can be repeated to apply multiple filters (AND semantics)."
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the index of the first item to include in the result."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the number of results to return."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "To retrieve items from a content store, a `GET` request can be sent to the `/contentStores/{contentStoreId}/items` endpoint.\n\nYou can use the `filterValue` query parameter to filter the results based on an expression. The expression format is `property<operator>value`, where the supported operators are `=`, `==`, `<`, `>`, `<=`, and `>=`. For example, `name=foo` returns only items whose name equals `foo`, and `publicationDate>=2024-01-01T00:00Z` returns only items published on or after January 1"
+        },
+        {
+          "info": {
+            "name": "Add store items",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{blueconicHostname}/rest/v2/contentStores/:contentStore/items",
+            "params": [
+              {
+                "name": "contentStore",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the content store to add items to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "To add items to a content store, a `PUT` request can be sent to the `/contentStores/{contentStoreId}/items` endpoint.\nThe request body must be a JSON array of items to be added. Each item in the array should be a JSON object with an `id` and a `properties` object.\nThe `properties` object contains key-value pairs representing the properties of the item. "
+        },
+        {
+          "info": {
+            "name": "Get all stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{blueconicHostname}/rest/v2/contentStores",
+            "params": [
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the number of results to return."
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the index of the first item to include in the result."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves all content stores."
+        },
+        {
+          "info": {
+            "name": "Create store",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{blueconicHostname}/rest/v2/contentStores",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "To create a content store, a request with a JSON object can be sent to the `/contentStores` endpoint via the `POST` method.\nThe JSON object must contain all the properties that are required for a content store."
+        },
+        {
+          "info": {
+            "name": "Bulk delete store items",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{blueconicHostname}/rest/v2/contentStores/:contentStore/items/bulk",
+            "params": [
+              {
+                "name": "contentStore",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the content store."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes multiple items from a content store."
+        },
+        {
+          "info": {
+            "name": "Update store",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{blueconicHostname}/rest/v2/contentStores/:contentStore",
+            "params": [
+              {
+                "name": "contentStore",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the content store to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/rest/v2/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "To update a content store, a request with a JSON object can be sent to the `/contentStores` endpoint via the `PUT` method.\nThe JSON object can contain any of the properties that are part of the content store. <br/>\nPartial updates are supported. You only need to supply the properties that you want to change.<br/>\nAt least one property needs to be supplied, otherwise a HTTP 400 is returned."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

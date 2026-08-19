@@ -1,0 +1,98 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.blueconic.com/en/articles/247717-webhook-connection
+spec_type: null
+spec_type_note: >-
+  BlueConic publishes NO AsyncAPI document. Probes for /asyncapi.yaml on www.blueconic.com
+  returned 404, and no AsyncAPI file exists in the blueconic GitHub organization (the only
+  spec repo, blueconic/openapi, carries OpenAPI only). This artifact therefore captures the
+  real event/webhook surface as a catalog, and apis.yml carries a Webhooks pointer — not an
+  AsyncAPI one.
+description: >-
+  BlueConic's event surface is the Webhook connection: a configurable, bidirectional
+  integration rather than a fixed catalog of named event types. Outbound, BlueConic triggers
+  an HTTP request to an external system when a configured profile property changes value or a
+  configured event fires, for visitors in selected segments. Inbound, BlueConic exposes a
+  generated per-goal URL that an external system calls to enrich or create profiles. There is
+  no published registry of event names because the events are the customer's own profile
+  properties, segments and listener events.
+surface:
+  name: Webhook Connection
+  docs: https://support.blueconic.com/en/articles/247717-webhook-connection
+  deep_dive: https://support.blueconic.com/en/articles/248046-webhook-connection-deep-dive
+  code_examples: https://support.blueconic.com/en/articles/247742-webhook-connection-code-examples
+  configured_in: BlueConic UI > Connections > Add connection > Webhook
+  api_managed: >-
+    Connections themselves are readable and runnable through the REST API v2 Connections
+    resource (getAllConnections, getOneConnection, getConnectionRuns) — see
+    openapi/blueconic-connections-api-openapi.yml.
+directions:
+  - direction: outbound
+    label: Requests sent by BlueConic
+    triggers:
+      - kind: profile-property-change
+        description: One or more configured profile properties changing value on a visitor profile.
+      - kind: event
+        description: A configured BlueConic event (from a listener or the JavaScript event API) firing.
+    audience_filter: One or more BlueConic segments; only visitors in a selected segment can trigger.
+    transport: HTTP request to a customer-specified URL
+    methods: [GET, POST, PUT, PATCH, DELETE]
+    body: Mustache-templated, built from profile property ids
+    headers: Customer-defined name/value pairs, Mustache-templated
+    auth:
+      - credentials in headers or request URL
+      - OAuth 2.0 authorization code flow
+      - OAuth 2.0 client credentials flow
+      - OAuth 2.0 refresh-token-based flow
+    optional_inputs:
+      - segments (available as "segments" in the data object)
+      - timeline events (available as "timelineEvents"; capped at 500 in real time)
+      - data processors as pre-processors on the input data
+    response_mapping: >-
+      JSON responses are parsed with JsonPath mapping rules and written back to profile
+      properties.
+    testing: Built-in "Send test request" with request/response inspection.
+  - direction: inbound
+    label: Requests sent to BlueConic
+    endpoint_template: https://{tenantname}.blueconic.net/rest/custom/frontend/connection_webhook/update
+    query_parameters:
+      - itemId — the connection item identifier (generated per goal)
+      - goalId — the goal identifier (generated per goal)
+      - apiKey — optional; only when the caller cannot send the key in a header
+      - property — the BlueConic profile property used to match the profile
+      - '<property> — the identifier value the external system appends'
+    optional_parameters:
+      - legislation=GDPR to set the legislation zone
+      - domain group UUID to route to a non-default domain group
+      - create-profiles option, to create a profile when no match is found
+    auth:
+      - generated API key (header preferred; URL parameter documented as less secure)
+      - OAuth 2.0 bearer token from a registered application with read+write access to profile properties
+    note: >-
+      All inbound goals share one authentication setting — changing it affects every inbound
+      goal on the connection.
+    mapping: Incoming request data is mapped into BlueConic profile properties.
+limits:
+  hard_request_limit: false
+  statement: >-
+    "BlueConic does not impose hard limits on the number of webhook requests, though webhook
+    calls are subject to BlueConic's fair use policy. Excessive concurrent requests or abusive
+    usage patterns may result in throttling or errors."
+  source: https://support.blueconic.com/en/articles/247717-webhook-connection
+related_event_surfaces:
+  - name: BlueConic Event API (client-side)
+    docs: https://support.blueconic.com/en/articles/248060-the-blueconic-event-api
+    what: >-
+      window.blueConicClient.event.publish(name, params) publishes a custom browser-side event
+      that Behavior Listeners subscribe to; createEvent() events must first be declared through
+      an Event Trigger Listener before they can drive dialogues.
+  - name: Listeners
+    docs: https://support.blueconic.com/en/articles/247923-listeners-overview
+    what: >-
+      ~25 first-party listeners (Behavior, Engagement, Scoring, Geofencing, TCF, OneTrust,
+      Content Meter, Visual Form, ...) turn browser-side signals into profile changes, which in
+      turn are what outbound webhooks trigger on.
+probes:
+  - url: https://www.blueconic.com/asyncapi.yaml
+    status: 404
+    checked: '2026-08-13'

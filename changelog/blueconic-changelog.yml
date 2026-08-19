@@ -1,0 +1,127 @@
+generated: '2026-08-13'
+method: searched
+source: https://announcekit.co/blueconic-changelog/blueconic-product-updates
+description: BlueConic publishes a dated product changelog on AnnounceKit, linked from the help center
+  article "CDP product updates and current status". It is a PLATFORM changelog, not an API changelog —
+  REST API v2 changes are not called out separately; per-release OpenAPI definitions are archived instead
+  at github.com/blueconic/openapi under definitions/r89 .. definitions/r101, and the live spec carries
+  the platform release number in info.version. Entries below are the recent window captured verbatim from
+  the feed on 2026-08-13.
+scheme: platform release (monthly, rolling per server cluster)
+current_version: 102.0 (info.version of definitions/openapi_latest.yaml on 2026-08-13)
+captured_version_in_repo: 100.0 (openapi/_original/blueconic-rest-api-v2-openapi.yml)
+feeds:
+  rss: https://announcekit.co/blueconic-changelog/blueconic-product-updates/rss.xml
+  atom: https://announcekit.co/blueconic-changelog/blueconic-product-updates/atom.xml
+  json: https://announcekit.co/blueconic-changelog/blueconic-product-updates/jsonfeed.json
+per_release_specs: https://github.com/blueconic/openapi/tree/main/definitions
+in_platform_notice: Product updates and planned maintenance are announced at least 7 days in advance,
+  in-platform via the Notifications menu.
+breaking_changes_flagged: false
+breaking_changes_note: The changelog does not label entries as breaking vs additive; every entry in the
+  captured window is additive (new features, new connectors, new agent capabilities).
+window:
+  from: '2026-05-31'
+  to: '2026-07-31'
+  entries: 20
+entries:
+- date: '2026-07-31'
+  title: Keep Blueshift segments in sync with BlueConic, automatically
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/keep-blueshift-segments-in-sync-with-blueconic-automatically-4qwACs
+  summary: BlueConic segments now sync directly to Blueshift, keeping lifecycle audiences current without
+    manual rebuilds. Marketers can now sync BlueC...
+- date: '2026-07-31'
+  title: AI Canvas
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/ai-canvas-4bKCI0
+  summary: When you build a segment in AI Canvas that extends another segment, the canvas summary now
+    shows the segment being extended, along with the ...
+- date: '2026-07-31'
+  title: Know if a growth play is working, without reading the metrics yourself
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/know-if-a-growth-play-is-working-without-reading-the-metrics-yourself-4tUX28
+  summary: The new Growth Monitor agent reads outcome data daily and tells you, in plain language, whether
+    you're on track, off track, or something loo...
+- date: '2026-07-31'
+  title: Get prioritized recommendations for every Growth Play, right where you measure it
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/get-prioritized-recommendations-for-every-growth-play-right-where-you-measure-it-4v3lyo
+  summary: The Growth Advisor Agent turns outcome data into plain-language, prioritized suggestions, where
+    to shift budget, which campaigns are draggin...
+- date: '2026-07-31'
+  title: Know which campaigns actually drove revenue
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/know-which-campaigns-actually-drove-revenue-up0EU
+  summary: BlueConic now measures campaign conversions directly, independent of what your ad platform
+    reports. Platform-reported numbers only tell part...
+- date: '2026-07-31'
+  title: AI Canvas Can Now Build Listeners For You
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/ai-canvas-can-now-build-listeners-for-you-PYfuM
+  summary: Describe the behavior you want to track, and the AI Canvas agent proposes a ready-to-review
+    listener , no manual config required. Setting up...
+- date: '2026-07-31'
+  title: See what's changed in a plugin before you install it
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/see-whats-changed-in-a-plugin-before-you-install-it-4aCebK
+  summary: Certified plugins can now surface their release notes directly in the Plugin Gallery Plugin
+    version history has always lived outside the pr...
+- date: '2026-06-30'
+  title: Launch better experiences faster — starting with a proven foundation.
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/launch-better-experiences-faster----starting-with-a-proven-foundation.-1Qo4LK
+  summary: The revamped Template Gallery gives teams fully built, ready-to-customize experiences — complete
+    with configured logic, outcomes, and step-b...
+- date: '2026-06-30'
+  title: Run multiple instances of the same integration in a single workspace
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/run-multiple-instances-of-the-same-integration-in-a-single-workspace-3siBvq
+  summary: BlueConic Experiences now supports multiple independent instances of the same integration —
+    giving teams separate credentials, mappings, and...
+- date: '2026-06-30'
+  title: Add role-based controls for strict CSP compliance
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/add-role-based-controls-for-strict-csp-compliance-4cOCrK
+  summary: Give admins more control over high-permission Channel View features while supporting stricter
+    security policies. BlueConic now includes a ne...
+- date: '2026-06-30'
+  title: Set up your Salesforce Marketing Cloud integration in minutes, not hours.
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/set-up-your-salesforce-marketing-cloud-integration-in-minutes-not-hours.-3i5jS8
+  summary: Configuring the SFMC integration in BlueConic Experiences just got dramatically faster — fields
+    load automatically, keys are detected, and m...
+- date: '2026-06-30'
+  title: Close the loop between BlueConic data and TikTok ad performance.
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/close-the-loop-between-blueconic-data-and-tiktok-ad-performance.-3uzFAY
+  summary: A new goal in the TikTok Ads Manager connection lets you send BlueConic profile and timeline
+    event data directly to TikTok as offline events...
+- date: '2026-06-30'
+  title: Map attributes and product feeds faster with AI-powered suggestions
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/map-attributes-and-product-feeds-faster-with-ai-powered-suggestions-3racZa
+  summary: BlueConic Experiences now reads your campaign copy and proposes mappings for both profile attributes
+    and product feeds — so you spend less t...
+- date: '2026-06-30'
+  title: See How Your Growth Plays Are Actually Performing
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/see-how-your-growth-plays-are-actually-performing-3FTYvm
+  summary: Cross-channel performance reporting is now built directly into BlueConic — no spreadsheets,
+    no switching tabs, no waiting on agency reports....
+- date: '2026-06-30'
+  title: Bring Salesforce transactional data into BlueConic as timeline events
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/bring-salesforce-transactional-data-into-blueconic-as-timeline-events-1ZteVO
+  summary: The Salesforce connector now supports importing order, subscription, and other event-shaped
+    data as timeline events — unlocking core CDP use...
+- date: '2026-06-30'
+  title: Activate BlueConic segments in Attentive for SMS and email programs
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/activate-blueconic-segments-in-attentive-for-sms-and-email-programs-2jUmis
+  summary: A native Attentive connection lets you export profile data from BlueConic segments to Attentive
+    on a schedule — keeping subscriber records e...
+- date: '2026-06-30'
+  title: Connect your CMS to BlueConic — and keep content and personalization in sync.
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/connect-your-cms-to-blueconic----and-keep-content-and-personalization-in-sync.-2orWnu
+  summary: Bloomreach and Contentstack are now native content sources inside the BlueConic headless dialogue
+    editor. More teams are moving to composabl...
+- date: '2026-06-30'
+  title: Audit your integration health — directly from the Report Center.
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/audit-your-integration-health----directly-from-the-report-center.-3luvqU
+  summary: Teams can now export a complete, structured record of every integration submission directly
+    from the Report Center, with the granularity nee...
+- date: '2026-06-30'
+  title: Automate user access management end-to-end with SCIM provisioning
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/automate-user-access-management-end-to-end-with-scim-provisioning-3oTpWE
+  summary: BlueConic now supports SCIM 2.0, letting enterprise teams automate user lifecycle management
+    directly from their Identity Provider. Managing...
+- date: '2026-05-31'
+  title: AI-powered agents now guide every step of your Growth Play, from discovery to launch.
+  url: https://announcekit.co/blueconic-changelog/blueconic-product-updates/ai-powered-agents-now-guide-every-step-of-your-growth-play-from-discovery-to-launch.-VAnpC
+  summary: The BlueConic Growth Engine now includes three embedded AI agents that help you select, configure,
+    and launch Growth Plays faster. Each agen...

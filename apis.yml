@@ -336,6 +336,8 @@ apis:
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -526,6 +528,8 @@ apis:
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
+  - Authentication
+  tags_raw:
   - OAuth 2.0
   properties:
   - type: OpenAPI
@@ -938,6 +942,8 @@ apis:
   humanURL: https://support.blueconic.com/en/articles/248008-overview-blueconic-rest-api
   baseURL: https://{tenantname}.blueconic.net/rest/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI

@@ -5,6 +5,18 @@ description: BlueConic is a customer data platform (CDP) with a REST API for man
   data activation. The API provides OAuth 2.0-secured access to visitor profiles,
   segments, interactions, and audit events via an OpenAPI-compliant interface.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: approval

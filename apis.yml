@@ -976,6 +976,9 @@ apis:
     url: >-
       https://support.blueconic.com/en/articles/247558-authorizing-applications-using-the-client-credentials-flow
 common:
+  - type: CapabilityMap
+    url: capabilities/blueconic-capability-edges.yml
+    name: BlueConic Business Capability Map
   - type: AgenticAccess
     url: agentic-access/blueconic-agentic-access.yml
   - type: DomainSecurity

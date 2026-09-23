@@ -3,9 +3,9 @@ info:
   title: API Evangelist enhancements for BlueConic REST API v2 Audit Events Users API
   version: 1.0.0
 extends: openapi/blueconic-users-api-openapi.yml
-generated: '2026-08-13'
-method: generated
-source: openapi/blueconic-users-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: openapi/blueconic-users-api-openapi.yml
 actions:
 - target: $.info
   update:

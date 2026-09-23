@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: BlueConic REST API v2 Audit Events Profiles API
-  description: "Welcome to the [BlueConic](https://www.blueconic.com) REST API v2. Our recently updated APIs offer access to a wealth of resources to interact with BlueConic visitor profiles, segments, interactions, and audit events via OpenAPI and OAuth 2.0 authorization flows making the interconnection between various services more secure, intuitive, and reliable than ever before.\n\nThis page describes how developers can use OAuth 2.0, the industry-standard protocol for authorization, to authorize apps in BlueConic and get started using the BlueConic REST API v2.\n\nLearn more about [how to use the BlueConic REST API v2](https://support.blueconic.com/hc/en-us/articles/200453891-Using-the-BlueConic-REST-API).\n\n# Authorizing an application to use the BlueConic REST API via OAuth 2.0\n\nIf you have an external software application that needs to communicate with BlueConic, you need to allow access to the BlueConic REST API. The authorization process in BlueConic for this access is built to OAuth 2.0 specifications. You can use either of two authorization flows: the authorization code flow and the client credentials flow. The most secure flow is the authorization code flow, intended for use with a user who can log in to BlueConic and authenticate the application to use the BlueConic API. The client credentials flow is easier to implement but lacks security features present in the authorization code flow. The client credentials flow is intended for machine-to-machine applications. \n\n## Using the Authorization code flow\n\nTo use the BlueConic REST API with OAuth 2.0 according to the authorization code flow you need to complete the following steps:\n\n1.  Configure BlueConic so your external OAuth 2.0 application can authenticate and use the REST API. This means that you have to:\n    - Have a BlueConic user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a BlueConic user with the \"Authorize Applications\" permission. This user can authorize the external application via the redirect page served by the authorization server.\n    - Configure the external application on the BlueConic Access management > Applications tab, so BlueConic can store public client ID and the client secret. The external app uses these properties to perform the initial request for an authorization code.\n\n\n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically, that means an application that is able to:\n    - Generate a code verifier and code challenge.\n    - Store the public client ID and client secret as configured in BlueConic (see step 1). \n    - Request an authorization code from the BlueConic authorization server. Include the code challenge in the request. \n    - Show the user the redirect page served by the BlueConic authorization server, so the user can authenticate with credentials and consent to giving the application BlueConic REST API access.\n    - Receive the authorization code from the BlueConic authorization server.\n    - Use the authorization code to request an access token (and refresh token) from the BlueConic authorization server. Include the code verifier in the request. You must also provide the client ID and client secret for client authentication. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests. \n    - Revoke access if the user of the app so chooses (meaning that after this revocation, a new authorization grant is required to use the BlueConic REST API).\n    - Handle refresh token rotation. This means that whenever a new access token is requested using the refresh token, a new refresh token is also supplied along with the new access token.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Authorization Code Flow](https://support.blueconic.com/hc/en-us/articles/14912561861403)\n\n## Using the Client credentials flow\n\nTo make use of the BlueConic REST API with OAuth 2.0 following the client credentials flow, you need to complete the following steps:\n\n1. Configure BlueConic so your external OAuth 2.0 application can use the REST API. This means that you have to:\n    - Have a user with the \"Applications\" permission. This user can configure the details of the external application in BlueConic.\n    - Have a user with the \"Authorize Applications\" permission, who also has all permissions needed to use the REST API endpoint that you intend to use.\n    - Configure the external application on the Access management > Applications tab, so BlueConic can generate and store the public client ID and client secret for client authentication. Also select at least one scope so the app has access to that part of the REST API.\n   \n2. Develop an application that can execute OAuth 2.0 REST API requests. Specifically that means an application that is able to:\n    - Store the public client ID and client secret as configured in BlueConic (see above).\n    - Use the client ID and client secret to request an access token from the BlueConic authorization server. You can do so by sending the client credentials in the body of your POST request.\n    - Use the access token to perform REST API requests.\n    - Handle all possible responses from the BlueConic REST API appropriately.\n\n[Read more about the Client Credentials Flow](https://support.blueconic.com/hc/en-us/articles/14912655111963)\n\n# Using the try-out feature\nThe “Try” feature allows you to directly make REST calls to the API server, where you can make requests and see the responses, allowing you to experiment with the BlueConic API and understand how it works.\n\nYou can enter your BlueConic URL in the “API Servers” section. After that, you can try out the calls that don’t require authentication, such as “Get interactions”. You can enter the request parameters and click “Try”.\n\n## OAuth 2.0 authentication\n\nMost calls require OAuth 2.0 authentication, such as “Get audit events”. This can be seen at the right top and under the Request heading of each API method. To use the “Try” feature, you need to authenticate via OAuth 2.0. First create an Application in your BlueConic tenant (see above). When using the Authorization code flow, make sure to set the redirect URL to this tool as specified under the OAuth 2.0 authentication section. After you create the Application, authenticate this tool in the “Authentication” section. Enter the client ID and client secret in the correct OAuth 2.0 flow for which you created the application and press “GET TOKEN”. If the tool got a token successfully, you will see the text “API key applied” just under the “Authentication” heading. In calls that require Authentication, it will say “OAuth (OAuth 2.0) in header”. Now you can use the “Try” feature for calls that require OAuth 2.0. If you hover over the authentication scheme at the top right of an API method, you will see the required scopes (e.g. “Get audit events” has the scope read:audit-events). Make sure you set these scopes for the Application in BlueConic.\n\n# General functionality for all endpoints\n\n1. By using `prettyPrint`, the JSON data is formatted in a way that makes it easier to read and work with. This can be especially useful when working with large or complex JSON datasets. Add the following to the query string of a request to pretty print JSON: `&prettyPrint=true`.\n2. Gzip encoding is a method of compressing data and is commonly used to reduce the size of files sent over the Internet. BlueConic supports this so a client can set the request header `Accept-Encoding: gzip`. BlueConic will then compress the data in its response and send it back to the client with the `Content-Encoding: gzip` header. \n\n"
+  title: BlueConic REST API v2 Profiles API
+  description: Welcome to the BlueConic REST API v2.
   termsOfService: https://www.blueconic.com/blueconic-terms-and-conditions
   contact:
     name: Contact us
@@ -19,7 +19,7 @@ servers:
       default: tenantname
 tags:
 - name: Profiles
-  description: The following methods allow you to create, modify, retrieve properties from, and delete [BlueConic Profiles](https://support.blueconic.com/hc/en-us/articles/115001671965-Overview-BlueConic-Profiles), as well as retrieve BlueConic segment information.
+  description: The following methods allow you to create, modify, retrieve properties from, and delete BlueConic Profiles, as well as retrieve BlueConic segment information.
 paths:
   /profiles:
     get:
@@ -519,12 +519,83 @@ paths:
         - read:profiles
 components:
   schemas:
-    permissions:
+    restriction:
+      type: object
+      description: The possible restriction rules when matching profiles. Only "isMemberOfSegment" is available at the moment.
+      properties:
+        isMemberOfSegment:
+          type: string
+          description: The segment ID this profile should be a part of.
+    event:
       type: object
       properties:
-        level:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        date:
           type: string
-          description: The permission level of the profile
+          format: date-time
+          description: Timestamp for the event. The format of date is "2018-01-01T00:00Z" or with a timezone offset "2018-01-01T00:00+05:00". If empty, "now" will be used.
+        eventTypeId:
+          type: string
+          description: The type identifier of the event. See https://yourserver.blueconic.net/rest/timelineEventTypes?alt=json for the list of defined event types.
+        id:
+          type: string
+          description: An identifier to identify the event. Preferred to be unique, although it isn't required. If an event with the same ID is present on the profile's timeline, it will be overwritten. Note that the combination of ID, event type ID, and date uniquely identifies an event.
+        identifier:
+          type: string
+          description: An (external) identifier which can be passed along with a timeline event operation and is returned in the response.
+        strategy:
+          type: string
+          description: How the event will be applied to the timeline.
+          enum:
+          - SET
+          - UPSERT
+          - UPDATE
+          - DELETE
+          writeOnly: true
+    profiles:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        profiles:
+          type: array
+          description: List of profile IDs that matches search criteria.
+          items:
+            $ref: '#/components/schemas/AbstractBaseBean'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
     BulkResultBean:
       type: object
       properties:
@@ -561,13 +632,6 @@ components:
               type: string
               description: The errors found for the given profile changes (if any).
           description: The errors found for the given profile changes (if any).
-    restriction:
-      type: object
-      description: The possible restriction rules when matching profiles. Only "isMemberOfSegment" is available at the moment.
-      properties:
-        isMemberOfSegment:
-          type: string
-          description: The segment ID this profile should be a part of.
     ProfileProperty:
       type: object
       description: 'The rules that will be executed on this profile.</br>The following properties have a special meaning:</br> `privacy_legislation`: the value passed in this property should be one of the [privacy legislation zone values](https://support.blueconic.com/hc/en-us/articles/202528082-BlueConic-REST-API#privacy_legislation), and is used to determine if a profile should be matched against the passed `objectiveIds` in the querystring. </br>`consented_objectives`: the value(s) passed in this property are used to match against the passed `objectiveIds` in the querystring. At least one must match in order for the profile to be created/updated, otherwise `CONSENT_MISMATCH` is returned. </br>`refused_objectives`: the value(s) passed in this property are used to set the explicitly refused objectives.'
@@ -598,6 +662,36 @@ components:
           items:
             type: string
             description: The values to apply to this rule.
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    Criterium:
+      type: object
+      description: The profile properties to match (only use "Unique Identifier" properties). This is an array of arrays; the items in the outer array have an "OR" relation, the items in the inner array have an "AND" relation.
+      properties:
+        id:
+          type: string
+          description: The profile property ID to match on.
+        value:
+          type: string
+          description: The profile property value to match on.
+    lifecycleStage:
+      type: object
+      description: Lifecycle stages that the profile is part of.
+      properties:
+        lifecycle:
+          $ref: '#/components/schemas/simpleObject'
+        stage:
+          $ref: '#/components/schemas/simpleObject'
     AbstractBaseBean:
       type: object
       description: List of profile IDs that matches search criteria.
@@ -618,233 +712,19 @@ components:
           items:
             type: string
             description: The matching group IDs.
-    lifecycleStage:
-      type: object
-      description: Lifecycle stages that the profile is part of.
-      properties:
-        lifecycle:
-          $ref: '#/components/schemas/simpleObject'
-        stage:
-          $ref: '#/components/schemas/simpleObject'
-    profiles:
+    ErrorBean:
       type: object
       properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        profiles:
-          type: array
-          description: List of profile IDs that matches search criteria.
-          items:
-            $ref: '#/components/schemas/AbstractBaseBean'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    profileSegmentBean:
-      type: object
-      properties:
-        id:
+        field:
           type: string
-          description: The ID of the segment.
-        name:
-          type: string
-          description: The name of the segment.
-        tags:
-          type: array
-          description: The labels of the segment (optionally included).
-          items:
-            type: string
-            description: The labels of the segment (optionally included).
-    profile:
-      type: object
-      description: The profiles that are in this segment.
-      properties:
-        id:
-          type: string
-          description: The unique identifier for the object.
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        privacyLegislation:
-          type: string
-          description: The default privacy legislation for creating profiles (not for matching).
-          enum:
-          - NONE
-          - GDPR
-          - PIPEDA
-          - CCPA
-          - SB220
-          - NYPA
-          - PERU_DPL
-          - ARGENTINA_DPL
-          - SB1392
-          - SB190
-          - BRAZIL_LGPD
-          - ISRAEL_PPL
-          - JAPAN_APPI
-          - NEW_ZEALAND_PRIVACY_ACT
-          - SWITZERLAND_DPA
-          - UK_GDPR
-          - CHINA_PIPL
-          - AUSTRALIA_PRIVACY_ACT
-          - CDPA_CTCPDA
-          - UCPA
-          - MEXICO_LFPDPPP
-        consentedObjectives:
-          type: array
-          description: List of objective IDs that the profile has given consent to.
-          items:
-            type: string
-            description: List of objective IDs that the profile has given consent to.
-        refusedObjectives:
-          type: array
-          description: List of objective IDs that the profile has refused consent to.
-          items:
-            type: string
-            description: List of objective IDs that the profile has refused consent to.
-        permissions:
-          $ref: '#/components/schemas/permissions'
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/property'
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/event'
-        groups:
-          type: array
-          description: Groups that the profile is a part of.
-          items:
-            $ref: '#/components/schemas/group'
-        matchingGroups:
-          type: array
-          description: Groups that the profile is a part of and match the segment refinements.
-          items:
-            $ref: '#/components/schemas/matchingGroup'
-        lifecycleStages:
-          type: array
-          description: Lifecycle stages that the profile is part of.
-          items:
-            $ref: '#/components/schemas/lifecycleStage'
-        replacedBy:
-          type: string
-          description: The profile ID that replaced this profile.
-        replaces:
-          type: array
-          description: The IDs of the profiles that are replaced by this profile.
-          items:
-            type: string
-            description: The IDs of the profiles that are replaced by this profile.
-        segments:
-          type: array
-          items:
-            $ref: '#/components/schemas/profileSegmentBean'
-    Property:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Timeline event property ID to apply to this rule for.
-        strategy:
-          type: string
-          description: The strategy to apply to primitive timeline event properties. For nested timeline event properties, SET/UPSERT/UPDATE/DELETE are supported.
-          enum:
-          - ADD
-          - SET
-          - SET_IF_EMPTY
-          writeOnly: true
-        values:
-          type: array
-          description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
-          items:
-            type: object
-            description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
-    event:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
-        date:
-          type: string
-          format: date-time
-          description: Timestamp for the event. The format of date is "2018-01-01T00:00Z" or with a timezone offset "2018-01-01T00:00+05:00". If empty, "now" will be used.
-        eventTypeId:
-          type: string
-          description: The type identifier of the event. See https://yourserver.blueconic.net/rest/timelineEventTypes?alt=json for the list of defined event types.
-        id:
-          type: string
-          description: An identifier to identify the event. Preferred to be unique, although it isn't required. If an event with the same ID is present on the profile's timeline, it will be overwritten. Note that the combination of ID, event type ID, and date uniquely identifies an event.
-        identifier:
-          type: string
-          description: An (external) identifier which can be passed along with a timeline event operation and is returned in the response.
-        strategy:
-          type: string
-          description: How the event will be applied to the timeline.
-          enum:
-          - SET
-          - UPSERT
-          - UPDATE
-          - DELETE
-          writeOnly: true
-    TimelineResultBean:
-      type: object
-      description: The feedback on the given timeline events.
-      properties:
-        id:
-          type: string
-          description: The ID for this event.
-        identifier:
-          type: string
-          description: The identifier (optionally) as passed in the input, can be used as reference.
-        state:
-          type: string
-          description: The possible states for timeline events.
-          enum:
-          - CREATED
-          - SET
-          - MODIFIED
-          - REJECTED
-          - NOTFOUND
-          - DELETED
-        validationErrors:
-          type: array
-          description: The errors found for the given timeline event changes (if any).
-          example:
-          - '#/total_revenue/0: expected type: Number, found: String'
-          items:
-            type: string
-            description: The errors found for the given timeline event changes (if any).
-            example: '["#/total_revenue/0: expected type: Number, found: String"]'
-    ErrorRequestBean:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBean'
         message:
           type: string
+    permissions:
+      type: object
+      properties:
+        level:
+          type: string
+          description: The permission level of the profile
     BulkInputEntryV2:
       type: object
       properties:
@@ -956,13 +836,6 @@ components:
           type: boolean
           default: true
           description: Whether or not to execute the configured triggers (for example, a webhook connection) when a profile property value changes.
-    ErrorBean:
-      type: object
-      properties:
-        field:
-          type: string
-        message:
-          type: string
     simpleObject:
       type: object
       properties:
@@ -972,16 +845,92 @@ components:
         name:
           type: string
           description: The object name.
-    Criterium:
+    profile:
       type: object
-      description: The profile properties to match (only use "Unique Identifier" properties). This is an array of arrays; the items in the outer array have an "OR" relation, the items in the inner array have an "AND" relation.
+      description: The profiles that are in this segment.
       properties:
         id:
           type: string
-          description: The profile property ID to match on.
-        value:
+          description: The unique identifier for the object.
+        creationDate:
           type: string
-          description: The profile property value to match on.
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        privacyLegislation:
+          type: string
+          description: The default privacy legislation for creating profiles (not for matching).
+          enum:
+          - NONE
+          - GDPR
+          - PIPEDA
+          - CCPA
+          - SB220
+          - NYPA
+          - PERU_DPL
+          - ARGENTINA_DPL
+          - SB1392
+          - SB190
+          - BRAZIL_LGPD
+          - ISRAEL_PPL
+          - JAPAN_APPI
+          - NEW_ZEALAND_PRIVACY_ACT
+          - SWITZERLAND_DPA
+          - UK_GDPR
+          - CHINA_PIPL
+          - AUSTRALIA_PRIVACY_ACT
+          - CDPA_CTCPDA
+          - UCPA
+          - MEXICO_LFPDPPP
+        consentedObjectives:
+          type: array
+          description: List of objective IDs that the profile has given consent to.
+          items:
+            type: string
+            description: List of objective IDs that the profile has given consent to.
+        refusedObjectives:
+          type: array
+          description: List of objective IDs that the profile has refused consent to.
+          items:
+            type: string
+            description: List of objective IDs that the profile has refused consent to.
+        permissions:
+          $ref: '#/components/schemas/permissions'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
+        groups:
+          type: array
+          description: Groups that the profile is a part of.
+          items:
+            $ref: '#/components/schemas/group'
+        matchingGroups:
+          type: array
+          description: Groups that the profile is a part of and match the segment refinements.
+          items:
+            $ref: '#/components/schemas/matchingGroup'
+        lifecycleStages:
+          type: array
+          description: Lifecycle stages that the profile is part of.
+          items:
+            $ref: '#/components/schemas/lifecycleStage'
+        replacedBy:
+          type: string
+          description: The profile ID that replaced this profile.
+        replaces:
+          type: array
+          description: The IDs of the profiles that are replaced by this profile.
+          items:
+            type: string
+            description: The IDs of the profiles that are replaced by this profile.
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/profileSegmentBean'
     group:
       type: object
       description: Groups that the profile is a part of.
@@ -1004,19 +953,70 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/property'
-    property:
+    Property:
       type: object
-      description: A property consisting of an ID and a list of values.
       properties:
         id:
           type: string
-          description: The ID of the property.
+          description: Timeline event property ID to apply to this rule for.
+        strategy:
+          type: string
+          description: The strategy to apply to primitive timeline event properties. For nested timeline event properties, SET/UPSERT/UPDATE/DELETE are supported.
+          enum:
+          - ADD
+          - SET
+          - SET_IF_EMPTY
+          writeOnly: true
         values:
           type: array
-          description: Values for this property.
+          description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
+          items:
+            type: object
+            description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
+    profileSegmentBean:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the segment.
+        name:
+          type: string
+          description: The name of the segment.
+        tags:
+          type: array
+          description: The labels of the segment (optionally included).
           items:
             type: string
-            description: Values for this property.
+            description: The labels of the segment (optionally included).
+    TimelineResultBean:
+      type: object
+      description: The feedback on the given timeline events.
+      properties:
+        id:
+          type: string
+          description: The ID for this event.
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        state:
+          type: string
+          description: The possible states for timeline events.
+          enum:
+          - CREATED
+          - SET
+          - MODIFIED
+          - REJECTED
+          - NOTFOUND
+          - DELETED
+        validationErrors:
+          type: array
+          description: The errors found for the given timeline event changes (if any).
+          example:
+          - '#/total_revenue/0: expected type: Number, found: String'
+          items:
+            type: string
+            description: The errors found for the given timeline event changes (if any).
+            example: '["#/total_revenue/0: expected type: Number, found: String"]'
   securitySchemes:
     oauth2:
       type: oauth2

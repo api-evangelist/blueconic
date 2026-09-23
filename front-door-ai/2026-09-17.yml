@@ -1,0 +1,29 @@
+# Front Door AI Index — blueconic — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: blueconic
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.blueconic.com
+  final_host: www.blueconic.com
+  ownership: own
+  owner: blueconic
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 7
+  host_score: 7
+  density: 5.99
+  words: 1169
+  tiers:
+    agentic: 2
+    core: 5
+    model: 0
+  ambiguous: 13
+  top_terms:
+    agent: 12
+    AI: 5
+    AI agent: 1
+    agentic: 1
+    automation: 1

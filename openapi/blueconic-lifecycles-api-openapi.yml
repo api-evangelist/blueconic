@@ -102,17 +102,40 @@ paths:
         - read:lifecycles
 components:
   schemas:
-    simpleDomain:
+    rule:
       type: object
-      description: The domain.
       properties:
+        frequencyCapDuration:
+          type: string
+          description: The time period for the views cap.
+          enum:
+          - MINUTE
+          - HOUR
+          - DAY
+          - WEEK
+          - MONTH
+          - QUARTER
+          - YEAR
+          - ALWAYS
+          - SESSION
+        frequencyCapViews:
+          type: integer
+          format: int32
+          description: The number of views allowed in the specified time period.
         id:
           type: string
-          description: Unique identifier.
+          description: The ID of the frequency rule.
+    stage:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The ID of the stage.
         name:
           type: string
-          description: Name of this object.
-      readOnly: true
+          description: The name of the stage.
+        rule:
+          $ref: '#/components/schemas/rule'
     UserBean:
       type: object
       description: BlueConic user.
@@ -124,6 +147,18 @@ components:
           type: string
           description: The username.
       readOnly: true
+    priority:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the priority.
+        isDefault:
+          type: boolean
+          description: Whether the priority is the default priority.
+        name:
+          type: string
+          description: The name of the priority.
     lifecycle:
       type: object
       properties:
@@ -171,52 +206,17 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
-    stage:
+    simpleDomain:
       type: object
-      properties:
-        identifier:
-          type: string
-          description: The ID of the stage.
-        name:
-          type: string
-          description: The name of the stage.
-        rule:
-          $ref: '#/components/schemas/rule'
-    rule:
-      type: object
-      properties:
-        frequencyCapDuration:
-          type: string
-          description: The time period for the views cap.
-          enum:
-          - MINUTE
-          - HOUR
-          - DAY
-          - WEEK
-          - MONTH
-          - QUARTER
-          - YEAR
-          - ALWAYS
-          - SESSION
-        frequencyCapViews:
-          type: integer
-          format: int32
-          description: The number of views allowed in the specified time period.
-        id:
-          type: string
-          description: The ID of the frequency rule.
-    priority:
-      type: object
+      description: The domain.
       properties:
         id:
           type: string
-          description: The ID of the priority.
-        isDefault:
-          type: boolean
-          description: Whether the priority is the default priority.
+          description: Unique identifier.
         name:
           type: string
-          description: The name of the priority.
+          description: Name of this object.
+      readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

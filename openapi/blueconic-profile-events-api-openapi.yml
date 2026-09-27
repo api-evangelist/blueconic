@@ -77,22 +77,6 @@ paths:
         - read:profiles
 components:
   schemas:
-    profileEvent:
-      type: object
-      properties:
-        date:
-          type: string
-          description: Datetime in UTC when the event occurred. The date is in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        property:
-          type: array
-          items:
-            $ref: '#/components/schemas/property'
-        type:
-          type: string
-          description: The type of event.
-          enum:
-          - PermissionLevelChanged
-          - ConsentChanged
     profileEvents:
       type: object
       properties:
@@ -120,6 +104,22 @@ components:
           format: int32
           description: The total number of results.
           readOnly: true
+    profileEvent:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Datetime in UTC when the event occurred. The date is in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        property:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+        type:
+          type: string
+          description: The type of event.
+          enum:
+          - PermissionLevelChanged
+          - ConsentChanged
     property:
       type: object
       description: A property consisting of an ID and a list of values.

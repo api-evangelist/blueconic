@@ -119,17 +119,6 @@ components:
           enum:
           - RESTRICT
           - EXCLUDE
-    simpleDomain:
-      type: object
-      description: The domain.
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-        name:
-          type: string
-          description: Name of this object.
-      readOnly: true
     Listener:
       type: object
       description: A listener
@@ -210,6 +199,17 @@ components:
           description: The ID of the channel.
       required:
       - URLRestrictions
+    simpleDomain:
+      type: object
+      description: The domain.
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: Name of this object.
+      readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

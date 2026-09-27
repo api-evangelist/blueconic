@@ -103,6 +103,34 @@ paths:
         - read:timeline-event-types
 components:
   schemas:
+    timelineEventTypes:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        timelineEventType:
+          type: array
+          description: The timeline event types.
+          items:
+            $ref: '#/components/schemas/timelineEventType'
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
     FieldTypeBean:
       type: object
       description: A field type of a timeline event type.
@@ -130,6 +158,24 @@ components:
           description: The name of the field.
         values:
           $ref: '#/components/schemas/fieldTypeWrapper'
+    fieldTypeWrapper:
+      type: object
+      description: The value(s) of a type.
+      properties:
+        value:
+          type: object
+          description: The value of the field
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
     timelineEventType:
       type: object
       description: A timeline event type.
@@ -192,52 +238,6 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
-    fieldTypeWrapper:
-      type: object
-      description: The value(s) of a type.
-      properties:
-        value:
-          type: object
-          description: The value of the field
-    timelineEventTypes:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        timelineEventType:
-          type: array
-          description: The timeline event types.
-          items:
-            $ref: '#/components/schemas/timelineEventType'
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

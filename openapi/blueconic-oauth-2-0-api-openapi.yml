@@ -218,15 +218,6 @@ paths:
           description: The server is too busy to handle the request.
 components:
   schemas:
-    TokenErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: The error code.
-        error_description:
-          type: string
-          description: A human-readable description of the error with additional information.
     TokenSuccessResponse:
       type: object
       properties:
@@ -243,6 +234,15 @@ components:
         token_type:
           type: string
           description: The token type of the access and refresh token.
+    TokenErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The error code.
+        error_description:
+          type: string
+          description: A human-readable description of the error with additional information.
   securitySchemes:
     oauth2:
       type: oauth2

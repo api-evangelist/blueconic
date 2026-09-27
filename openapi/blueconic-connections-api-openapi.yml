@@ -155,6 +155,16 @@ paths:
         - read:connections
 components:
   schemas:
+    SimpleRoleBean:
+      type: object
+      description: A role with id and name.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the role.
+        name:
+          type: string
+          description: Name of the role.
     UrlRestriction:
       type: object
       description: URL restriction for a target channel.
@@ -171,20 +181,22 @@ components:
           enum:
           - RESTRICT
           - EXCLUDE
-    simpleDomain:
+    property:
       type: object
-      description: The domain.
+      description: A property consisting of an ID and a list of values.
       properties:
         id:
           type: string
-          description: Unique identifier.
-        name:
-          type: string
-          description: Name of this object.
-      readOnly: true
-    ConnectionStatus:
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+    status:
       type: object
-      description: The status of a connection run
+      description: Notebook run status.
       properties:
         endDate:
           type: string
@@ -236,6 +248,30 @@ components:
           - FAILED
           - STOPPING
           - STOPPED
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    targetChannels:
+      type: object
+      description: Target channel.
+      properties:
+        URLRestrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UrlRestriction'
+        channelId:
+          type: string
+          description: The ID of the channel.
+      required:
+      - URLRestrictions
     Connection:
       type: object
       description: A connection
@@ -307,19 +343,9 @@ components:
             $ref: '#/components/schemas/targetChannels'
       required:
       - roles
-    SimpleRoleBean:
+    ConnectionStatus:
       type: object
-      description: A role with id and name.
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the role.
-        name:
-          type: string
-          description: Name of the role.
-    status:
-      type: object
-      description: Notebook run status.
+      description: The status of a connection run
       properties:
         endDate:
           type: string
@@ -371,43 +397,17 @@ components:
           - FAILED
           - STOPPING
           - STOPPED
-    property:
+    simpleDomain:
       type: object
-      description: A property consisting of an ID and a list of values.
+      description: The domain.
       properties:
         id:
           type: string
-          description: The ID of the property.
-        values:
-          type: array
-          description: Values for this property.
-          items:
-            type: string
-            description: Values for this property.
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
+          description: Unique identifier.
+        name:
           type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
+          description: Name of this object.
       readOnly: true
-    targetChannels:
-      type: object
-      description: Target channel.
-      properties:
-        URLRestrictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/UrlRestriction'
-        channelId:
-          type: string
-          description: The ID of the channel.
-      required:
-      - URLRestrictions
   securitySchemes:
     oauth2:
       type: oauth2

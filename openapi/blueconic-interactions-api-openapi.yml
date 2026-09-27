@@ -89,23 +89,25 @@ paths:
           description: The server is too busy to handle the request.
 components:
   schemas:
-    entry:
+    InteractionType:
       type: object
       properties:
-        defaultLocale:
-          type: string
-          description: The default locale.
         id:
           type: string
-          description: The interaction ID.
-        interactionType:
-          $ref: '#/components/schemas/InteractionType'
-        name:
+          description: The interaction type ID.
+        positionType:
           type: string
-          description: The interaction name.
-        position:
+          description: The position type, e.g. overlay or position.
+        type:
           type: string
-          description: The position of the interaction on the channel.
+          description: The interaction type, e.g. listener or action.
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
     ErrorRequestBean:
       type: object
       properties:
@@ -125,25 +127,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/entry'
-    ErrorBean:
+    entry:
       type: object
       properties:
-        field:
+        defaultLocale:
           type: string
-        message:
-          type: string
-    InteractionType:
-      type: object
-      properties:
+          description: The default locale.
         id:
           type: string
-          description: The interaction type ID.
-        positionType:
+          description: The interaction ID.
+        interactionType:
+          $ref: '#/components/schemas/InteractionType'
+        name:
           type: string
-          description: The position type, e.g. overlay or position.
-        type:
+          description: The interaction name.
+        position:
           type: string
-          description: The interaction type, e.g. listener or action.
+          description: The position of the interaction on the channel.
   securitySchemes:
     oauth2:
       type: oauth2

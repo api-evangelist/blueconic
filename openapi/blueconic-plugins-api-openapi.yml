@@ -131,16 +131,6 @@ paths:
         - read:plugins
 components:
   schemas:
-    DescriptionLabel:
-      type: object
-      description: 'Localized description text displayed in the About section of the plugin. Provides a brief summary of the plugin’s purpose or functionality. Note: the UI always displays the description with the key set to en_US.'
-      properties:
-        key:
-          type: string
-          description: Language code that specifies the locale of the description text. Follows the IETF BCP 47 format (e.g., en_US for U.S. English)
-        value:
-          type: string
-          description: The localized description text for the specified language.
     UserBean:
       type: object
       description: BlueConic user.
@@ -231,6 +221,16 @@ components:
         value:
           type: string
           description: The localized display name for the specified language.
+    DescriptionLabel:
+      type: object
+      description: 'Localized description text displayed in the About section of the plugin. Provides a brief summary of the plugin’s purpose or functionality. Note: the UI always displays the description with the key set to en_US.'
+      properties:
+        key:
+          type: string
+          description: Language code that specifies the locale of the description text. Follows the IETF BCP 47 format (e.g., en_US for U.S. English)
+        value:
+          type: string
+          description: The localized description text for the specified language.
   securitySchemes:
     oauth2:
       type: oauth2

@@ -275,79 +275,6 @@ components:
               type: string
               description: The errors found for the given profile changes (if any).
           description: The errors found for the given profile changes (if any).
-    link:
-      type: object
-      properties:
-        Href:
-          type: string
-          description: The href of the link
-        Rel:
-          type: string
-          description: The link rel e.g. 'self', 'next', etc.
-        Type:
-          type: string
-          description: The type of the link e.g. 'application/json'
-    ErrorRequestBean:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBean'
-        message:
-          type: string
-    TimelineResultBean:
-      type: object
-      description: The feedback on the given timeline events.
-      properties:
-        id:
-          type: string
-          description: The ID for this event.
-        identifier:
-          type: string
-          description: The identifier (optionally) as passed in the input, can be used as reference.
-        state:
-          type: string
-          description: The possible states for timeline events.
-          enum:
-          - CREATED
-          - SET
-          - MODIFIED
-          - REJECTED
-          - NOTFOUND
-          - DELETED
-        validationErrors:
-          type: array
-          description: The errors found for the given timeline event changes (if any).
-          example:
-          - '#/total_revenue/0: expected type: Number, found: String'
-          items:
-            type: string
-            description: The errors found for the given timeline event changes (if any).
-            example: '["#/total_revenue/0: expected type: Number, found: String"]'
-    property:
-      type: object
-      description: A property consisting of an ID and a list of values.
-      properties:
-        id:
-          type: string
-          description: The ID of the property.
-        values:
-          type: array
-          description: Values for this property.
-          items:
-            type: string
-            description: Values for this property.
-    ErrorBean:
-      type: object
-      properties:
-        field:
-          type: string
-        message:
-          type: string
     BulkGroupInputEntry:
       type: object
       properties:
@@ -395,6 +322,19 @@ components:
           - UPSERT
           - UPDATE
           - DELETE
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
     group:
       type: object
       description: Groups that the profile is a part of.
@@ -417,6 +357,47 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/property'
+    link:
+      type: object
+      properties:
+        Href:
+          type: string
+          description: The href of the link
+        Rel:
+          type: string
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
+          type: string
+          description: The type of the link e.g. 'application/json'
+    TimelineResultBean:
+      type: object
+      description: The feedback on the given timeline events.
+      properties:
+        id:
+          type: string
+          description: The ID for this event.
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        state:
+          type: string
+          description: The possible states for timeline events.
+          enum:
+          - CREATED
+          - SET
+          - MODIFIED
+          - REJECTED
+          - NOTFOUND
+          - DELETED
+        validationErrors:
+          type: array
+          description: The errors found for the given timeline event changes (if any).
+          example:
+          - '#/total_revenue/0: expected type: Number, found: String'
+          items:
+            type: string
+            description: The errors found for the given timeline event changes (if any).
+            example: '["#/total_revenue/0: expected type: Number, found: String"]'
     BulkGroupResultBean:
       type: object
       properties:
@@ -447,40 +428,6 @@ components:
               type: string
               description: The errors found for the given group changes (if any).
           description: The errors found for the given group changes (if any).
-    GroupsAPIGroups:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: The cursor of the current page. `*` when not passed.
-        groups:
-          type: array
-          description: The groups.
-          items:
-            $ref: '#/components/schemas/group'
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        links:
-          type: array
-          description: The links to the first and next/last page.
-          items:
-            $ref: '#/components/schemas/link'
-        nextCursor:
-          type: string
-          description: The cursor of the next page (if any).
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
     RefinementBean:
       type: object
       properties:
@@ -528,6 +475,59 @@ components:
           items:
             type: string
             description: The values
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    GroupsAPIGroups:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The cursor of the current page. `*` when not passed.
+        groups:
+          type: array
+          description: The groups.
+          items:
+            $ref: '#/components/schemas/group'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        links:
+          type: array
+          description: The links to the first and next/last page.
+          items:
+            $ref: '#/components/schemas/link'
+        nextCursor:
+          type: string
+          description: The cursor of the next page (if any).
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

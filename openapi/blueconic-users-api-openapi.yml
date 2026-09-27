@@ -107,17 +107,6 @@ paths:
         - read:users
 components:
   schemas:
-    simpleDomain:
-      type: object
-      description: The domain.
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-        name:
-          type: string
-          description: Name of this object.
-      readOnly: true
     SimpleRoleBean:
       type: object
       description: A role with id and name.
@@ -138,6 +127,17 @@ components:
         userName:
           type: string
           description: The username.
+      readOnly: true
+    simpleDomain:
+      type: object
+      description: The domain.
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: Name of this object.
       readOnly: true
     users:
       type: object

@@ -95,18 +95,6 @@ paths:
         - read:dialogues
 components:
   schemas:
-    ErrorRequestBean:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBean'
-        message:
-          type: string
     result:
       type: object
       properties:
@@ -143,6 +131,18 @@ components:
       properties:
         field:
           type: string
+        message:
+          type: string
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
         message:
           type: string
   securitySchemes:

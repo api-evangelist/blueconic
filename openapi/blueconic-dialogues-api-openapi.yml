@@ -103,6 +103,34 @@ paths:
         - read:dialogues
 components:
   schemas:
+    Dialogues:
+      type: object
+      description: Collection of dialogue configurations.
+      properties:
+        dialogues:
+          type: array
+          items:
+            $ref: '#/components/schemas/dialogue'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
     UrlRestriction:
       type: object
       description: URL restriction for a target channel.
@@ -119,6 +147,119 @@ components:
           enum:
           - RESTRICT
           - EXCLUDE
+    VariantBean:
+      type: object
+      description: Variants for this dialogue.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        id:
+          type: string
+          description: The object ID.
+        isEnabled:
+          type: boolean
+          description: Indicates whether the variant is enabled.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        name:
+          type: string
+          description: The object name.
+        pluginId:
+          type: string
+          description: the plugin ID.
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+    dialogue:
+      type: object
+      description: Dialogue configuration for a single instance.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        id:
+          type: string
+          description: The object ID.
+        isEnabled:
+          type: boolean
+          description: Indicates whether the variant is enabled.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        name:
+          type: string
+          description: The object name.
+        optimizerSettings:
+          $ref: '#/components/schemas/optimizerSettings'
+        priority:
+          $ref: '#/components/schemas/priority'
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+        targetChannels:
+          type: array
+          description: Target channels for this dialogue.
+          items:
+            $ref: '#/components/schemas/targetChannels'
+        variants:
+          $ref: '#/components/schemas/VariantBean'
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    priority:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the priority.
+        isDefault:
+          type: boolean
+          description: Whether the priority is the default priority.
+        name:
+          type: string
+          description: The name of the priority.
     DialogueBean:
       type: object
       description: Dialogue configuration for a single instance.
@@ -168,6 +309,19 @@ components:
             $ref: '#/components/schemas/targetChannels'
         variants:
           $ref: '#/components/schemas/VariantBean'
+    targetChannels:
+      type: object
+      description: Target channel.
+      properties:
+        URLRestrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UrlRestriction'
+        channelId:
+          type: string
+          description: The ID of the channel.
+      required:
+      - URLRestrictions
     optimizerSettings:
       type: object
       description: The optimizer settings for a dialogue.
@@ -234,160 +388,6 @@ components:
         variantStrategyModelId:
           type: string
           description: The variant strategy model id.
-    dialogue:
-      type: object
-      description: Dialogue configuration for a single instance.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        creator:
-          $ref: '#/components/schemas/UserBean'
-        description:
-          type: string
-          description: The description.
-        id:
-          type: string
-          description: The object ID.
-        isEnabled:
-          type: boolean
-          description: Indicates whether the variant is enabled.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        lastModifiedUser:
-          $ref: '#/components/schemas/UserBean'
-        name:
-          type: string
-          description: The object name.
-        optimizerSettings:
-          $ref: '#/components/schemas/optimizerSettings'
-        priority:
-          $ref: '#/components/schemas/priority'
-        tags:
-          type: array
-          description: The tags (i.e. labels).
-          example: Address
-          items:
-            type: string
-            description: The tags (i.e. labels).
-            example: Address
-        targetChannels:
-          type: array
-          description: Target channels for this dialogue.
-          items:
-            $ref: '#/components/schemas/targetChannels'
-        variants:
-          $ref: '#/components/schemas/VariantBean'
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
-    targetChannels:
-      type: object
-      description: Target channel.
-      properties:
-        URLRestrictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/UrlRestriction'
-        channelId:
-          type: string
-          description: The ID of the channel.
-      required:
-      - URLRestrictions
-    Dialogues:
-      type: object
-      description: Collection of dialogue configurations.
-      properties:
-        dialogues:
-          type: array
-          items:
-            $ref: '#/components/schemas/dialogue'
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    VariantBean:
-      type: object
-      description: Variants for this dialogue.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        creator:
-          $ref: '#/components/schemas/UserBean'
-        description:
-          type: string
-          description: The description.
-        id:
-          type: string
-          description: The object ID.
-        isEnabled:
-          type: boolean
-          description: Indicates whether the variant is enabled.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        lastModifiedUser:
-          $ref: '#/components/schemas/UserBean'
-        name:
-          type: string
-          description: The object name.
-        pluginId:
-          type: string
-          description: the plugin ID.
-        tags:
-          type: array
-          description: The tags (i.e. labels).
-          example: Address
-          items:
-            type: string
-            description: The tags (i.e. labels).
-            example: Address
-    priority:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the priority.
-        isDefault:
-          type: boolean
-          description: Whether the priority is the default priority.
-        name:
-          type: string
-          description: The name of the priority.
   securitySchemes:
     oauth2:
       type: oauth2

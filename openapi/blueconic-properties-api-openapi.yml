@@ -242,6 +242,64 @@ paths:
         - read:profile-properties
 components:
   schemas:
+    profileProperties:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        links:
+          $ref: '#/components/schemas/links'
+        profileProperties:
+          type: array
+          items:
+            $ref: '#/components/schemas/profileProperty'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    link:
+      type: object
+      properties:
+        Href:
+          type: string
+          description: The href of the link
+        Rel:
+          type: string
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
+          type: string
+          description: The type of the link e.g. 'application/json'
+    unit:
+      type: object
+      description: The unit of the property.
+      properties:
+        id:
+          type: string
+          description: The unit ID.
+        name:
+          $ref: '#/components/schemas/Labels'
+    links:
+      type: object
+      properties:
+        links:
+          type: array
+          description: The related links.
+          items:
+            $ref: '#/components/schemas/link'
     profileProperty:
       type: object
       properties:
@@ -391,16 +449,6 @@ components:
             type: string
             description: When selecting this property as filter for segmentation, these values will be selectable next to the values that are in the profiles. Only applicable when "availableForSegmentation" is "true".
           uniqueItems: true
-    label:
-      type: object
-      description: The labels for the name
-      properties:
-        content:
-          type: string
-          description: The label value
-        locale:
-          type: string
-          description: The label locale
     currency:
       type: object
       default: None
@@ -424,18 +472,6 @@ components:
           type: string
           description: The currency symbol, e.g. "$", "€", etc.
           readOnly: true
-    link:
-      type: object
-      properties:
-        Href:
-          type: string
-          description: The href of the link
-        Rel:
-          type: string
-          description: The link rel e.g. 'self', 'next', etc.
-        Type:
-          type: string
-          description: The type of the link e.g. 'application/json'
     Labels:
       type: object
       description: The language labels for the unit.
@@ -458,44 +494,16 @@ components:
           format: int64
           description: The minimum value of the range
       readOnly: true
-    profileProperties:
+    label:
       type: object
+      description: The labels for the name
       properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        links:
-          $ref: '#/components/schemas/links'
-        profileProperties:
-          type: array
-          items:
-            $ref: '#/components/schemas/profileProperty'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    unit:
-      type: object
-      description: The unit of the property.
-      properties:
-        id:
+        content:
           type: string
-          description: The unit ID.
-        name:
-          $ref: '#/components/schemas/Labels'
+          description: The label value
+        locale:
+          type: string
+          description: The label locale
     UserBean:
       type: object
       description: BlueConic user.
@@ -507,14 +515,6 @@ components:
           type: string
           description: The username.
       readOnly: true
-    links:
-      type: object
-      properties:
-        links:
-          type: array
-          description: The related links.
-          items:
-            $ref: '#/components/schemas/link'
   securitySchemes:
     oauth2:
       type: oauth2

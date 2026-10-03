@@ -239,42 +239,13 @@ paths:
         - write:groups
 components:
   schemas:
-    BulkResultBean:
+    ErrorBean:
       type: object
       properties:
-        identifier:
+        field:
           type: string
-          description: The identifier (optionally) as passed in the input, can be used as reference.
-        profileId:
+        message:
           type: string
-          description: The profile ID of the profile that was created, updated or deleted.
-        state:
-          type: string
-          description: The possible states for profile related changes.
-          enum:
-          - CREATED
-          - SKIPPED
-          - MODIFIED
-          - UNCHANGED
-          - NOTFOUND
-          - RESTRICTION_MISMATCH
-          - CONSENT_MISMATCH
-          - DELETED
-          - UNAUTHORIZED
-        timeline:
-          type: array
-          description: The feedback on the given timeline events.
-          items:
-            $ref: '#/components/schemas/TimelineResultBean'
-        validationErrors:
-          type: object
-          additionalProperties:
-            type: array
-            description: The errors found for the given profile changes (if any).
-            items:
-              type: string
-              description: The errors found for the given profile changes (if any).
-          description: The errors found for the given profile changes (if any).
     BulkGroupInputEntry:
       type: object
       properties:
@@ -322,82 +293,52 @@ components:
           - UPSERT
           - UPDATE
           - DELETE
-    property:
+    ErrorRequestBean:
       type: object
-      description: A property consisting of an ID and a list of values.
       properties:
-        id:
-          type: string
-          description: The ID of the property.
-        values:
-          type: array
-          description: Values for this property.
-          items:
-            type: string
-            description: Values for this property.
-    group:
-      type: object
-      description: Groups that the profile is a part of.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        groupTypeId:
-          type: string
-          description: The ID of the BlueConic group type.
-        id:
-          type: string
-          description: The unique identifier for the object.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        properties:
+        code:
+          type: integer
+          format: int32
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/property'
-    link:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    GroupsAPIGroups:
       type: object
       properties:
-        Href:
+        cursor:
           type: string
-          description: The href of the link
-        Rel:
-          type: string
-          description: The link rel e.g. 'self', 'next', etc.
-        Type:
-          type: string
-          description: The type of the link e.g. 'application/json'
-    TimelineResultBean:
-      type: object
-      description: The feedback on the given timeline events.
-      properties:
-        id:
-          type: string
-          description: The ID for this event.
-        identifier:
-          type: string
-          description: The identifier (optionally) as passed in the input, can be used as reference.
-        state:
-          type: string
-          description: The possible states for timeline events.
-          enum:
-          - CREATED
-          - SET
-          - MODIFIED
-          - REJECTED
-          - NOTFOUND
-          - DELETED
-        validationErrors:
+          description: The cursor of the current page. `*` when not passed.
+        groups:
           type: array
-          description: The errors found for the given timeline event changes (if any).
-          example:
-          - '#/total_revenue/0: expected type: Number, found: String'
+          description: The groups.
           items:
-            type: string
-            description: The errors found for the given timeline event changes (if any).
-            example: '["#/total_revenue/0: expected type: Number, found: String"]'
+            $ref: '#/components/schemas/group'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        links:
+          type: array
+          description: The links to the first and next/last page.
+          items:
+            $ref: '#/components/schemas/link'
+        nextCursor:
+          type: string
+          description: The cursor of the next page (if any).
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
     BulkGroupResultBean:
       type: object
       properties:
@@ -428,6 +369,106 @@ components:
               type: string
               description: The errors found for the given group changes (if any).
           description: The errors found for the given group changes (if any).
+    group:
+      type: object
+      description: Groups that the profile is a part of.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        groupTypeId:
+          type: string
+          description: The ID of the BlueConic group type.
+        id:
+          type: string
+          description: The unique identifier for the object.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+    BulkResultBean:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        profileId:
+          type: string
+          description: The profile ID of the profile that was created, updated or deleted.
+        state:
+          type: string
+          description: The possible states for profile related changes.
+          enum:
+          - CREATED
+          - SKIPPED
+          - MODIFIED
+          - UNCHANGED
+          - NOTFOUND
+          - RESTRICTION_MISMATCH
+          - CONSENT_MISMATCH
+          - DELETED
+          - UNAUTHORIZED
+        timeline:
+          type: array
+          description: The feedback on the given timeline events.
+          items:
+            $ref: '#/components/schemas/TimelineResultBean'
+        validationErrors:
+          type: object
+          additionalProperties:
+            type: array
+            description: The errors found for the given profile changes (if any).
+            items:
+              type: string
+              description: The errors found for the given profile changes (if any).
+          description: The errors found for the given profile changes (if any).
+    TimelineResultBean:
+      type: object
+      description: The feedback on the given timeline events.
+      properties:
+        id:
+          type: string
+          description: The ID for this event.
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        state:
+          type: string
+          description: The possible states for timeline events.
+          enum:
+          - CREATED
+          - SET
+          - MODIFIED
+          - REJECTED
+          - NOTFOUND
+          - DELETED
+        validationErrors:
+          type: array
+          description: The errors found for the given timeline event changes (if any).
+          example:
+          - '#/total_revenue/0: expected type: Number, found: String'
+          items:
+            type: string
+            description: The errors found for the given timeline event changes (if any).
+            example: '["#/total_revenue/0: expected type: Number, found: String"]'
     RefinementBean:
       type: object
       properties:
@@ -475,59 +516,18 @@ components:
           items:
             type: string
             description: The values
-    ErrorBean:
+    link:
       type: object
       properties:
-        field:
+        Href:
           type: string
-        message:
+          description: The href of the link
+        Rel:
           type: string
-    ErrorRequestBean:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBean'
-        message:
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
           type: string
-    GroupsAPIGroups:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: The cursor of the current page. `*` when not passed.
-        groups:
-          type: array
-          description: The groups.
-          items:
-            $ref: '#/components/schemas/group'
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        links:
-          type: array
-          description: The links to the first and next/last page.
-          items:
-            $ref: '#/components/schemas/link'
-        nextCursor:
-          type: string
-          description: The cursor of the next page (if any).
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
+          description: The type of the link e.g. 'application/json'
   securitySchemes:
     oauth2:
       type: oauth2

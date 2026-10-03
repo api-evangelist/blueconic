@@ -62,13 +62,6 @@ paths:
         - read:audit-events
 components:
   schemas:
-    AuditEventsBean:
-      type: object
-      properties:
-        auditEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditEntryBean'
     AuditEntryObjectBean:
       type: object
       properties:
@@ -76,6 +69,13 @@ components:
           type: string
         name:
           type: string
+    AuditEventsBean:
+      type: object
+      properties:
+        auditEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditEntryBean'
     AuditEntryBean:
       type: object
       properties:

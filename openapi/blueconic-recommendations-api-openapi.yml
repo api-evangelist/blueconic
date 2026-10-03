@@ -105,6 +105,39 @@ paths:
           description: The server is too busy to handle the request.
 components:
   schemas:
+    RecommendationRequest:
+      type: object
+      properties:
+        boosts:
+          type: array
+          description: The algorithms that will be executed to determine the recommendations with their boost value and parameters.
+          example:
+          - value: '1.5'
+            algorithm: RECENCY
+          items:
+            $ref: '#/components/schemas/Boost'
+        count:
+          type: integer
+          format: int32
+          description: The maximum number of items that should be returned for this definition.
+          example: 5
+        filters:
+          type: array
+          description: Item filters, see description.
+          example:
+          - category:news
+          - viewed
+          items:
+            type: string
+            description: Item filters, see description.
+            example: '["category:news","viewed"]'
+        id:
+          type: string
+          description: 'The order of execution of the definition objects: ''first'' will be executed first, ''second'' will be executed next. If the total count has not been reached, the remainder items will be from the ''default'' definition.'
+          example: first
+      required:
+      - boosts
+      - id
     RecommendationItem:
       type: object
       description: The recommendations of this block.
@@ -145,39 +178,20 @@ components:
         url:
           type: string
           description: The url of this item.
-    RecommendationRequest:
+    RecommendationResponse:
       type: object
       properties:
-        boosts:
+        recommendationBlock:
           type: array
-          description: The algorithms that will be executed to determine the recommendations with their boost value and parameters.
-          example:
-          - value: '1.5'
-            algorithm: RECENCY
+          description: The recommendation blocks as defined in the request body.
           items:
-            $ref: '#/components/schemas/Boost'
-        count:
-          type: integer
-          format: int32
-          description: The maximum number of items that should be returned for this definition.
-          example: 5
-        filters:
-          type: array
-          description: Item filters, see description.
-          example:
-          - category:news
-          - viewed
-          items:
-            type: string
-            description: Item filters, see description.
-            example: '["category:news","viewed"]'
-        id:
+            $ref: '#/components/schemas/RecommendationSubResponse'
+        recommendationId:
           type: string
-          description: 'The order of execution of the definition objects: ''first'' will be executed first, ''second'' will be executed next. If the total count has not been reached, the remainder items will be from the ''default'' definition.'
-          example: first
-      required:
-      - boosts
-      - id
+          description: The unique ID for this recommendation request.
+        trackingPixel:
+          type: string
+          description: The tracking pixel to track this recommendation request.
     RecommendationSubResponse:
       type: object
       description: The recommendation blocks as defined in the request body.
@@ -230,20 +244,6 @@ components:
       required:
       - algorithm
       - value
-    RecommendationResponse:
-      type: object
-      properties:
-        recommendationBlock:
-          type: array
-          description: The recommendation blocks as defined in the request body.
-          items:
-            $ref: '#/components/schemas/RecommendationSubResponse'
-        recommendationId:
-          type: string
-          description: The unique ID for this recommendation request.
-        trackingPixel:
-          type: string
-          description: The tracking pixel to track this recommendation request.
   securitySchemes:
     oauth2:
       type: oauth2

@@ -103,50 +103,6 @@ paths:
         - read:timeline_event_rollups
 components:
   schemas:
-    ConditionBean:
-      type: object
-      description: Condition configuration for the rollup.
-      properties:
-        conditionOperator:
-          type: string
-          description: The condition operator.
-          enum:
-          - MINIMUM
-          - MAXIMUM
-          - IS_EMPTY
-          - HAS_A_VALUE
-          - CONTAINS_ANY
-          - DOES_NOT_CONTAIN_ANY
-          - BETWEEN
-          - BEFORE
-          - AFTER
-          - WITHIN_LAST
-          - SQL_BASED_SLIDING_WINDOW
-        eventPropertyId:
-          type: string
-          description: The timeline event type property ID.
-        fromDate:
-          type: string
-          format: date-time
-          description: The from date value for the condition.
-        fromValue:
-          type: number
-          format: double
-          description: The from value for the condition.
-        toDate:
-          type: string
-          format: date-time
-          description: The to date value for the condition.
-        toValue:
-          type: number
-          format: double
-          description: The to value for the condition.
-        values:
-          type: array
-          description: The values for the condition.
-          items:
-            type: string
-            description: The values for the condition.
     MappingBean:
       type: object
       description: Mapping configuration for the rollup.
@@ -199,6 +155,89 @@ components:
           format: int32
           description: The total number of results.
           readOnly: true
+    QueryBean:
+      type: object
+      description: Query configuration for the rollup.
+      properties:
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionBean'
+        eventTypeIds:
+          type: array
+          description: The timeline event type IDs used in the rollup. For basic rollups, it's always singular. For SQL based, it can be multiple.
+          items:
+            type: string
+            description: The timeline event type IDs used in the rollup. For basic rollups, it's always singular. For SQL based, it can be multiple.
+        mappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappingBean'
+        sqlQuery:
+          type: string
+          description: The SQL query. Only applicable when the query type is `SQL`.
+        type:
+          type: string
+          description: The query type.
+          enum:
+          - BASIC
+          - SQL
+          example: BASIC
+    ConditionBean:
+      type: object
+      description: Condition configuration for the rollup.
+      properties:
+        conditionOperator:
+          type: string
+          description: The condition operator.
+          enum:
+          - MINIMUM
+          - MAXIMUM
+          - IS_EMPTY
+          - HAS_A_VALUE
+          - CONTAINS_ANY
+          - DOES_NOT_CONTAIN_ANY
+          - BETWEEN
+          - BEFORE
+          - AFTER
+          - WITHIN_LAST
+          - SQL_BASED_SLIDING_WINDOW
+        eventPropertyId:
+          type: string
+          description: The timeline event type property ID.
+        fromDate:
+          type: string
+          format: date-time
+          description: The from date value for the condition.
+        fromValue:
+          type: number
+          format: double
+          description: The from value for the condition.
+        toDate:
+          type: string
+          format: date-time
+          description: The to date value for the condition.
+        toValue:
+          type: number
+          format: double
+          description: The to value for the condition.
+        values:
+          type: array
+          description: The values for the condition.
+          items:
+            type: string
+            description: The values for the condition.
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
     RollupBean:
       type: object
       description: Rollup configuration for a single instance.
@@ -263,45 +302,6 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
-    QueryBean:
-      type: object
-      description: Query configuration for the rollup.
-      properties:
-        conditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConditionBean'
-        eventTypeIds:
-          type: array
-          description: The timeline event type IDs used in the rollup. For basic rollups, it's always singular. For SQL based, it can be multiple.
-          items:
-            type: string
-            description: The timeline event type IDs used in the rollup. For basic rollups, it's always singular. For SQL based, it can be multiple.
-        mappings:
-          type: array
-          items:
-            $ref: '#/components/schemas/MappingBean'
-        sqlQuery:
-          type: string
-          description: The SQL query. Only applicable when the query type is `SQL`.
-        type:
-          type: string
-          description: The query type.
-          enum:
-          - BASIC
-          - SQL
-          example: BASIC
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

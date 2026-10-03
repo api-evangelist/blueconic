@@ -114,6 +114,43 @@ components:
           type: string
           description: The username.
       readOnly: true
+    reference:
+      type: object
+      description: The items that this objective applies to.
+      properties:
+        id:
+          type: string
+          description: The ID of the referenced object
+        type:
+          type: string
+          description: The type of the referenced object
+    objectives:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        objectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/objective'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
     objective:
       type: object
       properties:
@@ -191,43 +228,6 @@ components:
           type: integer
           format: int64
           description: The number of profiles that have refused or consented this objective.
-    objectives:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        objectives:
-          type: array
-          items:
-            $ref: '#/components/schemas/objective'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    reference:
-      type: object
-      description: The items that this objective applies to.
-      properties:
-        id:
-          type: string
-          description: The ID of the referenced object
-        type:
-          type: string
-          description: The type of the referenced object
   securitySchemes:
     oauth2:
       type: oauth2

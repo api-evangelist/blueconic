@@ -103,22 +103,19 @@ paths:
         - read:listeners
 components:
   schemas:
-    UrlRestriction:
+    targetChannels:
       type: object
-      description: URL restriction for a target channel.
+      description: Target channel.
       properties:
-        pattern:
+        URLRestrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UrlRestriction'
+        channelId:
           type: string
-          description: The URL pattern.
-        previewURL:
-          type: string
-          description: The preview URL.
-        restrictionType:
-          type: string
-          description: The restriction type.
-          enum:
-          - RESTRICT
-          - EXCLUDE
+          description: The ID of the channel.
+      required:
+      - URLRestrictions
     Listener:
       type: object
       description: A listener
@@ -186,19 +183,22 @@ components:
           type: string
           description: The username.
       readOnly: true
-    targetChannels:
+    UrlRestriction:
       type: object
-      description: Target channel.
+      description: URL restriction for a target channel.
       properties:
-        URLRestrictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/UrlRestriction'
-        channelId:
+        pattern:
           type: string
-          description: The ID of the channel.
-      required:
-      - URLRestrictions
+          description: The URL pattern.
+        previewURL:
+          type: string
+          description: The preview URL.
+        restrictionType:
+          type: string
+          description: The restriction type.
+          enum:
+          - RESTRICT
+          - EXCLUDE
     simpleDomain:
       type: object
       description: The domain.

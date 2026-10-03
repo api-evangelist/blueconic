@@ -163,16 +163,6 @@ paths:
         - read:notebooks
 components:
   schemas:
-    SimpleRoleBean:
-      type: object
-      description: A role with id and name.
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the role.
-        name:
-          type: string
-          description: Name of the role.
     NotebookStatusBeans:
       type: object
       description: A collection of notebook run status entries.
@@ -220,60 +210,27 @@ components:
           items:
             type: string
             description: Values for this property.
-    status:
+    SimpleRoleBean:
       type: object
-      description: Notebook run status.
+      description: A role with id and name.
       properties:
-        endDate:
+        id:
           type: string
-          format: date-time
-          description: The end date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        goalStatistics:
-          type: array
-          description: The goal statistics
-          items:
-            $ref: '#/components/schemas/property'
-        lane:
+          description: Unique identifier of the role.
+        name:
           type: string
-          description: The lane in which this run was executed
-          enum:
-          - REGULAR
-          - REGULAR2
-          - REGULAR3
-          - REGULAR4
-          - REGULAR5
-          - REGULAR6
-          - REGULAR7
-          - REGULAR8
-          - EXPRESS
-          - RUN_NOW
-          - CONTINUOUS
-        message:
+          description: Name of the role.
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
           type: string
-          description: The message of the run
-        runCount:
-          type: integer
-          format: int64
-          description: The run count
-        runId:
+          description: The full name of the user.
+        userName:
           type: string
-          description: The run id
-        startDate:
-          type: string
-          format: date-time
-          description: The start date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        state:
-          type: string
-          description: The state of the run
-          enum:
-          - STARTING
-          - RUNNING
-          - FINISHED
-          - FAILED
-          - STOPPING
-          - STOPPED
+          description: The username.
+      readOnly: true
     notebook:
       type: object
       properties:
@@ -347,17 +304,60 @@ components:
           format: int32
           description: The total number of results.
           readOnly: true
-    UserBean:
+    status:
       type: object
-      description: BlueConic user.
+      description: Notebook run status.
       properties:
-        fullName:
+        endDate:
           type: string
-          description: The full name of the user.
-        userName:
+          format: date-time
+          description: The end date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        goalStatistics:
+          type: array
+          description: The goal statistics
+          items:
+            $ref: '#/components/schemas/property'
+        lane:
           type: string
-          description: The username.
-      readOnly: true
+          description: The lane in which this run was executed
+          enum:
+          - REGULAR
+          - REGULAR2
+          - REGULAR3
+          - REGULAR4
+          - REGULAR5
+          - REGULAR6
+          - REGULAR7
+          - REGULAR8
+          - EXPRESS
+          - RUN_NOW
+          - CONTINUOUS
+        message:
+          type: string
+          description: The message of the run
+        runCount:
+          type: integer
+          format: int64
+          description: The run count
+        runId:
+          type: string
+          description: The run id
+        startDate:
+          type: string
+          format: date-time
+          description: The start date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        state:
+          type: string
+          description: The state of the run
+          enum:
+          - STARTING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - STOPPING
+          - STOPPED
   securitySchemes:
     oauth2:
       type: oauth2

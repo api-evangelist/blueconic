@@ -242,6 +242,23 @@ paths:
         - read:profile-properties
 components:
   schemas:
+    unit:
+      type: object
+      description: The unit of the property.
+      properties:
+        id:
+          type: string
+          description: The unit ID.
+        name:
+          $ref: '#/components/schemas/Labels'
+    links:
+      type: object
+      properties:
+        links:
+          type: array
+          description: The related links.
+          items:
+            $ref: '#/components/schemas/link'
     profileProperties:
       type: object
       properties:
@@ -271,35 +288,25 @@ components:
           format: int32
           description: The total number of results.
           readOnly: true
-    link:
+    label:
       type: object
+      description: The labels for the name
       properties:
-        Href:
+        content:
           type: string
-          description: The href of the link
-        Rel:
+          description: The label value
+        locale:
           type: string
-          description: The link rel e.g. 'self', 'next', etc.
-        Type:
-          type: string
-          description: The type of the link e.g. 'application/json'
-    unit:
+          description: The label locale
+    Labels:
       type: object
-      description: The unit of the property.
+      description: The language labels for the unit.
       properties:
-        id:
-          type: string
-          description: The unit ID.
-        name:
-          $ref: '#/components/schemas/Labels'
-    links:
-      type: object
-      properties:
-        links:
+        label:
           type: array
-          description: The related links.
+          description: The labels for the name
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/label'
     profileProperty:
       type: object
       properties:
@@ -472,15 +479,29 @@ components:
           type: string
           description: The currency symbol, e.g. "$", "€", etc.
           readOnly: true
-    Labels:
+    UserBean:
       type: object
-      description: The language labels for the unit.
+      description: BlueConic user.
       properties:
-        label:
-          type: array
-          description: The labels for the name
-          items:
-            $ref: '#/components/schemas/label'
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    link:
+      type: object
+      properties:
+        Href:
+          type: string
+          description: The href of the link
+        Rel:
+          type: string
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
+          type: string
+          description: The type of the link e.g. 'application/json'
     range:
       type: object
       description: The interval set for the property
@@ -493,27 +514,6 @@ components:
           type: integer
           format: int64
           description: The minimum value of the range
-      readOnly: true
-    label:
-      type: object
-      description: The labels for the name
-      properties:
-        content:
-          type: string
-          description: The label value
-        locale:
-          type: string
-          description: The label locale
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
       readOnly: true
   securitySchemes:
     oauth2:

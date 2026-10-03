@@ -245,6 +245,73 @@ paths:
         - read:segments
 components:
   schemas:
+    segment:
+      type: object
+      description: The segments.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        id:
+          type: string
+          description: The object ID.
+        inverseOf:
+          type: string
+          description: The ID of the segment of which this is the inverse.
+        inversedBy:
+          type: string
+          description: The ID of the segment that inversed this segment.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        name:
+          type: string
+          description: The object name.
+        profileCount:
+          type: integer
+          format: int32
+          description: The number of profiles in this segment.
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+    group:
+      type: object
+      description: Groups that the profile is a part of.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        groupTypeId:
+          type: string
+          description: The ID of the BlueConic group type.
+        id:
+          type: string
+          description: The unique identifier for the object.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
     event:
       type: object
       properties:
@@ -274,53 +341,14 @@ components:
           - UPDATE
           - DELETE
           writeOnly: true
-    matchingGroup:
+    lifecycleStage:
       type: object
-      description: Groups that the profile is a part of and match the segment refinements.
+      description: Lifecycle stages that the profile is part of.
       properties:
-        profilePropertyId:
-          type: string
-          description: The ID of the BlueConic profile property.
-        groupIds:
-          type: array
-          description: The matching group IDs.
-          items:
-            type: string
-            description: The matching group IDs.
-    link:
-      type: object
-      properties:
-        Href:
-          type: string
-          description: The href of the link
-        Rel:
-          type: string
-          description: The link rel e.g. 'self', 'next', etc.
-        Type:
-          type: string
-          description: The type of the link e.g. 'application/json'
-    group:
-      type: object
-      description: Groups that the profile is a part of.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        groupTypeId:
-          type: string
-          description: The ID of the BlueConic group type.
-        id:
-          type: string
-          description: The unique identifier for the object.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/property'
+        lifecycle:
+          $ref: '#/components/schemas/simpleObject'
+        stage:
+          $ref: '#/components/schemas/simpleObject'
     property:
       type: object
       description: A property consisting of an ID and a list of values.
@@ -334,76 +362,34 @@ components:
           items:
             type: string
             description: Values for this property.
-    lifecycleStage:
+    matchingGroup:
       type: object
-      description: Lifecycle stages that the profile is part of.
+      description: Groups that the profile is a part of and match the segment refinements.
       properties:
-        lifecycle:
-          $ref: '#/components/schemas/simpleObject'
-        stage:
-          $ref: '#/components/schemas/simpleObject'
-    segments:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        segments:
-          type: array
-          description: The segments.
-          items:
-            $ref: '#/components/schemas/segment'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    SegmentProfiles:
-      type: object
-      properties:
-        cursor:
+        profilePropertyId:
           type: string
-          description: The cursor of the current page. `*` when not passed.
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        links:
+          description: The ID of the BlueConic profile property.
+        groupIds:
           type: array
-          description: The links to the first and next/last page.
+          description: The matching group IDs.
           items:
-            $ref: '#/components/schemas/link'
-        nextCursor:
+            type: string
+            description: The matching group IDs.
+    profileSegmentBean:
+      type: object
+      properties:
+        id:
           type: string
-          description: The cursor of the next page (if any).
-        profiles:
+          description: The ID of the segment.
+        name:
+          type: string
+          description: The name of the segment.
+        tags:
           type: array
-          description: The profiles that are in this segment.
+          description: The labels of the segment (optionally included).
           items:
-            $ref: '#/components/schemas/profile'
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
+            type: string
+            description: The labels of the segment (optionally included).
     profile:
       type: object
       description: The profiles that are in this segment.
@@ -490,6 +476,55 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/profileSegmentBean'
+    SegmentProfiles:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The cursor of the current page. `*` when not passed.
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        links:
+          type: array
+          description: The links to the first and next/last page.
+          items:
+            $ref: '#/components/schemas/link'
+        nextCursor:
+          type: string
+          description: The cursor of the next page (if any).
+        profiles:
+          type: array
+          description: The profiles that are in this segment.
+          items:
+            $ref: '#/components/schemas/profile'
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    permissions:
+      type: object
+      properties:
+        level:
+          type: string
+          description: The permission level of the profile
+    simpleObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: The object name.
     Property:
       type: object
       properties:
@@ -510,21 +545,6 @@ components:
           items:
             type: object
             description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
-    profileSegmentBean:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the segment.
-        name:
-          type: string
-          description: The name of the segment.
-        tags:
-          type: array
-          description: The labels of the segment (optionally included).
-          items:
-            type: string
-            description: The labels of the segment (optionally included).
     RefinementBean:
       type: object
       properties:
@@ -583,66 +603,46 @@ components:
           type: string
           description: The username.
       readOnly: true
-    permissions:
+    link:
       type: object
       properties:
-        level:
+        Href:
           type: string
-          description: The permission level of the profile
-    segment:
+          description: The href of the link
+        Rel:
+          type: string
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
+          type: string
+          description: The type of the link e.g. 'application/json'
+    segments:
       type: object
-      description: The segments.
       properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        creator:
-          $ref: '#/components/schemas/UserBean'
-        description:
-          type: string
-          description: The description.
-        id:
-          type: string
-          description: The object ID.
-        inverseOf:
-          type: string
-          description: The ID of the segment of which this is the inverse.
-        inversedBy:
-          type: string
-          description: The ID of the segment that inversed this segment.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        lastModifiedUser:
-          $ref: '#/components/schemas/UserBean'
-        name:
-          type: string
-          description: The object name.
-        profileCount:
+        itemsPerPage:
           type: integer
           format: int32
-          description: The number of profiles in this segment.
-        tags:
+          description: Number of results per page.
+          readOnly: true
+        segments:
           type: array
-          description: The tags (i.e. labels).
-          example: Address
+          description: The segments.
           items:
-            type: string
-            description: The tags (i.e. labels).
-            example: Address
-    simpleObject:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-        name:
-          type: string
-          description: The object name.
+            $ref: '#/components/schemas/segment'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

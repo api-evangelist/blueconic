@@ -107,65 +107,6 @@ paths:
         - read:users
 components:
   schemas:
-    SimpleRoleBean:
-      type: object
-      description: A role with id and name.
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the role.
-        name:
-          type: string
-          description: Name of the role.
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
-    simpleDomain:
-      type: object
-      description: The domain.
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-        name:
-          type: string
-          description: Name of this object.
-      readOnly: true
-    users:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueConicUserBean'
     BlueConicUserBean:
       type: object
       description: The user.
@@ -231,6 +172,65 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
+    SimpleRoleBean:
+      type: object
+      description: A role with id and name.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the role.
+        name:
+          type: string
+          description: Name of the role.
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    simpleDomain:
+      type: object
+      description: The domain.
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: Name of this object.
+      readOnly: true
+    users:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueConicUserBean'
   securitySchemes:
     oauth2:
       type: oauth2

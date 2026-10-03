@@ -131,51 +131,6 @@ components:
           format: int32
           description: The total number of results.
           readOnly: true
-    FieldTypeBean:
-      type: object
-      description: A field type of a timeline event type.
-      properties:
-        dataSensitivity:
-          type: string
-          description: The data sensitivity of the field.
-          enum:
-          - NON_PII
-          - PII
-        description:
-          type: string
-          description: The description of the field.
-        identifier:
-          type: string
-          description: The identifier of the field.
-        key:
-          type: string
-          description: The key of the field.
-        multiple:
-          type: boolean
-          description: Whether the field is multi-valued.
-        name:
-          type: string
-          description: The name of the field.
-        values:
-          $ref: '#/components/schemas/fieldTypeWrapper'
-    fieldTypeWrapper:
-      type: object
-      description: The value(s) of a type.
-      properties:
-        value:
-          type: object
-          description: The value of the field
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
     timelineEventType:
       type: object
       description: A timeline event type.
@@ -238,6 +193,51 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
+    fieldTypeWrapper:
+      type: object
+      description: The value(s) of a type.
+      properties:
+        value:
+          type: object
+          description: The value of the field
+    FieldTypeBean:
+      type: object
+      description: A field type of a timeline event type.
+      properties:
+        dataSensitivity:
+          type: string
+          description: The data sensitivity of the field.
+          enum:
+          - NON_PII
+          - PII
+        description:
+          type: string
+          description: The description of the field.
+        identifier:
+          type: string
+          description: The identifier of the field.
+        key:
+          type: string
+          description: The key of the field.
+        multiple:
+          type: boolean
+          description: Whether the field is multi-valued.
+        name:
+          type: string
+          description: The name of the field.
+        values:
+          $ref: '#/components/schemas/fieldTypeWrapper'
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

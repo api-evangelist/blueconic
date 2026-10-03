@@ -95,6 +95,13 @@ paths:
         - read:dialogues
 components:
   schemas:
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
     result:
       type: object
       properties:
@@ -126,13 +133,6 @@ components:
             type: number
             description: The statistics in key/value format.
           description: The statistics in key/value format.
-    ErrorBean:
-      type: object
-      properties:
-        field:
-          type: string
-        message:
-          type: string
     ErrorRequestBean:
       type: object
       properties:

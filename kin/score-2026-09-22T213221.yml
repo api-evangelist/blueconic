@@ -1,31 +1,29 @@
-# Kin Score artifact — blueconic — 2026-08-25T154045
+# Kin Score artifact — blueconic — 2026-09-22T213221
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: blueconic
-  schema_version: 0.14.0
-  scored_at: '2026-08-25'
-  run_ts: 2026-08-25T154045
-  composite: 68.8
-  band: exemplar
+  schema_version: 0.22.0
+  scored_at: '2026-09-22'
+  run_ts: 2026-09-22T213221
+  composite: 65.9
+  band: strong
   facets:
-    discoverability: 68.5
-    contract_quality: 70.2
-    governance: 43.9
+    discoverability: 70.4
+    contract_quality: 66.6
+    contract_governance: 31.8
     operational_transparency: 94.7
     developer_ergonomics: 78.6
-    commercial_clarity: 55.3
-    contract_governance: 43.9
     access_clarity: 55.3
   agent_readiness:
-    score: 47.0
+    score: 48.7
     band: agent-ready
     band_gated_from: agent-native
     dimensions:
       spec_presence: true
       agentic_access: derived
       reversibility_documented: false
-      mcp_server: documented
+      mcp_server: templated
       auth_clarity: negotiable
       idempotency: false
       error_semantics: verified

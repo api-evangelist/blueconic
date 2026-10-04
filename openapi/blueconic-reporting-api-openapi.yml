@@ -95,25 +95,6 @@ paths:
         - read:dialogues
 components:
   schemas:
-    ErrorBean:
-      type: object
-      properties:
-        field:
-          type: string
-        message:
-          type: string
-    result:
-      type: object
-      properties:
-        dialogueStatistics:
-          type: array
-          description: The list of dialogue statistics entries, one per request dialogue UUID.
-          items:
-            $ref: '#/components/schemas/DialogueReportingEntry'
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of dialogues in the resultset.
     DialogueReportingEntry:
       type: object
       description: The list of dialogue statistics entries, one per request dialogue UUID.
@@ -133,6 +114,18 @@ components:
             type: number
             description: The statistics in key/value format.
           description: The statistics in key/value format.
+    result:
+      type: object
+      properties:
+        dialogueStatistics:
+          type: array
+          description: The list of dialogue statistics entries, one per request dialogue UUID.
+          items:
+            $ref: '#/components/schemas/DialogueReportingEntry'
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of dialogues in the resultset.
     ErrorRequestBean:
       type: object
       properties:
@@ -143,6 +136,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
         message:
           type: string
   securitySchemes:

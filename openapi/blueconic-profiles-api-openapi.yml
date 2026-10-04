@@ -519,6 +519,92 @@ paths:
         - read:profiles
 components:
   schemas:
+    profiles:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        profiles:
+          type: array
+          description: List of profile IDs that matches search criteria.
+          items:
+            $ref: '#/components/schemas/AbstractBaseBean'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    BulkResultBean:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        profileId:
+          type: string
+          description: The profile ID of the profile that was created, updated or deleted.
+        state:
+          type: string
+          description: The possible states for profile related changes.
+          enum:
+          - CREATED
+          - SKIPPED
+          - MODIFIED
+          - UNCHANGED
+          - NOTFOUND
+          - RESTRICTION_MISMATCH
+          - CONSENT_MISMATCH
+          - DELETED
+          - UNAUTHORIZED
+        timeline:
+          type: array
+          description: The feedback on the given timeline events.
+          items:
+            $ref: '#/components/schemas/TimelineResultBean'
+        validationErrors:
+          type: object
+          additionalProperties:
+            type: array
+            description: The errors found for the given profile changes (if any).
+            items:
+              type: string
+              description: The errors found for the given profile changes (if any).
+          description: The errors found for the given profile changes (if any).
+    group:
+      type: object
+      description: Groups that the profile is a part of.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        groupTypeId:
+          type: string
+          description: The ID of the BlueConic group type.
+        id:
+          type: string
+          description: The unique identifier for the object.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
     ErrorBean:
       type: object
       properties:
@@ -526,35 +612,6 @@ components:
           type: string
         message:
           type: string
-    event:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
-        date:
-          type: string
-          format: date-time
-          description: Timestamp for the event. The format of date is "2018-01-01T00:00Z" or with a timezone offset "2018-01-01T00:00+05:00". If empty, "now" will be used.
-        eventTypeId:
-          type: string
-          description: The type identifier of the event. See https://yourserver.blueconic.net/rest/timelineEventTypes?alt=json for the list of defined event types.
-        id:
-          type: string
-          description: An identifier to identify the event. Preferred to be unique, although it isn't required. If an event with the same ID is present on the profile's timeline, it will be overwritten. Note that the combination of ID, event type ID, and date uniquely identifies an event.
-        identifier:
-          type: string
-          description: An (external) identifier which can be passed along with a timeline event operation and is returned in the response.
-        strategy:
-          type: string
-          description: How the event will be applied to the timeline.
-          enum:
-          - SET
-          - UPSERT
-          - UPDATE
-          - DELETE
-          writeOnly: true
     property:
       type: object
       description: A property consisting of an ID and a list of values.
@@ -568,21 +625,31 @@ components:
           items:
             type: string
             description: Values for this property.
-    profileSegmentBean:
+    ErrorRequestBean:
       type: object
       properties:
-        id:
-          type: string
-          description: The ID of the segment.
-        name:
-          type: string
-          description: The name of the segment.
-        tags:
+        code:
+          type: integer
+          format: int32
+        errors:
           type: array
-          description: The labels of the segment (optionally included).
+          items:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
+    matchingGroup:
+      type: object
+      description: Groups that the profile is a part of and match the segment refinements.
+      properties:
+        profilePropertyId:
+          type: string
+          description: The ID of the BlueConic profile property.
+        groupIds:
+          type: array
+          description: The matching group IDs.
           items:
             type: string
-            description: The labels of the segment (optionally included).
+            description: The matching group IDs.
     profile:
       type: object
       description: The profiles that are in this segment.
@@ -669,91 +736,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/profileSegmentBean'
-    TimelineResultBean:
-      type: object
-      description: The feedback on the given timeline events.
-      properties:
-        id:
-          type: string
-          description: The ID for this event.
-        identifier:
-          type: string
-          description: The identifier (optionally) as passed in the input, can be used as reference.
-        state:
-          type: string
-          description: The possible states for timeline events.
-          enum:
-          - CREATED
-          - SET
-          - MODIFIED
-          - REJECTED
-          - NOTFOUND
-          - DELETED
-        validationErrors:
-          type: array
-          description: The errors found for the given timeline event changes (if any).
-          example:
-          - '#/total_revenue/0: expected type: Number, found: String'
-          items:
-            type: string
-            description: The errors found for the given timeline event changes (if any).
-            example: '["#/total_revenue/0: expected type: Number, found: String"]'
-    lifecycleStage:
-      type: object
-      description: Lifecycle stages that the profile is part of.
-      properties:
-        lifecycle:
-          $ref: '#/components/schemas/simpleObject'
-        stage:
-          $ref: '#/components/schemas/simpleObject'
-    matchingGroup:
-      type: object
-      description: Groups that the profile is a part of and match the segment refinements.
-      properties:
-        profilePropertyId:
-          type: string
-          description: The ID of the BlueConic profile property.
-        groupIds:
-          type: array
-          description: The matching group IDs.
-          items:
-            type: string
-            description: The matching group IDs.
-    simpleObject:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-        name:
-          type: string
-          description: The object name.
-    Property:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Timeline event property ID to apply to this rule for.
-        strategy:
-          type: string
-          description: The strategy to apply to primitive timeline event properties. For nested timeline event properties, SET/UPSERT/UPDATE/DELETE are supported.
-          enum:
-          - ADD
-          - SET
-          - SET_IF_EMPTY
-          writeOnly: true
-        values:
-          type: array
-          description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
-          items:
-            type: object
-            description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
-    permissions:
-      type: object
-      properties:
-        level:
-          type: string
-          description: The permission level of the profile
     Criterium:
       type: object
       description: The profile properties to match (only use "Unique Identifier" properties). This is an array of arrays; the items in the outer array have an "OR" relation, the items in the inner array have an "AND" relation.
@@ -764,71 +746,6 @@ components:
         value:
           type: string
           description: The profile property value to match on.
-    group:
-      type: object
-      description: Groups that the profile is a part of.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        groupTypeId:
-          type: string
-          description: The ID of the BlueConic group type.
-        id:
-          type: string
-          description: The unique identifier for the object.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/property'
-    BulkResultBean:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The identifier (optionally) as passed in the input, can be used as reference.
-        profileId:
-          type: string
-          description: The profile ID of the profile that was created, updated or deleted.
-        state:
-          type: string
-          description: The possible states for profile related changes.
-          enum:
-          - CREATED
-          - SKIPPED
-          - MODIFIED
-          - UNCHANGED
-          - NOTFOUND
-          - RESTRICTION_MISMATCH
-          - CONSENT_MISMATCH
-          - DELETED
-          - UNAUTHORIZED
-        timeline:
-          type: array
-          description: The feedback on the given timeline events.
-          items:
-            $ref: '#/components/schemas/TimelineResultBean'
-        validationErrors:
-          type: object
-          additionalProperties:
-            type: array
-            description: The errors found for the given profile changes (if any).
-            items:
-              type: string
-              description: The errors found for the given profile changes (if any).
-          description: The errors found for the given profile changes (if any).
-    AbstractBaseBean:
-      type: object
-      description: List of profile IDs that matches search criteria.
-      properties:
-        id:
-          type: string
-          description: The unique identifier for the object.
     ProfileProperty:
       type: object
       description: 'The rules that will be executed on this profile.</br>The following properties have a special meaning:</br> `privacy_legislation`: the value passed in this property should be one of the [privacy legislation zone values](https://support.blueconic.com/hc/en-us/articles/202528082-BlueConic-REST-API#privacy_legislation), and is used to determine if a profile should be matched against the passed `objectiveIds` in the querystring. </br>`consented_objectives`: the value(s) passed in this property are used to match against the passed `objectiveIds` in the querystring. At least one must match in order for the profile to be created/updated, otherwise `CONSENT_MISMATCH` is returned. </br>`refused_objectives`: the value(s) passed in this property are used to set the explicitly refused objectives.'
@@ -859,18 +776,22 @@ components:
           items:
             type: string
             description: The values to apply to this rule.
-    ErrorRequestBean:
+    simpleObject:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBean'
-        message:
+        id:
           type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: The object name.
+    AbstractBaseBean:
+      type: object
+      description: List of profile IDs that matches search criteria.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the object.
     BulkInputEntryV2:
       type: object
       properties:
@@ -982,6 +903,21 @@ components:
           type: boolean
           default: true
           description: Whether or not to execute the configured triggers (for example, a webhook connection) when a profile property value changes.
+    profileSegmentBean:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the segment.
+        name:
+          type: string
+          description: The name of the segment.
+        tags:
+          type: array
+          description: The labels of the segment (optionally included).
+          items:
+            type: string
+            description: The labels of the segment (optionally included).
     restriction:
       type: object
       description: The possible restriction rules when matching profiles. Only "isMemberOfSegment" is available at the moment.
@@ -989,34 +925,98 @@ components:
         isMemberOfSegment:
           type: string
           description: The segment ID this profile should be a part of.
-    profiles:
+    permissions:
       type: object
       properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        profiles:
+        level:
+          type: string
+          description: The permission level of the profile
+    lifecycleStage:
+      type: object
+      description: Lifecycle stages that the profile is part of.
+      properties:
+        lifecycle:
+          $ref: '#/components/schemas/simpleObject'
+        stage:
+          $ref: '#/components/schemas/simpleObject'
+    event:
+      type: object
+      properties:
+        data:
           type: array
-          description: List of profile IDs that matches search criteria.
           items:
-            $ref: '#/components/schemas/AbstractBaseBean'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
+            $ref: '#/components/schemas/Property'
+        date:
+          type: string
+          format: date-time
+          description: Timestamp for the event. The format of date is "2018-01-01T00:00Z" or with a timezone offset "2018-01-01T00:00+05:00". If empty, "now" will be used.
+        eventTypeId:
+          type: string
+          description: The type identifier of the event. See https://yourserver.blueconic.net/rest/timelineEventTypes?alt=json for the list of defined event types.
+        id:
+          type: string
+          description: An identifier to identify the event. Preferred to be unique, although it isn't required. If an event with the same ID is present on the profile's timeline, it will be overwritten. Note that the combination of ID, event type ID, and date uniquely identifies an event.
+        identifier:
+          type: string
+          description: An (external) identifier which can be passed along with a timeline event operation and is returned in the response.
+        strategy:
+          type: string
+          description: How the event will be applied to the timeline.
+          enum:
+          - SET
+          - UPSERT
+          - UPDATE
+          - DELETE
+          writeOnly: true
+    Property:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Timeline event property ID to apply to this rule for.
+        strategy:
+          type: string
+          description: The strategy to apply to primitive timeline event properties. For nested timeline event properties, SET/UPSERT/UPDATE/DELETE are supported.
+          enum:
+          - ADD
+          - SET
+          - SET_IF_EMPTY
+          writeOnly: true
+        values:
+          type: array
+          description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
+          items:
+            type: object
+            description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
+    TimelineResultBean:
+      type: object
+      description: The feedback on the given timeline events.
+      properties:
+        id:
+          type: string
+          description: The ID for this event.
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        state:
+          type: string
+          description: The possible states for timeline events.
+          enum:
+          - CREATED
+          - SET
+          - MODIFIED
+          - REJECTED
+          - NOTFOUND
+          - DELETED
+        validationErrors:
+          type: array
+          description: The errors found for the given timeline event changes (if any).
+          example:
+          - '#/total_revenue/0: expected type: Number, found: String'
+          items:
+            type: string
+            description: The errors found for the given timeline event changes (if any).
+            example: '["#/total_revenue/0: expected type: Number, found: String"]'
   securitySchemes:
     oauth2:
       type: oauth2

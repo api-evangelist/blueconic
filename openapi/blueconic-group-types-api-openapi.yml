@@ -48,21 +48,6 @@ paths:
         - read:group-types
 components:
   schemas:
-    groupType:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the group type
-          example: household
-        name:
-          type: string
-          description: Singular name of the group type
-          example: Household
-        pluralName:
-          type: string
-          description: Plural name of the group type
-          example: Households
     groupTypes:
       type: object
       properties:
@@ -90,6 +75,21 @@ components:
           format: int32
           description: The total number of results.
           readOnly: true
+    groupType:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the group type
+          example: household
+        name:
+          type: string
+          description: Singular name of the group type
+          example: Household
+        pluralName:
+          type: string
+          description: Plural name of the group type
+          example: Households
   securitySchemes:
     oauth2:
       type: oauth2

@@ -155,19 +155,6 @@ paths:
         - read:connections
 components:
   schemas:
-    targetChannels:
-      type: object
-      description: Target channel.
-      properties:
-        URLRestrictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/UrlRestriction'
-        channelId:
-          type: string
-          description: The ID of the channel.
-      required:
-      - URLRestrictions
     property:
       type: object
       description: A property consisting of an ID and a list of values.
@@ -262,87 +249,19 @@ components:
             $ref: '#/components/schemas/targetChannels'
       required:
       - roles
-    ConnectionStatus:
+    targetChannels:
       type: object
-      description: The status of a connection run
+      description: Target channel.
       properties:
-        endDate:
-          type: string
-          format: date-time
-          description: The end date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        goalStatistics:
+        URLRestrictions:
           type: array
-          description: The goal statistics
           items:
-            $ref: '#/components/schemas/property'
-        lane:
+            $ref: '#/components/schemas/UrlRestriction'
+        channelId:
           type: string
-          description: The lane in which this run was executed
-          enum:
-          - REGULAR
-          - REGULAR2
-          - REGULAR3
-          - REGULAR4
-          - REGULAR5
-          - REGULAR6
-          - REGULAR7
-          - REGULAR8
-          - EXPRESS
-          - RUN_NOW
-          - CONTINUOUS
-        message:
-          type: string
-          description: The message of the run
-        runCount:
-          type: integer
-          format: int64
-          description: The run count
-        runId:
-          type: string
-          description: The run id
-        startDate:
-          type: string
-          format: date-time
-          description: The start date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        state:
-          type: string
-          description: The state of the run
-          enum:
-          - STARTING
-          - RUNNING
-          - FINISHED
-          - FAILED
-          - STOPPING
-          - STOPPED
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
-    UrlRestriction:
-      type: object
-      description: URL restriction for a target channel.
-      properties:
-        pattern:
-          type: string
-          description: The URL pattern.
-        previewURL:
-          type: string
-          description: The preview URL.
-        restrictionType:
-          type: string
-          description: The restriction type.
-          enum:
-          - RESTRICT
-          - EXCLUDE
+          description: The ID of the channel.
+      required:
+      - URLRestrictions
     simpleDomain:
       type: object
       description: The domain.
@@ -408,6 +327,87 @@ components:
           - FAILED
           - STOPPING
           - STOPPED
+    ConnectionStatus:
+      type: object
+      description: The status of a connection run
+      properties:
+        endDate:
+          type: string
+          format: date-time
+          description: The end date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        goalStatistics:
+          type: array
+          description: The goal statistics
+          items:
+            $ref: '#/components/schemas/property'
+        lane:
+          type: string
+          description: The lane in which this run was executed
+          enum:
+          - REGULAR
+          - REGULAR2
+          - REGULAR3
+          - REGULAR4
+          - REGULAR5
+          - REGULAR6
+          - REGULAR7
+          - REGULAR8
+          - EXPRESS
+          - RUN_NOW
+          - CONTINUOUS
+        message:
+          type: string
+          description: The message of the run
+        runCount:
+          type: integer
+          format: int64
+          description: The run count
+        runId:
+          type: string
+          description: The run id
+        startDate:
+          type: string
+          format: date-time
+          description: The start date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        state:
+          type: string
+          description: The state of the run
+          enum:
+          - STARTING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - STOPPING
+          - STOPPED
+    UrlRestriction:
+      type: object
+      description: URL restriction for a target channel.
+      properties:
+        pattern:
+          type: string
+          description: The URL pattern.
+        previewURL:
+          type: string
+          description: The preview URL.
+        restrictionType:
+          type: string
+          description: The restriction type.
+          enum:
+          - RESTRICT
+          - EXCLUDE
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

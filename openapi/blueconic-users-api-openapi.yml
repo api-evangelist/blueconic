@@ -107,6 +107,27 @@ paths:
         - read:users
 components:
   schemas:
+    SimpleRoleBean:
+      type: object
+      description: A role with id and name.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the role.
+        name:
+          type: string
+          description: Name of the role.
+    simpleDomain:
+      type: object
+      description: The domain.
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: Name of this object.
+      readOnly: true
     BlueConicUserBean:
       type: object
       description: The user.
@@ -172,16 +193,6 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
-    SimpleRoleBean:
-      type: object
-      description: A role with id and name.
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the role.
-        name:
-          type: string
-          description: Name of the role.
     UserBean:
       type: object
       description: BlueConic user.
@@ -192,17 +203,6 @@ components:
         userName:
           type: string
           description: The username.
-      readOnly: true
-    simpleDomain:
-      type: object
-      description: The domain.
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-        name:
-          type: string
-          description: Name of this object.
       readOnly: true
     users:
       type: object

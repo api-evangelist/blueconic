@@ -103,6 +103,63 @@ paths:
         - read:roles
 components:
   schemas:
+    pluginRestrictionItem:
+      type: object
+      description: 'Single plugin restriction: pluginId, access (only ''deny'' supported), operations (e.g. create, edit).'
+      properties:
+        access:
+          type: string
+          description: Access type; only 'deny' is supported.
+          enum:
+          - deny
+        operations:
+          type: array
+          description: Operations to restrict (e.g. create, edit).
+          items:
+            type: string
+            description: Operations to restrict (e.g. create, edit).
+            enum:
+            - create
+            - edit
+        pluginId:
+          type: string
+          description: Plugin identifier.
+    roles:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleBean'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    restrictions:
+      type: object
+      description: Plugin restrictions for the role. Single plugins list; only access 'deny' is supported.
+      properties:
+        plugins:
+          type: array
+          description: List of plugin restriction items (access deny only).
+          items:
+            $ref: '#/components/schemas/pluginRestrictionItem'
     RoleBean:
       type: object
       properties:
@@ -194,27 +251,6 @@ components:
             example: Address
       required:
       - permissions
-    pluginRestrictionItem:
-      type: object
-      description: 'Single plugin restriction: pluginId, access (only ''deny'' supported), operations (e.g. create, edit).'
-      properties:
-        access:
-          type: string
-          description: Access type; only 'deny' is supported.
-          enum:
-          - deny
-        operations:
-          type: array
-          description: Operations to restrict (e.g. create, edit).
-          items:
-            type: string
-            description: Operations to restrict (e.g. create, edit).
-            enum:
-            - create
-            - edit
-        pluginId:
-          type: string
-          description: Plugin identifier.
     UserBean:
       type: object
       description: BlueConic user.
@@ -226,42 +262,6 @@ components:
           type: string
           description: The username.
       readOnly: true
-    roles:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleBean'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    restrictions:
-      type: object
-      description: Plugin restrictions for the role. Single plugins list; only access 'deny' is supported.
-      properties:
-        plugins:
-          type: array
-          description: List of plugin restriction items (access deny only).
-          items:
-            $ref: '#/components/schemas/pluginRestrictionItem'
   securitySchemes:
     oauth2:
       type: oauth2

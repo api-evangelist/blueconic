@@ -348,52 +348,6 @@ paths:
         - write:content_stores
 components:
   schemas:
-    ErrorBean:
-      type: object
-      properties:
-        field:
-          type: string
-        message:
-          type: string
-    contentStores:
-      type: object
-      properties:
-        contentStores:
-          type: array
-          items:
-            $ref: '#/components/schemas/contentStore'
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    ErrorRequestBean:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBean'
-        message:
-          type: string
     property:
       type: object
       description: A property consisting of an ID and a list of values.
@@ -407,35 +361,74 @@ components:
           items:
             type: string
             description: Values for this property.
-    items:
+    contentStore:
       type: object
       properties:
-        items:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        creator:
+          $ref: '#/components/schemas/UserBean'
+        description:
+          type: string
+          description: The description.
+        id:
+          type: string
+          description: The object ID.
+        itemCount:
+          type: integer
+          format: int32
+          description: The number of items in the store.
+          readOnly: true
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        lastModifiedUser:
+          $ref: '#/components/schemas/UserBean'
+        name:
+          type: string
+          description: The object name.
+        properties:
           type: array
           items:
-            $ref: '#/components/schemas/item'
-        itemsPerPage:
+            $ref: '#/components/schemas/property'
+        storeType:
+          type: string
+          description: The store type.
+          enum:
+          - CONTENT
+          - PRODUCT
+        tags:
+          type: array
+          description: The tags (i.e. labels).
+          example: Address
+          items:
+            type: string
+            description: The tags (i.e. labels).
+            example: Address
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
           type: integer
           format: int32
-          description: Number of results per page.
-          readOnly: true
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-      required:
-      - items
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
+        message:
+          type: string
     item:
       type: object
       properties:
@@ -498,6 +491,69 @@ components:
         text:
           type: string
           description: The text of the item.
+    ids:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+    items:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/item'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+      required:
+      - items
+    contentStores:
+      type: object
+      properties:
+        contentStores:
+          type: array
+          items:
+            $ref: '#/components/schemas/contentStore'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
     UserBean:
       type: object
       description: BlueConic user.
@@ -509,62 +565,6 @@ components:
           type: string
           description: The username.
       readOnly: true
-    ids:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-    contentStore:
-      type: object
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        creator:
-          $ref: '#/components/schemas/UserBean'
-        description:
-          type: string
-          description: The description.
-        id:
-          type: string
-          description: The object ID.
-        itemCount:
-          type: integer
-          format: int32
-          description: The number of items in the store.
-          readOnly: true
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        lastModifiedUser:
-          $ref: '#/components/schemas/UserBean'
-        name:
-          type: string
-          description: The object name.
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/property'
-        storeType:
-          type: string
-          description: The store type.
-          enum:
-          - CONTENT
-          - PRODUCT
-        tags:
-          type: array
-          description: The tags (i.e. labels).
-          example: Address
-          items:
-            type: string
-            description: The tags (i.e. labels).
-            example: Address
   securitySchemes:
     oauth2:
       type: oauth2

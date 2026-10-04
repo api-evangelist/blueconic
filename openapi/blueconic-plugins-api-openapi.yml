@@ -131,16 +131,6 @@ paths:
         - read:plugins
 components:
   schemas:
-    Label:
-      type: object
-      description: 'Localized display name of the plugin. Note: the UI always displays the description with the key set to en_US.'
-      properties:
-        key:
-          type: string
-          description: Language code that specifies the locale of the labels text. Follows the IETF BCP 47 format (e.g., en_US for U.S. English)
-        value:
-          type: string
-          description: The localized display name for the specified language.
     plugin:
       type: object
       properties:
@@ -231,6 +221,16 @@ components:
           type: string
           description: The username.
       readOnly: true
+    Label:
+      type: object
+      description: 'Localized display name of the plugin. Note: the UI always displays the description with the key set to en_US.'
+      properties:
+        key:
+          type: string
+          description: Language code that specifies the locale of the labels text. Follows the IETF BCP 47 format (e.g., en_US for U.S. English)
+        value:
+          type: string
+          description: The localized display name for the specified language.
   securitySchemes:
     oauth2:
       type: oauth2

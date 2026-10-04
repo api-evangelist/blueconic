@@ -103,34 +103,6 @@ paths:
         - read:dialogues
 components:
   schemas:
-    Dialogues:
-      type: object
-      description: Collection of dialogue configurations.
-      properties:
-        dialogues:
-          type: array
-          items:
-            $ref: '#/components/schemas/dialogue'
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
     dialogue:
       type: object
       description: Dialogue configuration for a single instance.
@@ -180,31 +152,6 @@ components:
             $ref: '#/components/schemas/targetChannels'
         variants:
           $ref: '#/components/schemas/VariantBean'
-    priority:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the priority.
-        isDefault:
-          type: boolean
-          description: Whether the priority is the default priority.
-        name:
-          type: string
-          description: The name of the priority.
-    targetChannels:
-      type: object
-      description: Target channel.
-      properties:
-        URLRestrictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/UrlRestriction'
-        channelId:
-          type: string
-          description: The ID of the channel.
-      required:
-      - URLRestrictions
     optimizerSettings:
       type: object
       description: The optimizer settings for a dialogue.
@@ -312,33 +259,31 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
-    UserBean:
+    targetChannels:
       type: object
-      description: BlueConic user.
+      description: Target channel.
       properties:
-        fullName:
+        URLRestrictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/UrlRestriction'
+        channelId:
           type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
-    UrlRestriction:
+          description: The ID of the channel.
+      required:
+      - URLRestrictions
+    priority:
       type: object
-      description: URL restriction for a target channel.
       properties:
-        pattern:
+        id:
           type: string
-          description: The URL pattern.
-        previewURL:
+          description: The ID of the priority.
+        isDefault:
+          type: boolean
+          description: Whether the priority is the default priority.
+        name:
           type: string
-          description: The preview URL.
-        restrictionType:
-          type: string
-          description: The restriction type.
-          enum:
-          - RESTRICT
-          - EXCLUDE
+          description: The name of the priority.
     DialogueBean:
       type: object
       description: Dialogue configuration for a single instance.
@@ -388,6 +333,61 @@ components:
             $ref: '#/components/schemas/targetChannels'
         variants:
           $ref: '#/components/schemas/VariantBean'
+    UrlRestriction:
+      type: object
+      description: URL restriction for a target channel.
+      properties:
+        pattern:
+          type: string
+          description: The URL pattern.
+        previewURL:
+          type: string
+          description: The preview URL.
+        restrictionType:
+          type: string
+          description: The restriction type.
+          enum:
+          - RESTRICT
+          - EXCLUDE
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    Dialogues:
+      type: object
+      description: Collection of dialogue configurations.
+      properties:
+        dialogues:
+          type: array
+          items:
+            $ref: '#/components/schemas/dialogue'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

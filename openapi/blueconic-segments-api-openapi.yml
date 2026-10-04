@@ -245,6 +245,137 @@ paths:
         - read:segments
 components:
   schemas:
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+    link:
+      type: object
+      properties:
+        Href:
+          type: string
+          description: The href of the link
+        Rel:
+          type: string
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
+          type: string
+          description: The type of the link e.g. 'application/json'
+    segments:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        segments:
+          type: array
+          description: The segments.
+          items:
+            $ref: '#/components/schemas/segment'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    simpleObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: The object name.
+    group:
+      type: object
+      description: Groups that the profile is a part of.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        groupTypeId:
+          type: string
+          description: The ID of the BlueConic group type.
+        id:
+          type: string
+          description: The unique identifier for the object.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
+    RefinementBean:
+      type: object
+      properties:
+        daysCount:
+          type: integer
+          format: int32
+          description: The days count
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefinementBean'
+        fromDate:
+          type: string
+          description: The from date in ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')
+        fromValue:
+          type: integer
+          format: int32
+          description: The from value
+        groupProperty:
+          type: string
+          description: The group property
+        hoursCount:
+          type: integer
+          format: int32
+          description: The hours count
+        objective:
+          type: string
+          description: The objective
+        operator:
+          type: string
+          description: The operator
+        property:
+          type: string
+          description: The property
+        toDate:
+          type: string
+          description: The to date in ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')
+        toValue:
+          type: integer
+          format: int32
+          description: The to value
+        values:
+          type: array
+          description: The values
+          items:
+            type: string
+            description: The values
     segment:
       type: object
       description: The segments.
@@ -290,78 +421,40 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
-    group:
+    SegmentProfiles:
       type: object
-      description: Groups that the profile is a part of.
       properties:
-        creationDate:
+        cursor:
           type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        groupTypeId:
-          type: string
-          description: The ID of the BlueConic group type.
-        id:
-          type: string
-          description: The unique identifier for the object.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        properties:
+          description: The cursor of the current page. `*` when not passed.
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        links:
           type: array
+          description: The links to the first and next/last page.
           items:
-            $ref: '#/components/schemas/property'
-    event:
-      type: object
-      properties:
-        data:
+            $ref: '#/components/schemas/link'
+        nextCursor:
+          type: string
+          description: The cursor of the next page (if any).
+        profiles:
           type: array
+          description: The profiles that are in this segment.
           items:
-            $ref: '#/components/schemas/Property'
-        date:
-          type: string
-          format: date-time
-          description: Timestamp for the event. The format of date is "2018-01-01T00:00Z" or with a timezone offset "2018-01-01T00:00+05:00". If empty, "now" will be used.
-        eventTypeId:
-          type: string
-          description: The type identifier of the event. See https://yourserver.blueconic.net/rest/timelineEventTypes?alt=json for the list of defined event types.
-        id:
-          type: string
-          description: An identifier to identify the event. Preferred to be unique, although it isn't required. If an event with the same ID is present on the profile's timeline, it will be overwritten. Note that the combination of ID, event type ID, and date uniquely identifies an event.
-        identifier:
-          type: string
-          description: An (external) identifier which can be passed along with a timeline event operation and is returned in the response.
-        strategy:
-          type: string
-          description: How the event will be applied to the timeline.
-          enum:
-          - SET
-          - UPSERT
-          - UPDATE
-          - DELETE
-          writeOnly: true
-    lifecycleStage:
-      type: object
-      description: Lifecycle stages that the profile is part of.
-      properties:
-        lifecycle:
-          $ref: '#/components/schemas/simpleObject'
-        stage:
-          $ref: '#/components/schemas/simpleObject'
-    property:
-      type: object
-      description: A property consisting of an ID and a list of values.
-      properties:
-        id:
-          type: string
-          description: The ID of the property.
-        values:
-          type: array
-          description: Values for this property.
-          items:
-            type: string
-            description: Values for this property.
+            $ref: '#/components/schemas/profile'
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
     matchingGroup:
       type: object
       description: Groups that the profile is a part of and match the segment refinements.
@@ -375,21 +468,6 @@ components:
           items:
             type: string
             description: The matching group IDs.
-    profileSegmentBean:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the segment.
-        name:
-          type: string
-          description: The name of the segment.
-        tags:
-          type: array
-          description: The labels of the segment (optionally included).
-          items:
-            type: string
-            description: The labels of the segment (optionally included).
     profile:
       type: object
       description: The profiles that are in this segment.
@@ -476,55 +554,75 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/profileSegmentBean'
-    SegmentProfiles:
+    lifecycleStage:
+      type: object
+      description: Lifecycle stages that the profile is part of.
+      properties:
+        lifecycle:
+          $ref: '#/components/schemas/simpleObject'
+        stage:
+          $ref: '#/components/schemas/simpleObject'
+    event:
       type: object
       properties:
-        cursor:
-          type: string
-          description: The cursor of the current page. `*` when not passed.
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        links:
+        data:
           type: array
-          description: The links to the first and next/last page.
           items:
-            $ref: '#/components/schemas/link'
-        nextCursor:
+            $ref: '#/components/schemas/Property'
+        date:
           type: string
-          description: The cursor of the next page (if any).
-        profiles:
-          type: array
-          description: The profiles that are in this segment.
-          items:
-            $ref: '#/components/schemas/profile'
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
+          format: date-time
+          description: Timestamp for the event. The format of date is "2018-01-01T00:00Z" or with a timezone offset "2018-01-01T00:00+05:00". If empty, "now" will be used.
+        eventTypeId:
+          type: string
+          description: The type identifier of the event. See https://yourserver.blueconic.net/rest/timelineEventTypes?alt=json for the list of defined event types.
+        id:
+          type: string
+          description: An identifier to identify the event. Preferred to be unique, although it isn't required. If an event with the same ID is present on the profile's timeline, it will be overwritten. Note that the combination of ID, event type ID, and date uniquely identifies an event.
+        identifier:
+          type: string
+          description: An (external) identifier which can be passed along with a timeline event operation and is returned in the response.
+        strategy:
+          type: string
+          description: How the event will be applied to the timeline.
+          enum:
+          - SET
+          - UPSERT
+          - UPDATE
+          - DELETE
+          writeOnly: true
     permissions:
       type: object
       properties:
         level:
           type: string
           description: The permission level of the profile
-    simpleObject:
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
+    profileSegmentBean:
       type: object
       properties:
         id:
           type: string
-          description: Unique identifier.
+          description: The ID of the segment.
         name:
           type: string
-          description: The object name.
+          description: The name of the segment.
+        tags:
+          type: array
+          description: The labels of the segment (optionally included).
+          items:
+            type: string
+            description: The labels of the segment (optionally included).
     Property:
       type: object
       properties:
@@ -545,104 +643,6 @@ components:
           items:
             type: object
             description: The values for this timeline event property. Either a list of primitives (strings, numbers, booleans) or a list of objects (see example).
-    RefinementBean:
-      type: object
-      properties:
-        daysCount:
-          type: integer
-          format: int32
-          description: The days count
-        filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/RefinementBean'
-        fromDate:
-          type: string
-          description: The from date in ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')
-        fromValue:
-          type: integer
-          format: int32
-          description: The from value
-        groupProperty:
-          type: string
-          description: The group property
-        hoursCount:
-          type: integer
-          format: int32
-          description: The hours count
-        objective:
-          type: string
-          description: The objective
-        operator:
-          type: string
-          description: The operator
-        property:
-          type: string
-          description: The property
-        toDate:
-          type: string
-          description: The to date in ISO 8601 format (e.g. '2025-01-22T11:21:33.872Z')
-        toValue:
-          type: integer
-          format: int32
-          description: The to value
-        values:
-          type: array
-          description: The values
-          items:
-            type: string
-            description: The values
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
-    link:
-      type: object
-      properties:
-        Href:
-          type: string
-          description: The href of the link
-        Rel:
-          type: string
-          description: The link rel e.g. 'self', 'next', etc.
-        Type:
-          type: string
-          description: The type of the link e.g. 'application/json'
-    segments:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        segments:
-          type: array
-          description: The segments.
-          items:
-            $ref: '#/components/schemas/segment'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

@@ -100,45 +100,6 @@ paths:
         - read:channels
 components:
   schemas:
-    ChannelBeanV2SchemaForChannelsV2:
-      type: object
-      description: The channels.
-      properties:
-        aliases:
-          type: array
-          description: The aliases of the channel. Alternative hostnames, only applicable to web channels. For example, an alias of the hostname `www.blueconic.com` could be `blueconic.com`.
-          items:
-            type: string
-            description: The aliases of the channel. Alternative hostnames, only applicable to web channels. For example, an alias of the hostname `www.blueconic.com` could be `blueconic.com`.
-        domain:
-          $ref: '#/components/schemas/simpleDomain'
-        hostname:
-          type: string
-          description: The hostname of the channel. For web channels, the hostname of the website, excluding the protocol (e.g. `https://`) and path (e.g. `/`). For mobile/ctv channels, the App ID. For email channels, the hostname is empty.
-        id:
-          type: string
-          description: The ID of the channel.
-        name:
-          type: string
-          description: The name of the channel.
-        tags:
-          type: array
-          description: The tags of the channel.
-          items:
-            type: string
-            description: The tags of the channel.
-        type:
-          type: string
-          description: The type of the channel.
-          enum:
-          - EMAIL
-          - MOBILE
-          - WEBSITE
-          - CTV
-        visitorCount:
-          type: integer
-          format: int32
-          description: The visitor count of the channel.
     channel:
       type: object
       properties:
@@ -204,16 +165,16 @@ components:
           type: integer
           format: int32
           description: The visitor count of the channel.
-    UserBean:
+    simpleDomain:
       type: object
-      description: BlueConic user.
+      description: The domain.
       properties:
-        fullName:
+        id:
           type: string
-          description: The full name of the user.
-        userName:
+          description: Unique identifier.
+        name:
           type: string
-          description: The username.
+          description: Name of this object.
       readOnly: true
     ChannelsV2Schema:
       type: object
@@ -243,16 +204,55 @@ components:
           format: int32
           description: The total number of results.
           readOnly: true
-    simpleDomain:
+    ChannelBeanV2SchemaForChannelsV2:
       type: object
-      description: The domain.
+      description: The channels.
       properties:
+        aliases:
+          type: array
+          description: The aliases of the channel. Alternative hostnames, only applicable to web channels. For example, an alias of the hostname `www.blueconic.com` could be `blueconic.com`.
+          items:
+            type: string
+            description: The aliases of the channel. Alternative hostnames, only applicable to web channels. For example, an alias of the hostname `www.blueconic.com` could be `blueconic.com`.
+        domain:
+          $ref: '#/components/schemas/simpleDomain'
+        hostname:
+          type: string
+          description: The hostname of the channel. For web channels, the hostname of the website, excluding the protocol (e.g. `https://`) and path (e.g. `/`). For mobile/ctv channels, the App ID. For email channels, the hostname is empty.
         id:
           type: string
-          description: Unique identifier.
+          description: The ID of the channel.
         name:
           type: string
-          description: Name of this object.
+          description: The name of the channel.
+        tags:
+          type: array
+          description: The tags of the channel.
+          items:
+            type: string
+            description: The tags of the channel.
+        type:
+          type: string
+          description: The type of the channel.
+          enum:
+          - EMAIL
+          - MOBILE
+          - WEBSITE
+          - CTV
+        visitorCount:
+          type: integer
+          format: int32
+          description: The visitor count of the channel.
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
       readOnly: true
   securitySchemes:
     oauth2:

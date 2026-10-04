@@ -103,86 +103,6 @@ paths:
         - read:timeline_event_rollups
 components:
   schemas:
-    MappingBean:
-      type: object
-      description: Mapping configuration for the rollup.
-      properties:
-        eventPropertyId:
-          type: string
-          description: The timeline event type property that is used in the mapping.
-        mappingOperator:
-          type: string
-          description: The mapping operator.
-          enum:
-          - COUNT
-          - SUM
-          - MINIMUM
-          - MAXIMUM
-          - LAST
-          - FIRST
-          - AVERAGE
-          - ALL_VALUES
-        profilePropertyId:
-          type: string
-          description: The profile property ID to which the rolled up value is written.
-        sqlSelectColumnName:
-          type: string
-          description: Column name in query result to map to profile property. Only relevant for SQL mode.
-    timelineEventRollups:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        timelineEventRollups:
-          type: array
-          items:
-            $ref: '#/components/schemas/RollupBean'
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    QueryBean:
-      type: object
-      description: Query configuration for the rollup.
-      properties:
-        conditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConditionBean'
-        eventTypeIds:
-          type: array
-          description: The timeline event type IDs used in the rollup. For basic rollups, it's always singular. For SQL based, it can be multiple.
-          items:
-            type: string
-            description: The timeline event type IDs used in the rollup. For basic rollups, it's always singular. For SQL based, it can be multiple.
-        mappings:
-          type: array
-          items:
-            $ref: '#/components/schemas/MappingBean'
-        sqlQuery:
-          type: string
-          description: The SQL query. Only applicable when the query type is `SQL`.
-        type:
-          type: string
-          description: The query type.
-          enum:
-          - BASIC
-          - SQL
-          example: BASIC
     ConditionBean:
       type: object
       description: Condition configuration for the rollup.
@@ -227,17 +147,33 @@ components:
           items:
             type: string
             description: The values for the condition.
-    UserBean:
+    timelineEventRollups:
       type: object
-      description: BlueConic user.
       properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        timelineEventRollups:
+          type: array
+          items:
+            $ref: '#/components/schemas/RollupBean'
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
     RollupBean:
       type: object
       description: Rollup configuration for a single instance.
@@ -302,6 +238,70 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
+    QueryBean:
+      type: object
+      description: Query configuration for the rollup.
+      properties:
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionBean'
+        eventTypeIds:
+          type: array
+          description: The timeline event type IDs used in the rollup. For basic rollups, it's always singular. For SQL based, it can be multiple.
+          items:
+            type: string
+            description: The timeline event type IDs used in the rollup. For basic rollups, it's always singular. For SQL based, it can be multiple.
+        mappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappingBean'
+        sqlQuery:
+          type: string
+          description: The SQL query. Only applicable when the query type is `SQL`.
+        type:
+          type: string
+          description: The query type.
+          enum:
+          - BASIC
+          - SQL
+          example: BASIC
+    MappingBean:
+      type: object
+      description: Mapping configuration for the rollup.
+      properties:
+        eventPropertyId:
+          type: string
+          description: The timeline event type property that is used in the mapping.
+        mappingOperator:
+          type: string
+          description: The mapping operator.
+          enum:
+          - COUNT
+          - SUM
+          - MINIMUM
+          - MAXIMUM
+          - LAST
+          - FIRST
+          - AVERAGE
+          - ALL_VALUES
+        profilePropertyId:
+          type: string
+          description: The profile property ID to which the rolled up value is written.
+        sqlSelectColumnName:
+          type: string
+          description: Column name in query result to map to profile property. Only relevant for SQL mode.
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

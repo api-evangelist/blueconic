@@ -77,6 +77,19 @@ paths:
         - read:profiles
 components:
   schemas:
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
     profileEvent:
       type: object
       properties:
@@ -93,19 +106,6 @@ components:
           enum:
           - PermissionLevelChanged
           - ConsentChanged
-    property:
-      type: object
-      description: A property consisting of an ID and a list of values.
-      properties:
-        id:
-          type: string
-          description: The ID of the property.
-        values:
-          type: array
-          description: Values for this property.
-          items:
-            type: string
-            description: Values for this property.
     profileEvents:
       type: object
       properties:

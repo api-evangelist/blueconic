@@ -1,0 +1,52 @@
+slug: blueconic
+provider: BlueConic
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Profiles
+  spec_file: blueconic-profiles-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.9
+  evidence: 'PUT /profiles  createUpdateDeleteProfiles  Create, update, or delete one or more profiles;
+    schemas: profile, ProfileProperty, matchingGroup'
+  reason: The operations maintain unified customer profiles with identity matching groups in a customer
+    data platform — plainly customer master/golden-record data management.
+- tag: Segments
+  spec_file: blueconic-segments-api-openapi.yml
+  capability_id: BC-420.20
+  capability_id_l1: BC-420
+  capability_name: Customer Segmentation Management
+  confidence: 0.88
+  evidence: GET /segments/{segment}/profiles  getProfilesInSegment  Get profiles in segment
+  reason: Operations enumerate audience segments and their member profiles, which is customer segmentation
+    management in a CDP context.
+- tag: Models
+  spec_file: blueconic-models-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.82
+  evidence: GET /models/{model}/model  getModelONNXBinary  Get model binary
+  reason: CRUD over predictive models including retrieval of the ONNX binary is machine-learning model
+    lifecycle management, i.e. AI/ML management, not a customer-facing capability.
+- tag: Lifecycles
+  spec_file: blueconic-lifecycles-api-openapi.yml
+  capability_id: BC-420.30
+  capability_id_l1: BC-420
+  capability_name: Customer Lifecycle Management
+  confidence: 0.72
+  evidence: 'GET /lifecycles  getAllLifecycles  Get all lifecycles; schemas: lifecycle, stage'
+  reason: In this CDP the lifecycle object models customer lifecycle stages applied to visitor profiles,
+    matching Customer Lifecycle Management. Read-only surface and thin description keep confidence moderate.

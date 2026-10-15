@@ -2,6 +2,7 @@ generated: '2026-10-15'
 method: searched
 checked:
 - shopify/integrations/shopify-integration-edges.yml
+- wordpress/integrations/wordpress-integration-edges.yml
 source:
 - shopify/integrations/shopify-integration-edges.yml
 edges:
@@ -23,3 +24,20 @@ edges:
   detected_by: mirror-platform-listings.py
   publisher_verified:
   - Built for Shopify
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/blueconic/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - BlueConic
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin

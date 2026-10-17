@@ -145,6 +145,18 @@ components:
         url:
           type: string
           description: The url of this item.
+    RecommendationSubResponse:
+      type: object
+      description: The recommendation blocks as defined in the request body.
+      properties:
+        id:
+          type: string
+          description: The ID for this recommendation block, as defined in the request body.
+        recommendations:
+          type: array
+          description: The recommendations of this block.
+          items:
+            $ref: '#/components/schemas/RecommendationItem'
     RecommendationResponse:
       type: object
       properties:
@@ -159,18 +171,6 @@ components:
         trackingPixel:
           type: string
           description: The tracking pixel to track this recommendation request.
-    RecommendationSubResponse:
-      type: object
-      description: The recommendation blocks as defined in the request body.
-      properties:
-        id:
-          type: string
-          description: The ID for this recommendation block, as defined in the request body.
-        recommendations:
-          type: array
-          description: The recommendations of this block.
-          items:
-            $ref: '#/components/schemas/RecommendationItem'
     Boost:
       type: object
       description: The algorithms that will be executed to determine the recommendations with their boost value and parameters.

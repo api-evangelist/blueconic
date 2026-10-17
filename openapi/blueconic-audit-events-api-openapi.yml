@@ -62,6 +62,13 @@ paths:
         - read:audit-events
 components:
   schemas:
+    AuditEntryObjectBean:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
     AuditEntryBean:
       type: object
       properties:
@@ -153,13 +160,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AuditEntryBean'
-    AuditEntryObjectBean:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2

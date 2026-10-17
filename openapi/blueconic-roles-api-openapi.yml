@@ -103,27 +103,6 @@ paths:
         - read:roles
 components:
   schemas:
-    pluginRestrictionItem:
-      type: object
-      description: 'Single plugin restriction: pluginId, access (only ''deny'' supported), operations (e.g. create, edit).'
-      properties:
-        access:
-          type: string
-          description: Access type; only 'deny' is supported.
-          enum:
-          - deny
-        operations:
-          type: array
-          description: Operations to restrict (e.g. create, edit).
-          items:
-            type: string
-            description: Operations to restrict (e.g. create, edit).
-            enum:
-            - create
-            - edit
-        pluginId:
-          type: string
-          description: Plugin identifier.
     roles:
       type: object
       properties:
@@ -160,6 +139,17 @@ components:
           description: List of plugin restriction items (access deny only).
           items:
             $ref: '#/components/schemas/pluginRestrictionItem'
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
     RoleBean:
       type: object
       properties:
@@ -251,17 +241,27 @@ components:
             example: Address
       required:
       - permissions
-    UserBean:
+    pluginRestrictionItem:
       type: object
-      description: BlueConic user.
+      description: 'Single plugin restriction: pluginId, access (only ''deny'' supported), operations (e.g. create, edit).'
       properties:
-        fullName:
+        access:
           type: string
-          description: The full name of the user.
-        userName:
+          description: Access type; only 'deny' is supported.
+          enum:
+          - deny
+        operations:
+          type: array
+          description: Operations to restrict (e.g. create, edit).
+          items:
+            type: string
+            description: Operations to restrict (e.g. create, edit).
+            enum:
+            - create
+            - edit
+        pluginId:
           type: string
-          description: The username.
-      readOnly: true
+          description: Plugin identifier.
   securitySchemes:
     oauth2:
       type: oauth2

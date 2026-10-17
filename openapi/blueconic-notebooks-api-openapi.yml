@@ -163,6 +163,132 @@ paths:
         - read:notebooks
 components:
   schemas:
+    status:
+      type: object
+      description: Notebook run status.
+      properties:
+        endDate:
+          type: string
+          format: date-time
+          description: The end date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        goalStatistics:
+          type: array
+          description: The goal statistics
+          items:
+            $ref: '#/components/schemas/property'
+        lane:
+          type: string
+          description: The lane in which this run was executed
+          enum:
+          - REGULAR
+          - REGULAR2
+          - REGULAR3
+          - REGULAR4
+          - REGULAR5
+          - REGULAR6
+          - REGULAR7
+          - REGULAR8
+          - EXPRESS
+          - RUN_NOW
+          - CONTINUOUS
+        message:
+          type: string
+          description: The message of the run
+        runCount:
+          type: integer
+          format: int64
+          description: The run count
+        runId:
+          type: string
+          description: The run id
+        startDate:
+          type: string
+          format: date-time
+          description: The start date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+          readOnly: true
+        state:
+          type: string
+          description: The state of the run
+          enum:
+          - STARTING
+          - RUNNING
+          - FINISHED
+          - FAILED
+          - STOPPING
+          - STOPPED
+    NotebookStatusBeans:
+      type: object
+      description: A collection of notebook run status entries.
+      properties:
+        entries:
+          type: array
+          description: List of notebook run status entries
+          items:
+            $ref: '#/components/schemas/status'
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        runs:
+          type: array
+          description: List of notebook run status entries
+          items:
+            $ref: '#/components/schemas/status'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    notebooks:
+      type: object
+      properties:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        notebooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/notebook'
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
+          type: string
+          description: The full name of the user.
+        userName:
+          type: string
+          description: The username.
+      readOnly: true
     notebook:
       type: object
       properties:
@@ -232,132 +358,6 @@ components:
           items:
             type: string
             description: Values for this property.
-    notebooks:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        notebooks:
-          type: array
-          items:
-            $ref: '#/components/schemas/notebook'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-    status:
-      type: object
-      description: Notebook run status.
-      properties:
-        endDate:
-          type: string
-          format: date-time
-          description: The end date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        goalStatistics:
-          type: array
-          description: The goal statistics
-          items:
-            $ref: '#/components/schemas/property'
-        lane:
-          type: string
-          description: The lane in which this run was executed
-          enum:
-          - REGULAR
-          - REGULAR2
-          - REGULAR3
-          - REGULAR4
-          - REGULAR5
-          - REGULAR6
-          - REGULAR7
-          - REGULAR8
-          - EXPRESS
-          - RUN_NOW
-          - CONTINUOUS
-        message:
-          type: string
-          description: The message of the run
-        runCount:
-          type: integer
-          format: int64
-          description: The run count
-        runId:
-          type: string
-          description: The run id
-        startDate:
-          type: string
-          format: date-time
-          description: The start date of the run. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-          readOnly: true
-        state:
-          type: string
-          description: The state of the run
-          enum:
-          - STARTING
-          - RUNNING
-          - FINISHED
-          - FAILED
-          - STOPPING
-          - STOPPED
-    UserBean:
-      type: object
-      description: BlueConic user.
-      properties:
-        fullName:
-          type: string
-          description: The full name of the user.
-        userName:
-          type: string
-          description: The username.
-      readOnly: true
-    NotebookStatusBeans:
-      type: object
-      description: A collection of notebook run status entries.
-      properties:
-        entries:
-          type: array
-          description: List of notebook run status entries
-          items:
-            $ref: '#/components/schemas/status'
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        runs:
-          type: array
-          description: List of notebook run status entries
-          items:
-            $ref: '#/components/schemas/status'
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
   securitySchemes:
     oauth2:
       type: oauth2

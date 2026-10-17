@@ -107,16 +107,44 @@ paths:
         - read:users
 components:
   schemas:
-    SimpleRoleBean:
+    users:
       type: object
-      description: A role with id and name.
       properties:
-        id:
+        itemsPerPage:
+          type: integer
+          format: int32
+          description: Number of results per page.
+          readOnly: true
+        startIndex:
+          type: integer
+          format: int32
+          description: The start index.
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          description: The total number of pages.
+          readOnly: true
+        totalResults:
+          type: integer
+          format: int32
+          description: The total number of results.
+          readOnly: true
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueConicUserBean'
+    UserBean:
+      type: object
+      description: BlueConic user.
+      properties:
+        fullName:
           type: string
-          description: Unique identifier of the role.
-        name:
+          description: The full name of the user.
+        userName:
           type: string
-          description: Name of the role.
+          description: The username.
+      readOnly: true
     simpleDomain:
       type: object
       description: The domain.
@@ -193,44 +221,16 @@ components:
             type: string
             description: The tags (i.e. labels).
             example: Address
-    UserBean:
+    SimpleRoleBean:
       type: object
-      description: BlueConic user.
+      description: A role with id and name.
       properties:
-        fullName:
+        id:
           type: string
-          description: The full name of the user.
-        userName:
+          description: Unique identifier of the role.
+        name:
           type: string
-          description: The username.
-      readOnly: true
-    users:
-      type: object
-      properties:
-        itemsPerPage:
-          type: integer
-          format: int32
-          description: Number of results per page.
-          readOnly: true
-        startIndex:
-          type: integer
-          format: int32
-          description: The start index.
-          readOnly: true
-        totalPages:
-          type: integer
-          format: int32
-          description: The total number of pages.
-          readOnly: true
-        totalResults:
-          type: integer
-          format: int32
-          description: The total number of results.
-          readOnly: true
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueConicUserBean'
+          description: Name of the role.
   securitySchemes:
     oauth2:
       type: oauth2

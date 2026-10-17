@@ -89,6 +89,13 @@ paths:
           description: The server is too busy to handle the request.
 components:
   schemas:
+    interactions:
+      type: object
+      properties:
+        interactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/entry'
     InteractionType:
       type: object
       properties:
@@ -101,18 +108,23 @@ components:
         type:
           type: string
           description: The interaction type, e.g. listener or action.
-    interactions:
-      type: object
-      properties:
-        interactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/entry'
     ErrorBean:
       type: object
       properties:
         field:
           type: string
+        message:
+          type: string
+    ErrorRequestBean:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBean'
         message:
           type: string
     entry:
@@ -132,18 +144,6 @@ components:
         position:
           type: string
           description: The position of the interaction on the channel.
-    ErrorRequestBean:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBean'
-        message:
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -239,78 +239,6 @@ paths:
         - write:groups
 components:
   schemas:
-    property:
-      type: object
-      description: A property consisting of an ID and a list of values.
-      properties:
-        id:
-          type: string
-          description: The ID of the property.
-        values:
-          type: array
-          description: Values for this property.
-          items:
-            type: string
-            description: Values for this property.
-    link:
-      type: object
-      properties:
-        Href:
-          type: string
-          description: The href of the link
-        Rel:
-          type: string
-          description: The link rel e.g. 'self', 'next', etc.
-        Type:
-          type: string
-          description: The type of the link e.g. 'application/json'
-    BulkGroupInputEntry:
-      type: object
-      properties:
-        domainGroup:
-          type: string
-          default: DEFAULT
-          description: Specifies the domain group in which a group is created. Used for matching and creating groups.
-        groupId:
-          type: string
-          description: The BlueConic group ID to search for.
-        groupTypeId:
-          type: string
-          description: The BlueConic group type ID.
-        identifier:
-          type: string
-          description: An (external) identifier which can be passed along with an operation and is returned in the response.
-          example: '[[{"id": "email", value: "test@test.com"}]]'
-        properties:
-          type: object
-          description: The rules that will be executed on this group.
-          properties:
-            id:
-              type: string
-              description: The profile property ID to apply to this rule for.
-            strategy:
-              type: string
-              description: The strategy to apply to this rule.
-              enum:
-              - ADD
-              - SET
-              - SET_IF_EMPTY
-              - INCREMENT
-              - REMOVE
-            values:
-              type: array
-              description: The values to apply to this rule.
-              items:
-                type: string
-                description: The values to apply to this rule.
-        strategy:
-          type: string
-          default: UPDATE
-          description: The strategy to apply to the given entry. Can be used to create, update or delete groups.
-          enum:
-          - UPSERT
-          - UPDATE
-          - DELETE
     GroupsAPIGroups:
       type: object
       properties:
@@ -345,101 +273,6 @@ components:
           format: int32
           description: The total number of results.
           readOnly: true
-    BulkResultBean:
-      type: object
-      properties:
-        identifier:
-          type: string
-          description: The identifier (optionally) as passed in the input, can be used as reference.
-        profileId:
-          type: string
-          description: The profile ID of the profile that was created, updated or deleted.
-        state:
-          type: string
-          description: The possible states for profile related changes.
-          enum:
-          - CREATED
-          - SKIPPED
-          - MODIFIED
-          - UNCHANGED
-          - NOTFOUND
-          - RESTRICTION_MISMATCH
-          - CONSENT_MISMATCH
-          - DELETED
-          - UNAUTHORIZED
-        timeline:
-          type: array
-          description: The feedback on the given timeline events.
-          items:
-            $ref: '#/components/schemas/TimelineResultBean'
-        validationErrors:
-          type: object
-          additionalProperties:
-            type: array
-            description: The errors found for the given profile changes (if any).
-            items:
-              type: string
-              description: The errors found for the given profile changes (if any).
-          description: The errors found for the given profile changes (if any).
-    group:
-      type: object
-      description: Groups that the profile is a part of.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        groupTypeId:
-          type: string
-          description: The ID of the BlueConic group type.
-        id:
-          type: string
-          description: The unique identifier for the object.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
-        properties:
-          type: array
-          items:
-            $ref: '#/components/schemas/property'
-    BulkGroupResultBean:
-      type: object
-      properties:
-        groupId:
-          type: string
-        groupTypeId:
-          type: string
-        identifier:
-          type: string
-          description: The identifier (optionally) as passed in the input, can be used as reference.
-        state:
-          type: string
-          description: The possible states for group related changes.
-          enum:
-          - CREATED
-          - SKIPPED
-          - MODIFIED
-          - UNCHANGED
-          - NOTFOUND
-          - DELETED
-          - UNKNOWN_GROUP_TYPE
-        validationErrors:
-          type: object
-          additionalProperties:
-            type: array
-            description: The errors found for the given group changes (if any).
-            items:
-              type: string
-              description: The errors found for the given group changes (if any).
-          description: The errors found for the given group changes (if any).
-    ErrorBean:
-      type: object
-      properties:
-        field:
-          type: string
-        message:
-          type: string
     RefinementBean:
       type: object
       properties:
@@ -487,6 +320,83 @@ components:
           items:
             type: string
             description: The values
+    link:
+      type: object
+      properties:
+        Href:
+          type: string
+          description: The href of the link
+        Rel:
+          type: string
+          description: The link rel e.g. 'self', 'next', etc.
+        Type:
+          type: string
+          description: The type of the link e.g. 'application/json'
+    BulkResultBean:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        profileId:
+          type: string
+          description: The profile ID of the profile that was created, updated or deleted.
+        state:
+          type: string
+          description: The possible states for profile related changes.
+          enum:
+          - CREATED
+          - SKIPPED
+          - MODIFIED
+          - UNCHANGED
+          - NOTFOUND
+          - RESTRICTION_MISMATCH
+          - CONSENT_MISMATCH
+          - DELETED
+          - UNAUTHORIZED
+        timeline:
+          type: array
+          description: The feedback on the given timeline events.
+          items:
+            $ref: '#/components/schemas/TimelineResultBean'
+        validationErrors:
+          type: object
+          additionalProperties:
+            type: array
+            description: The errors found for the given profile changes (if any).
+            items:
+              type: string
+              description: The errors found for the given profile changes (if any).
+          description: The errors found for the given profile changes (if any).
+    ErrorBean:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+    group:
+      type: object
+      description: Groups that the profile is a part of.
+      properties:
+        creationDate:
+          type: string
+          format: date-time
+          description: The creation date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        groupTypeId:
+          type: string
+          description: The ID of the BlueConic group type.
+        id:
+          type: string
+          description: The unique identifier for the object.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The last modified date of the object. Datetime in UTC in the https://www.ietf.org/rfc/rfc3339.txt format, example = "2025-01-22T11:21:33.872Z".
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/property'
     ErrorRequestBean:
       type: object
       properties:
@@ -499,6 +409,66 @@ components:
             $ref: '#/components/schemas/ErrorBean'
         message:
           type: string
+    property:
+      type: object
+      description: A property consisting of an ID and a list of values.
+      properties:
+        id:
+          type: string
+          description: The ID of the property.
+        values:
+          type: array
+          description: Values for this property.
+          items:
+            type: string
+            description: Values for this property.
+    BulkGroupInputEntry:
+      type: object
+      properties:
+        domainGroup:
+          type: string
+          default: DEFAULT
+          description: Specifies the domain group in which a group is created. Used for matching and creating groups.
+        groupId:
+          type: string
+          description: The BlueConic group ID to search for.
+        groupTypeId:
+          type: string
+          description: The BlueConic group type ID.
+        identifier:
+          type: string
+          description: An (external) identifier which can be passed along with an operation and is returned in the response.
+          example: '[[{"id": "email", value: "test@test.com"}]]'
+        properties:
+          type: object
+          description: The rules that will be executed on this group.
+          properties:
+            id:
+              type: string
+              description: The profile property ID to apply to this rule for.
+            strategy:
+              type: string
+              description: The strategy to apply to this rule.
+              enum:
+              - ADD
+              - SET
+              - SET_IF_EMPTY
+              - INCREMENT
+              - REMOVE
+            values:
+              type: array
+              description: The values to apply to this rule.
+              items:
+                type: string
+                description: The values to apply to this rule.
+        strategy:
+          type: string
+          default: UPDATE
+          description: The strategy to apply to the given entry. Can be used to create, update or delete groups.
+          enum:
+          - UPSERT
+          - UPDATE
+          - DELETE
     TimelineResultBean:
       type: object
       description: The feedback on the given timeline events.
@@ -528,6 +498,36 @@ components:
             type: string
             description: The errors found for the given timeline event changes (if any).
             example: '["#/total_revenue/0: expected type: Number, found: String"]'
+    BulkGroupResultBean:
+      type: object
+      properties:
+        groupId:
+          type: string
+        groupTypeId:
+          type: string
+        identifier:
+          type: string
+          description: The identifier (optionally) as passed in the input, can be used as reference.
+        state:
+          type: string
+          description: The possible states for group related changes.
+          enum:
+          - CREATED
+          - SKIPPED
+          - MODIFIED
+          - UNCHANGED
+          - NOTFOUND
+          - DELETED
+          - UNKNOWN_GROUP_TYPE
+        validationErrors:
+          type: object
+          additionalProperties:
+            type: array
+            description: The errors found for the given group changes (if any).
+            items:
+              type: string
+              description: The errors found for the given group changes (if any).
+          description: The errors found for the given group changes (if any).
   securitySchemes:
     oauth2:
       type: oauth2

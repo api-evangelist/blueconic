@@ -28,3 +28,34 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: blueconic-maven-central
+  label: Maven Central
+  partner: maven-central
+  partner_name: Maven Central
+  category: official SDK (Java/JVM)
+  type: register
+  channel: package-registry
+  evidence: https://central.sonatype.com/artifact/com.blueconic/blueconic-android-lib
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.blueconic:blueconic-android-lib
+      version: 7.3.0
+      released: '2026-09-09'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.blueconic/blueconic-android-lib
+      repo_leg: domain:blueconic.com
+      publisher_leg: groupId:blueconic.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null

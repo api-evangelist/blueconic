@@ -20,6 +20,7 @@ checked:
 - https://monid.ai/tools/blueconic
 - https://n8n.io/integrations/blueconic/
 - https://zapier.com/apps/blueconic/integrations
+- https://marketplace.databricks.com/
 summary: null
 marketplace_apps: []
 edges:
@@ -88,4 +89,30 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Databricks Marketplace
+  partner: databricks
+  partner_match: aggregator
+  type: marketplace
+  marketplace: databricks-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://marketplace.databricks.com/provider/edec3d22-5f65-400b-b897-2d0edefbb385
+  category: data product listing
+  contract_reference:
+    register: Databricks Marketplace (marketplace.databricks.com/api/2.0/public-marketplace-providers + public-marketplace-listings)
+    spec_file: null
+    role: data-marketplace-seller
+    registered_name: BlueConic, Inc
+    matched_domain: blueconic.com
+    matched_by: domain
+    listings: 2
+    sample_listings:
+    - BlueConic
+    - BlueConic MCP Server
+    signal_note: 'participation: the provider lists data products on this marketplace; counts are context'
+    detected_by: sweep-data-marketplaces.py
+    detected: '2026-10-20'
+  detected_by: sweep-data-marketplaces.py
+  detected: '2026-10-20'
 templates: []

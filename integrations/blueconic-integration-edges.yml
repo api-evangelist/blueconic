@@ -1,5 +1,11 @@
-generated: '2026-10-15'
+generated: '2026-10-20'
 method: searched
+source:
+- shopify/integrations/shopify-integration-edges.yml
+- https://zapier.com/apps/blueconic/integrations
+- https://n8n.io/integrations/blueconic/
+- https://composio.dev/toolkits/blueconic
+- https://monid.ai/tools/blueconic
 checked:
 - https://api.nuget.org/v3
 - https://crates.io/api/v1
@@ -10,8 +16,12 @@ checked:
 - https://rubygems.org/api/v1
 - shopify/integrations/shopify-integration-edges.yml
 - wordpress/integrations/wordpress-integration-edges.yml
-source:
-- shopify/integrations/shopify-integration-edges.yml
+- https://composio.dev/toolkits/blueconic
+- https://monid.ai/tools/blueconic
+- https://n8n.io/integrations/blueconic/
+- https://zapier.com/apps/blueconic/integrations
+summary: null
+marketplace_apps: []
 edges:
 - partner_name: Shopify (own)
   partner: shopify
@@ -78,3 +88,4 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+templates: []

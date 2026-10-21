@@ -21,6 +21,7 @@ checked:
 - https://n8n.io/integrations/blueconic/
 - https://zapier.com/apps/blueconic/integrations
 - https://marketplace.databricks.com/
+- yotpo/integrations/yotpo-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -115,4 +116,20 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-data-marketplaces.py
   detected: '2026-10-20'
+- partner_name: Yotpo (own)
+  partner: yotpo
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.yotpo.com/integrations/blueconic/
+  mirror_of: yotpo/integrations/yotpo-integration-edges.yml
+  apps:
+  - BlueConic
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
 templates: []

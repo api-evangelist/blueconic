@@ -86,3 +86,15 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: blueconic-yotpo-own
+  label: Yotpo (own)
+  partner: yotpo
+  partner_name: Yotpo (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.yotpo.com/integrations/blueconic/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

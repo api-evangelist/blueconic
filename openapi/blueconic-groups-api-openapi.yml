@@ -539,3 +539,9 @@ components:
           authorizationUrl: /rest/v2/oauth/authorize
           tokenUrl: /rest/v2/oauth/token
           refreshUrl: /rest/v2/oauth/token
+x-provenance:
+  method: harvested
+  publisher: BlueConic
+  source: https://raw.githubusercontent.com/blueconic/openapi/HEAD/definitions/openapi_latest.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
